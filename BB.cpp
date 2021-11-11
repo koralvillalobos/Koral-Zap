@@ -69,3 +69,8 @@ void::BB::setDoge(int newDoge)
 {
     doge = newDoge;
 }
+
+int main(){
+    BB BB;
+    BB.printBBMenu();
+}
