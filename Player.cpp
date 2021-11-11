@@ -14,17 +14,17 @@ Player::Player()
     int compMaintenanceLvl = 0;
     int numbVirus = 0;
     int compPartsAvailable = 0;
-    bool antiVirusUSB = false;
-    int VPNsAvailable = 0;
+    int antiVirusUSBcount = 0;
+    int VPNsOwned = 0;
     int internetProv = 0;
     int dogeCoinTotal = 0;
     int frustration = 0;
     int carmenProg = 0;
     int hackersKilled = 0;
 }
-bool Player::getantiVirusUSB()
+int Player::getantiVirusUSBcount()
 {
-    return antiVirusUSB;
+    return antiVirusUSBcount;
 }
 int Player::getFrustration()
 {
@@ -54,15 +54,16 @@ int Player::gethackersKilled()
 {
     return hackersKilled;
 }
-int Player::getVPNsAvailable()
+int Player::getVPNsOwned()
 {
-    return VPNsAvailable;
+    return VPNsOwned;
 }
 
+
 //setters
-void Player::setantiVirusUSB(bool NewAntiVirusUSB)
+void Player::setantiVirusUSBcount(int NewAntiVirusUSBcount)
 {
-    antiVirusUSB = NewAntiVirusUSB;
+    antiVirusUSBcount = NewAntiVirusUSBcount;
 }
 void Player::setFrustration(int newFrustration)
 {
@@ -92,8 +93,10 @@ void Player::sethackersKilled(int newHackersKilled)
 {
     hackersKilled = newHackersKilled;
 }
-void Player::setVPNsAvailable(int newVPNsAvailable)
+void Player::setVPNsOwned(int newVPNsOwned)
 {
-    VPNsAvailable = newVPNsAvailable;
+    VPNsOwned = newVPNsOwned;
 }
-
+int main(){
+    
+}

@@ -19,8 +19,8 @@ class Player
     int compMaintenanceLvl;
     int numbVirus;
     int compPartsAvailable;
-    bool antiVirusUSB;
-    int VPNsAvailable;
+    bool antiVirusUSBcount;
+    int VPNsOwned;
     int internetProv;
     int dogeCoinTotal;
     int frustration;
@@ -32,7 +32,7 @@ class Player
     Player();
 
     //getters
-    bool getantiVirusUSB();
+    int getantiVirusUSBcount();
     int getFrustration();
     int getcompMaintenanceLvl();
     int getnumbVirus();
@@ -40,10 +40,10 @@ class Player
     int getinternetProv();
     int getcarmenProg();
     int gethackersKilled();
-    int getVPNsAvailable();
+    int getVPNsOwned();
     
     //setters
-    void setantiVirusUSB(bool);
+    void setantiVirusUSBcount(int);
     void setFrustration(int);
     void setcompMaintenanceLvl(int);
     void setnumbVirus(int);
@@ -51,7 +51,7 @@ class Player
     void setinternetProv(int);
     void setcarmenProg(int);
     void sethackersKilled(int);
-    void setVPNsAvailable(int);
+    void setVPNsOwned(int);
 };
 
 #endif
