@@ -37,7 +37,7 @@ class BB{
         BB();
         BB(bool computer, bool antiVirus, int VPN, int providerLevel, int doge);
 
-        
+        void printBBMenu();
 
         bool getComputerStatus();
         void setComputerStatus(bool);

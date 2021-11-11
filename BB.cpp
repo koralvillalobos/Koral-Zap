@@ -21,6 +21,10 @@ BB::BB(bool newComputer, bool newAntiVirus, int newVPN, int newproviderLevel, in
 
 }
 
+void::BB::printBBMenu(){
+    cout <<"1. Computer Part\n2. Antivirus software\n3. Virtual Private Network (VPN)\n4. Internet Provider" << endl;
+}
+
 bool::BB::getComputerStatus()
 {
     return computer;
@@ -65,4 +69,9 @@ int ::BB::getDoge()
 void::BB::setDoge(int newDoge)
 {
     doge = newDoge;
+}
+
+int main(){
+    BB BB;
+    BB.printBBMenu();
 }
