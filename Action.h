@@ -16,16 +16,16 @@ class Action
 private:
     static const int puzzel1Ans = 21;
     static const int puzzel2Ans = 13;
-    char puzzel3Ans = 'B';
-    char puzzel4Ans = 'A';
-    char puzzel5Ans = 'D';
+    static const char puzzel3Ans = 'B';
+    static const char puzzel4Ans = 'A';
+    static const char puzzel5Ans = 'D';
 
 public:
     Action();
     bool attack();
-    int forfeit();
-    int virus();
-    int useantiVirus();
+    void forfeit();
+    void virus();
+    void useantiVirus();
     void CompletePuzzle(string);
     string RockPaperScissors(int);
     static const int getPuzzel1Ans();
