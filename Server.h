@@ -21,6 +21,7 @@ class Server{
 
         
     public:
+        Server();
         int getRoom();
         void setRoom(int);
 
