@@ -21,8 +21,11 @@ class Server{
 
         
     public:
+        Server();
         int getRoom();
         void setRoom(int);
+
+        void printMenu();
 
 };
 
