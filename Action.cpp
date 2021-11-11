@@ -53,14 +53,14 @@ bool Action::attack()
         return false;
     }
 }
-int Action::forfeit()
+void Action::forfeit()
 {
     Player player = Player();
 
     //player loses all spare computer parts
     player.setcompPartsAvailable(0);
 }
-int Action::virus()
+void Action::virus()
 {
     Map map = Map();
     Player player = Player();
@@ -69,13 +69,13 @@ int Action::virus()
     if (player.getnumbVirus() > 0)
     {
         //Need to fix this gota figure out how to tell if an action was made
-        if (map.executeMove(char 'w' || char 'a' || char 's' || char 'd') == 0) //if player moves -10 Computer Maintenance
+        if ((map.executeMove('w')) || (map.executeMove('a'))|| (map.executeMove('s')) || (map.executeMove('d') == 0)) //if player moves -10 Computer Maintenance
         {
             player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() - (10 * player.getnumbVirus()));
         }
     }
 }
-int Action::useantiVirus()
+void Action::useantiVirus()
 {
     Player player = Player();
 
@@ -201,6 +201,7 @@ string Action::RockPaperScissors(int numb)
             break;
         }
     }
+    return 0;
 }
 
 const int Action::getPuzzel1Ans()
@@ -226,7 +227,5 @@ char Action::getPuzzel5Ans()
 
 int main()
 {
-    //"puzzle.txt"
-    Action action = Action();
-    action.CompletePuzzle("puzzle.txt");
+
 }
