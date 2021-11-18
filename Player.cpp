@@ -1,3 +1,8 @@
+// CSCI1300 Fall 2021
+// Authors: Zaphod Schmidt and Koral Villlalobos
+// Recitations: 220 - Pragna Mandadi and 315 - Teo Pice-Broncucia
+// Project 3 - Player Implimentation
+
 #include <fstream>
 #include <iostream>
 #include <ctype.h>
@@ -9,7 +14,7 @@
 
 using namespace std;
 
-Player::Player()
+Player::Player() //default constructor initializing variables to zero
 {
     int compMaintenanceLvl = 0;
     int numbVirus = 0;
@@ -21,7 +26,10 @@ Player::Player()
     int frustration = 0;
     int carmenProg = 0;
     int hackersKilled = 0;
+    int dogeCoin = 0;
 }
+
+//getters
 int Player::getantiVirusUSBcount()
 {
     return antiVirusUSBcount;
@@ -57,6 +65,9 @@ int Player::gethackersKilled()
 int Player::getVPNsOwned()
 {
     return VPNsOwned;
+}
+int Player::getDogeCoin(){
+    return dogeCoin;
 }
 
 
@@ -97,6 +108,7 @@ void Player::setVPNsOwned(int newVPNsOwned)
 {
     VPNsOwned = newVPNsOwned;
 }
-int main(){
-    
+
+void Player::setDogeCoin(int newDoge){
+    dogeCoin = newDoge;
 }
