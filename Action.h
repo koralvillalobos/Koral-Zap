@@ -27,6 +27,7 @@ private:
 public:
     Action();
     string choseRandomHacker();
+    void statusUpdate(Player &);
     void displayHackerMenu();
     bool executeHackerMenu(int,Player&,Hacker&);
     bool fightHacker(Player&,Hacker&);
