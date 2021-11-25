@@ -1,3 +1,8 @@
+// CSCI1300 Fall 2021
+// Authors: Zaphod Schmidt and Koral Villlalobos
+// Recitations: 220 - Pragna Mandadi and 315 - Teo Pice-Broncucia
+// Project 3 - Best Buy Class
+
 #ifndef BB_H
 #define BB_H
 
@@ -30,14 +35,12 @@ class BB{
         static const int level4 = 40;
         static const int level5 = 50;
 
-        int doge;
-
-
     public:
         BB();
-        BB(bool computer, bool antiVirus, int VPN, int providerLevel, int doge);
-    
-    void printBBMenu();
+        BB(bool computer, bool antiVirus, int VPN, int providerLevel);
+
+        void printBBMenu();
+        void printStartMenu();
 
         bool getComputerStatus();
         void setComputerStatus(bool);
@@ -54,6 +57,19 @@ class BB{
         int getDoge();
         void setDoge(int);
 
+        int getCPU();
+        int getGPU();
+        int getPowerSupplyUnit();
+        int getComputerCase();
+        int getInternetCard();
+        int getKeyboardMouse();
+        int getPremadeComp();
+        int getAntiVirusCost();
+        int getVPNCost();
+        int getPL2();
+        int getPL3();
+        int getPL4();
+        int getPL5();
 };
 
 #endif
