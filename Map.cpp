@@ -1,6 +1,15 @@
-#include "Map.h"
+// CSCI1300 Fall 2021
+// Authors: Zaphod Schmidt and Koral Villlalobos
+// Recitations: 220 - Pragna Mandadi and 315 - Teo Pice-Broncucia
+// Project 3 - Map Implimentation
 
-using namespace std; 
+#include "Player.h"
+#include "Hacker.h"
+#include "BB.h"
+#include "Server.h"
+#include "Action.h"
+
+using namespace std;
 
 Map::Map()
 {
@@ -8,8 +17,9 @@ Map::Map()
 }
 
 // resets player position, count values, and initializes values in position arrays to -1
-void Map::resetMap() {
-    playerPosition[0] = 0; 
+void Map::resetMap()
+{
+    playerPosition[0] = 0;
     playerPosition[1] = 0;
 
     bestBuyPosition[0] = -1;
@@ -19,56 +29,68 @@ void Map::resetMap() {
     hacker_count = 0;
     best_buy_on_map = false;
 
-    for (int i = 0; i < num_npcs; i++) {
+    for (int i = 0; i < num_npcs; i++)
+    {
         npcPositions[i][0] = -1;
         npcPositions[i][1] = -1;
     }
 
-    for (int i = 0; i < num_hackers; i++) {
+    for (int i = 0; i < num_hackers; i++)
+    {
         hackerPositions[i][0] = -1;
         hackerPositions[i][1] = -1;
     }
 
-    for (int i = 0; i < num_rows; i++) {
-        for (int j = 0; j < num_cols; j++) {
+    for (int i = 0; i < num_rows; i++)
+    {
+        for (int j = 0; j < num_cols; j++)
+        {
             mapData[i][j] = '-';
         }
     }
 }
 
 // return player's row position
-int Map::getPlayerRowPosition() {
+int Map::getPlayerRowPosition()
+{
     return playerPosition[0];
 }
 
 // return player's column position
-int Map::getPlayerColPosition() {
+int Map::getPlayerColPosition()
+{
     return playerPosition[1];
 }
 
-int Map::getNPCCount() {
+int Map::getNPCCount()
+{
     return npc_count;
 }
 
-int Map::getHackerCount() {
+int Map::getHackerCount()
+{
     return hacker_count;
 }
 
 // set player's row position to parameter row
-void Map::setPlayerRowPosition(int row) {
+void Map::setPlayerRowPosition(int row)
+{
     playerPosition[0] = row;
 }
 
 // set player's column position to parameter row
-void Map::setPlayerColPosition(int col) {
+void Map::setPlayerColPosition(int col)
+{
     playerPosition[1] = col;
 }
 
-void Map::setNPCCount(int count) {
+void Map::setNPCCount(int count)
+{
     npc_count = count;
 }
 
-void Map::setHackerCount(int count) {
+void Map::setHackerCount(int count)
+{
     hacker_count = count;
 }
 
@@ -78,22 +100,27 @@ void Map::setHackerCount(int count) {
  *                      or if (row, col) is an invalid position
  *                      or if (row, col) is already populated; else true
  */
-bool Map::spawnHacker(int row, int col) {
+bool Map::spawnHacker(int row, int col)
+{
     // out of map bounds
-    if (!(row >= 0 && row < num_rows && col >= 0 && col < num_cols)) {
+    if (!(row >= 0 && row < num_rows && col >= 0 && col < num_cols))
+    {
         return false;
     }
 
-    if (hacker_count >= num_hackers) {
+    if (hacker_count >= num_hackers)
+    {
         return false;
     }
 
     // location must be blank to spawn
-    if (mapData[row][col] != '-') {
+    if (mapData[row][col] != '-')
+    {
         return false;
     }
 
-    if (hackerPositions[hacker_count][0] == -1 && hackerPositions[hacker_count][1] == -1) {
+    if (hackerPositions[hacker_count][0] == -1 && hackerPositions[hacker_count][1] == -1)
+    {
         hackerPositions[hacker_count][0] = row;
         hackerPositions[hacker_count][1] = col;
         mapData[row][col] = 'H';
@@ -110,22 +137,27 @@ bool Map::spawnHacker(int row, int col) {
  *                      or if (row, col) is an invalid position
  *                      or if (row, col) is already populated; else true
  */
-bool Map::spawnNPC(int row, int col) {
+bool Map::spawnNPC(int row, int col)
+{
     // out of map bounds
-    if (!(row >= 0 && row < num_rows && col >= 0 && col < num_cols)) {
+    if (!(row >= 0 && row < num_rows && col >= 0 && col < num_cols))
+    {
         return false;
     }
 
-    if (npc_count >= num_npcs) {
+    if (npc_count >= num_npcs)
+    {
         return false;
     }
 
     // location must be blank to spawn
-    if (mapData[row][col] != '-') {
+    if (mapData[row][col] != '-')
+    {
         return false;
     }
 
-    if (npcPositions[npc_count][0] == -1 && npcPositions[npc_count][1] == -1) {
+    if (npcPositions[npc_count][0] == -1 && npcPositions[npc_count][1] == -1)
+    {
         npcPositions[npc_count][0] = row;
         npcPositions[npc_count][1] = col;
         mapData[row][col] = 'N';
@@ -142,22 +174,27 @@ bool Map::spawnNPC(int row, int col) {
  *                      or if (row, col) is already populated
  *                      or if there is a best buy already on the map; else true
  */
-bool Map::spawnBestBuy(int row, int col) {
+bool Map::spawnBestBuy(int row, int col)
+{
     // out of map bounds
-    if (!(row >= 0 && row < num_rows && col >= 0 && col < num_cols)) {
+    if (!(row >= 0 && row < num_rows && col >= 0 && col < num_cols))
+    {
         return false;
     }
 
     // location must be blank to spawn
-    if (mapData[row][col] != '-') {
+    if (mapData[row][col] != '-')
+    {
         return false;
     }
 
-    if (best_buy_on_map) {
+    if (best_buy_on_map)
+    {
         return false;
     }
 
-    if (bestBuyPosition[0] == -1 && bestBuyPosition[1] == -1) {
+    if (bestBuyPosition[0] == -1 && bestBuyPosition[1] == -1)
+    {
         bestBuyPosition[0] = row;
         bestBuyPosition[1] = col;
         mapData[row][col] = 'B';
@@ -169,28 +206,35 @@ bool Map::spawnBestBuy(int row, int col) {
 }
 
 // return true if x, y position has a best buy there
-bool Map::isBestBuyLocation(){
+bool Map::isBestBuyLocation()
+{
     return bestBuyPosition[0] == playerPosition[0] && bestBuyPosition[1] == playerPosition[1];
 }
 
 // return true if x, y position has an npc there
-bool Map::isNPCLocation(){
-    for(int i = 0; i < num_npcs; i++){
-        if(npcPositions[i][0] == playerPosition[0] && npcPositions[i][1] == playerPosition[1]){
-            return true; 
+bool Map::isNPCLocation()
+{
+    for (int i = 0; i < num_npcs; i++)
+    {
+        if (npcPositions[i][0] == playerPosition[0] && npcPositions[i][1] == playerPosition[1])
+        {
+            return true;
         }
     }
-    return false; 
+    return false;
 }
 
 // return true if x, y position has a hacker there
-bool Map::isHackerLocation() {
-    for(int i = 0; i < num_hackers; i++){
-        if(hackerPositions[i][0] == playerPosition[0] && hackerPositions[i][1] == playerPosition[1]){
-            return true; 
+bool Map::isHackerLocation()
+{
+    for (int i = 0; i < num_hackers; i++)
+    {
+        if (hackerPositions[i][0] == playerPosition[0] && hackerPositions[i][1] == playerPosition[1])
+        {
+            return true;
         }
     }
-    return false; 
+    return false;
 }
 
 /*
@@ -198,19 +242,25 @@ bool Map::isHackerLocation() {
  * Parameters: none
  * Return: nothing (void)
  */
-void Map::displayMoves(){
-    if(!(playerPosition[0] == 0)){
+void Map::displayMoves()
+{
+    if (!(playerPosition[0] == 0))
+    {
         cout << "w (Up)" << endl;
     }
-    if(!(playerPosition[0] == (num_rows - 1))){
-        cout << "s (Down)" << endl; 
+    if (!(playerPosition[0] == (num_rows - 1)))
+    {
+        cout << "s (Down)" << endl;
     }
-    if(!(playerPosition[1] == 0)){
-        cout << "a (Left)" << endl; 
+    if (!(playerPosition[1] == 0))
+    {
+        cout << "a (Left)" << endl;
     }
-    if(!(playerPosition[1] == (num_cols - 1))){
-        cout << "d (Right)" << endl; 
+    if (!(playerPosition[1] == (num_cols - 1)))
+    {
+        cout << "d (Right)" << endl;
     }
+    cout << "q (Quit)" << endl;
 }
 
 /*
@@ -219,30 +269,38 @@ void Map::displayMoves(){
  * Parameters: move (char) -- 'w' (up), 'a' (left), 's' (down), 'd' (right)
  * Return: (bool) if move is valid, then true, else false
  */
-bool Map::executeMove(char move){
+bool Map::executeMove(char move)
+{
     // if user inputs w, move up if it is an allowed move
-    if(!(playerPosition[0] == 0) && (tolower(move) == 'w')){
+     //if this function executes first thing is to see if player has virus
+
+    if (!(playerPosition[0] == 0) && (tolower(move) == 'w'))
+    {
         playerPosition[0] -= 1;
-        return true; 
+        return true;
     }
     // if user inputs s, move down if it is an allowed move
-    else if(!(playerPosition[0] == (num_rows - 1))&& (tolower(move) == 's')){
+    else if (!(playerPosition[0] == (num_rows - 1)) && (tolower(move) == 's'))
+    {
         playerPosition[0] += 1;
-        return true; 
+        return true;
     }
     // if user inputs a, move left if it is an allowed move
-    else if(!(playerPosition[1] == 0)&& (tolower(move) == 'a')){
+    else if (!(playerPosition[1] == 0) && (tolower(move) == 'a'))
+    {
         playerPosition[1] -= 1;
-        return true; 
+        return true;
     }
     // if user inputs d, move right if it is an allowed move
-    else if(!(playerPosition[1] == (num_cols - 1))&& (tolower(move) == 'd')){
+    else if (!(playerPosition[1] == (num_cols - 1)) && (tolower(move) == 'd'))
+    {
         playerPosition[1] += 1;
-        return true; 
+        return true;
     }
-    else{
-        cout << "Invalid Move" << endl; 
-        return false; 
+    else
+    {
+        cout << "Invalid Move" << endl;
+        return false;
     }
 }
 
@@ -251,15 +309,22 @@ bool Map::executeMove(char move){
  * Parameters: none
  * Return: nothing (void)
  */
-void Map::displayMap() {
-    for (int i = 0; i < num_rows; i++) {
-        for (int j = 0; j < num_cols; j++) {
-            if (playerPosition[0] == i && playerPosition[1] == j) {
+void Map::displayMap()
+{
+    for (int i = 0; i < num_rows; i++)
+    {
+        for (int j = 0; j < num_cols; j++)
+        {
+            if (playerPosition[0] == i && playerPosition[1] == j)
+            {
                 cout << "x";
-            } else if (mapData[i][j] == 'H') {  // don't show hacker on the map
+            }
+            else if (mapData[i][j] == 'H')
+            { // don't show hacker on the map
                 cout << "-";
             }
-            else {
+            else
+            {
                 cout << mapData[i][j];
             }
         }
@@ -268,6 +333,7 @@ void Map::displayMap() {
 }
 
 // returns true if there is already a Best Buy on the map
-bool Map::isBestBuyOnMap() {
+bool Map::isBestBuyOnMap()
+{
     return best_buy_on_map;
 }
