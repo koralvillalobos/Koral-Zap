@@ -16,21 +16,21 @@ using namespace std;
 
 Player::Player() //default constructor initializing variables to zero
 {
-    int compMaintenanceLvl = 0;
-    int numbVirus = 0;
-    int compPartsAvailable = 0;
-    int antiVirusUSBcount = 0;
-    int VPNsOwned = 0;
-    int internetProv = 0;
-    int dogeCoinTotal = 0;
-    int frustration = 0;
-    int carmenProg = 0;
-    int hackersKilled = 0;
-    int dogeCoin = 0;
+    compMaintenanceLvl = 100;
+    numbVirus = 0;
+    compPartsAvailable = 1;
+    antiVirusUSBcount = false;
+    VPNsOwned = 1;
+    internetProv = 10;
+    dogeCoinTotal = 1;
+    frustration = 1;
+    carmenProg = 1;
+    hackersKilled = 1;
+    dogeCoin = 200;
 }
 
 //getters
-int Player::getantiVirusUSBcount()
+bool Player::getantiVirusUSBcount()
 {
     return antiVirusUSBcount;
 }
@@ -72,10 +72,11 @@ int Player::getDogeCoin(){
 
 
 //setters
-void Player::setantiVirusUSBcount(int NewAntiVirusUSBcount)
+void Player::setantiVirusUSBcount(bool NewAntiVirusUSBcount)
 {
     antiVirusUSBcount = NewAntiVirusUSBcount;
 }
+
 void Player::setFrustration(int newFrustration)
 {
     frustration = newFrustration;
