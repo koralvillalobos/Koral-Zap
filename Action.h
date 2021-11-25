@@ -1,3 +1,8 @@
+// CSCI1300 Fall 2021
+// Authors: Zaphod Schmidt and Koral Villlalobos
+// Recitations: 220 - Pragna Mandadi and 315 - Teo Pice-Broncucia
+// Project 3 - Action Class
+
 #ifndef Action_H
 #define Action_H
 
@@ -5,7 +10,6 @@
 #include <iostream>
 #include <ctype.h>
 #include "Player.h"
-#include "Action.h"
 #include "Hacker.h"
 #include "BB.h"
 
@@ -22,10 +26,14 @@ private:
 
 public:
     Action();
-    bool attack();
-    void forfeit();
-    void virus();
-    void useantiVirus();
+    string choseRandomHacker();
+    void displayHackerMenu();
+    bool executeHackerMenu(int,Player&,Hacker&);
+    bool fightHacker(Player&,Hacker&);
+    bool forfeit(Player&);
+    void virus(Player&);
+    void useantiVirus(Player&);
+
     void CompletePuzzle(string);
     string RockPaperScissors(int);
     static const int getPuzzel1Ans();
@@ -33,5 +41,7 @@ public:
     char getPuzzel3Ans();
     char getPuzzel4Ans();
     char getPuzzel5Ans();
+
+    bool quitGame(char);
 };
 #endif
