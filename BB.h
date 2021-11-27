@@ -8,6 +8,7 @@
 
 #include <fstream>
 #include <iostream>
+#include "Player.h"
 #include <ctype.h>
 
 using namespace std; 
@@ -38,6 +39,8 @@ class BB{
     public:
         BB();
         BB(bool computer, bool antiVirus, int VPN, int providerLevel);
+
+        void gameStart(Player&);
 
         void printBBMenu();
         void printStartMenu();
