@@ -4,8 +4,19 @@
 #include "Map.h"
 #include "Player.h"
 #include "Server.h"
+#include "NPC.h"
 
 using namespace std;
+
+string makeLower(string name){
+
+    for(int i = 0; i < name.length(); i++){ //iterate through the string
+        if(name[i] >= 65 && name[i] <= 90){ //if uppercase found
+            name[i] += 32; //make lower
+        }
+    }
+    return name;
+}
 
 int main()
 {
@@ -16,6 +27,7 @@ int main()
     Action action; // create object called map of type Action
     Server server; // create object called map of type server
     BB bb;
+    NPC npc;
 
     map.spawnBestBuy(1, 3);
     map.spawnNPC(3, 8);
@@ -33,8 +45,10 @@ int main()
 
     bb.gameStart(player);
 
+    for(int i = 0; i < 5; i++){
     while (quit == false)
     {
+
         map.displayMap(); // pretty print map_data in terminal
         action.virus(player);
         cout << "Valid moves are: " << endl;
@@ -62,11 +76,19 @@ int main()
                 cout << endl;
                 stop = action.executeHackerMenu(option, player, hacker);
                 cout << endl;
+
             }
         }
         if (map.isNPCLocation()) //Starts NPC Action
         {
+            bool start = false;
             cout << "You've encountered an NPC!" << endl;
+            while (start == false)
+            {
+                cout << "1. Complete Puzzle" << endl;
+                cout << "2. Take Your Chances" << endl;
+                start = npc.runNPCMenu(player, option,bb);
+            }
         }
 
         //Option Quit
@@ -74,5 +96,6 @@ int main()
         {
             quit = action.quitGame(move); //Option to quit game
         }
+    }
     }
 }
