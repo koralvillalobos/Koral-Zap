@@ -7,6 +7,16 @@
 
 using namespace std;
 
+string makeLower(string name){
+
+    for(int i = 0; i < name.length(); i++){ //iterate through the string
+        if(name[i] >= 65 && name[i] <= 90){ //if uppercase found
+            name[i] += 32; //make lower
+        }
+    }
+    return name;
+}
+
 BB::BB() //default constructor
 {
     computer = false;
@@ -19,7 +29,7 @@ BB::BB() //default constructor
     numbComputerCase = 0;
     numbInternetCard = 0;
     numbKeyboardMouse = 0;
-    numbPremadeComp = 0;
+    numbPremadeComp = 1;
 }
 
 BB::BB(bool newComputer, bool newAntiVirus, int newVPN, int newproviderLevel) //parameterized constructor
