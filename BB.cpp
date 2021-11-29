@@ -13,6 +13,13 @@ BB::BB() //default constructor
     antiVirus = false;
     VPN = 1;
     providerLevel = 0;
+    numbCPU = 0;
+    numbGPU = 0;
+    numbPowerSupplyUnit = 0;
+    numbComputerCase = 0;
+    numbInternetCard = 0;
+    numbKeyboardMouse = 0;
+    numbPremadeComp = 0;
 }
 
 BB::BB(bool newComputer, bool newAntiVirus, int newVPN, int newproviderLevel) //parameterized constructor
@@ -29,74 +36,55 @@ void ::BB::printBBMenu()
 }
 void ::BB::printStartMenu()
 {
-cout<<"- COMPUTER PARTS. If your computer breaks, you need 5\ncomputer parts to make a new one.\n- ANTIVIRUS SOFTWARE. If your computer is infected with a\nvirus, use the antivirus software to get rid of it.\n- VIRTUAL PRIVATE NETWORK (VPN). The more VPNs you have\nthe harder it is for a hacker to infect your computer with\na virus.\n- INTERNET PROVIDER. The better the internet provider, the\nmore reliable your hacking will be.\nYou can spend all of your money here before you start your\njourney, or you can save some to spend on a different\nelectronics site along the way. But beware, some of the\nwebsites online are shady, and they won’t always give you a\nfair price..." <<endl;
+    cout<<"- COMPUTER PARTS. If your computer breaks, you need 5\ncomputer parts to make a new one.\n- ANTIVIRUS SOFTWARE. If your computer is infected with a\nvirus, use the antivirus software to get rid of it.\n- VIRTUAL PRIVATE NETWORK (VPN). The more VPNs you have\nthe harder it is for a hacker to infect your computer with\na virus.\n- INTERNET PROVIDER. The better the internet provider, the\nmore reliable your hacking will be.\nYou can spend all of your money here before you start your\njourney, or you can save some to spend on a different\nelectronics site along the way. But beware, some of the\nwebsites online are shady, and they won’t always give you a\nfair price..." <<endl;
 }
+
+
+//Getters
 bool ::BB::getComputerStatus()
 {
     return computer;
 }
-void ::BB::setComputerStatus(bool newComputer)
-{
-    computer = newComputer; //is broken
-}
-
 bool ::BB::getVirusStatus()
 {
     return antiVirus;
 }
-
-void ::BB::setVirusStatus(bool newVirusStatus)
-{
-    antiVirus = newVirusStatus; //there is a virus
-}
-
 int ::BB::getVPN()
 {
     return VPN;
 }
-
-void ::BB::setVPN(int newVPN)
-{
-    VPN = newVPN;
-}
-
 int ::BB::getProviderLevel()
 {
     return providerLevel;
 }
-void ::BB::setProviderLevel(int newProviderLevel)
+int ::BB::getCostCPU()
 {
-    providerLevel = newProviderLevel;
+    return costCPU;
 }
-int ::BB::getCPU()
+int ::BB::getCostGPU()
 {
-    return CPU;
+    return costGPU;
 }
-int ::BB::getGPU()
+int ::BB::getCostPowerSupplyUnit()
 {
-    return GPU;
+    return costPowerSupplyUnit;
 }
-int ::BB::getPowerSupplyUnit()
+int ::BB::getCostComputerCase()
 {
-    return powerSupplyUnit;
+    return costComputerCase;
 }
-int ::BB::getComputerCase()
+int ::BB::getCostInternetCard()
 {
-    return computerCase;
+    return costInternetCard;
 }
-int ::BB::getInternetCard()
+int ::BB::getCostKeyboardMouse()
 {
-    return internetCard;
+    return costKeyboardMouse;
 }
-int ::BB::getKeyboardMouse()
+int ::BB::getCostPremadeComp()
 {
-    return keyboardMouse;
+    return costPremadeComp;
 }
-int ::BB::getPremadeComp()
-{
-    return premadeComp;
-}
-
 int ::BB::getAntiVirusCost()
 {
     return antiVirusCost;
@@ -105,7 +93,6 @@ int ::BB::getVPNCost()
 {
     return VPNCost;
 }
-
 int ::BB::getPL2()
 {
     return level2;
@@ -122,7 +109,81 @@ int ::BB::getPL5()
 {
     return level5;
 }
+int ::BB::getNumbCPU()
+{
+    return numbCPU;
+}
+int ::BB::getNumbGPU()
+{
+    return numbGPU;
+}
+int ::BB::getNumbPowerSupplyUnit()
+{
+    return numbPowerSupplyUnit;
+}
+int ::BB::getNumbComputerCase()
+{
+    return numbComputerCase;
+}
+int ::BB::getNumbInternetCard()
+{
+    return numbInternetCard;
+}
+int ::BB::getNumbKeyboardMouse()
+{
+    return numbKeyboardMouse;
+}
+int ::BB::getNumbPremadeComp()
+{
+    return numbPremadeComp;
+}
 
+
+//Setters
+void ::BB::setNumbCPU(int newNumbCPU)
+{
+    numbCPU=newNumbCPU;
+}
+void ::BB::setNumbGPU(int newNumbGPU)
+{
+    numbGPU=newNumbGPU;
+}
+void ::BB::setNumbPowerSupplyUnit(int newNumbPowerSupplyUnit)
+{
+    numbPowerSupplyUnit=newNumbPowerSupplyUnit;
+}
+void ::BB::setNumbComputerCase(int newNumbComputerCase)
+{
+    numbComputerCase=newNumbComputerCase;
+}
+void ::BB::setNumbInternetCard(int newNumbInternetCard)
+{
+    numbInternetCard=newNumbInternetCard;
+}
+void ::BB::setNumbKeyboardMouse(int newNumbKeyboardMouse)
+{
+    numbKeyboardMouse=newNumbKeyboardMouse;
+}
+void ::BB::setNumbPremadeComp(int newNumbPremadeComp)
+{
+    numbPremadeComp=newNumbPremadeComp;
+}
+void ::BB::setComputerStatus(bool newComputer)
+{
+    computer = newComputer; //is broken
+}
+void ::BB::setVirusStatus(bool newVirusStatus)
+{
+    antiVirus = newVirusStatus; //there is a virus
+}
+void ::BB::setVPN(int newVPN)
+{
+    VPN = newVPN;
+}
+void ::BB::setProviderLevel(int newProviderLevel)
+{
+    providerLevel = newProviderLevel;
+}
 void ::BB::gameStart(Player &player){
     int bbOption;
     char purchaseAns;
@@ -150,52 +211,65 @@ void ::BB::gameStart(Player &player){
             cout << "▪ A CPU costs 10 Dogecoins" << endl;
             cout << "▪ A GPU costs 20 Dogecoins" << endl;
             cout << "▪ A Power Supply Unit costs 5 Dogecoins" << endl;
-            cout << "▪ An internet card costs 5 Dogecoins" << endl;
-            cout << "▪ A keyboard and mouse costs 10 Dogecoins" << endl;
-            cout << "▪ A premade computer costs 100 Dogecoins" << endl;
+            cout <<"▪ A Computer Case costs 15 Dogecoins"<<endl;
+            cout << "▪ An Internet Card costs 5 Dogecoins" << endl;
+            cout << "▪ A Keyboard and Mouse costs 10 Dogecoins" << endl;
+            cout << "▪ A Premade Computer costs 100 Dogecoins" << endl;
             cout << "How many parts do you wish to purchase?" << endl;
             cin >> computerPartChoice;
 
             do
             {
                 cout << "Choose what you would like to purchase: " << endl;
-                cout << "1. CPU\n2. GPU\n3. Power Supply Unit\n4. Internet card\n5. Keyboard and mouse\n6. Premade computer" << endl;
+                cout << "1. CPU\n2. GPU\n3. Power Supply Unit\n4. Computer Case\n5. Internet card\n6. Keyboard and mouse\n7. Premade computer" << endl;
                 cin >> computerPartItem;
                 
 
                 switch (computerPartItem)
                 {
                 case 1:
+                    setNumbCPU(getNumbCPU()+1);
                     player.setDogeCoin(player.getDogeCoin() - 10);
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
                     break;
 
                 case 2:
+                    setNumbGPU(getNumbGPU()+1);
                     player.setDogeCoin(player.getDogeCoin() - 20);
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
                     break;
 
                 case 3:
+                    setNumbPowerSupplyUnit(getNumbPowerSupplyUnit()+1);
                     player.setDogeCoin(player.getDogeCoin() - 5);
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
                     break;
-
                 case 4:
-                    player.setDogeCoin(player.getDogeCoin() - 5);
+                    setNumbComputerCase(getNumbComputerCase()+1);
+                    player.setDogeCoin(player.getDogeCoin() - 15);
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
                     break;
 
                 case 5:
-                    player.setDogeCoin(player.getDogeCoin() - 10);
+                    setNumbInternetCard(getNumbInternetCard()+1);
+                    player.setDogeCoin(player.getDogeCoin() - 5);
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
                     break;
 
                 case 6:
+                    setNumbKeyboardMouse(getCostKeyboardMouse()+1);
+                    player.setDogeCoin(player.getDogeCoin() - 10);
+                    cout << "DogeCoin: " << player.getDogeCoin() << endl;
+                    i++;
+                    break;
+
+                case 7:
+                    setNumbPremadeComp(getNumbPremadeComp()+1);
                     player.setDogeCoin(player.getDogeCoin() - 100);
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
