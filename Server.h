@@ -21,7 +21,7 @@ using namespace std; //multiple maps array of 5 server maps
 class Server{
     private:
         int room;
-        Hacker hackers[4];
+        int hackersDefeated;
         Map maps[5];
 
         
@@ -29,6 +29,9 @@ class Server{
         Server();
         int getRoom();
         void setRoom(int);
+
+        int getHackerDefeatCount();
+        void setHackerDefeatCount(int);
 
         void printMenu();
 
