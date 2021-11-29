@@ -8,10 +8,13 @@
 
 using namespace std;
 
-string makeLower(string name){
+string makeLower(string name)
+{
 
-    for(int i = 0; i < name.length(); i++){ //iterate through the string
-        if(name[i] >= 65 && name[i] <= 90){ //if uppercase found
+    for (int i = 0; i < name.length(); i++)
+    { //iterate through the string
+        if (name[i] >= 65 && name[i] <= 90)
+        {                  //if uppercase found
             name[i] += 32; //make lower
         }
     }
@@ -29,14 +32,12 @@ int main()
     BB bb;
     NPC npc;
 
-    map.spawnBestBuy(1, 3);
-    map.spawnNPC(3, 8);
-    map.spawnHacker(1, 1);
+    player.sethackersKilled(0);
 
     char move;         // for storing user input
     int option;        //KORAL MAKE SURE TO USE THIS FOR ANY MENU OPTIONS THAT USE NUMBERS INSTEAD OF LETTERS AS A SELECTION TOOL
     bool quit = false; //if true stops game
-    
+
     string playerName;
     cout << "Please enter a player name: " << endl;
     cin >> playerName;
@@ -45,57 +46,89 @@ int main()
 
     bb.gameStart(player);
 
-    for(int i = 0; i < 5; i++){
-    while (quit == false)
+    
+
+    for (int i = 0; i < 5; i++)
     {
+        server.setRoom(server.getRoom() + 1);
+        cout << "You are in server room: " << server.getRoom() << endl;
 
-        map.displayMap(); // pretty print map_data in terminal
-        action.virus(player);
-        cout << "Valid moves are: " << endl;
-        map.displayMoves(); // give user a menu of valid moves to pick from
-
-        cout << "Input a move: ";
-        cin >> move;
-        cout << endl;
-        map.executeMove(move); // move the player on map based on user input
-
-        if (map.isBestBuyLocation()) //Best Buy
+        int spawnNumb = rand() % 3;
+        for (int k = 0; k < spawnNumb; k++) //i = numb NPC
         {
-            cout << "You're in a Best Buy!" << endl;
-            bb.gameStart(player);
+            int NPCNumbRow = rand() % 5;
+            int NPCNumbCols = rand() % 9;
+            map.spawnNPC(NPCNumbRow, NPCNumbCols);
         }
-        if (map.isHackerLocation()) //Starts Hacker Action
+
+        spawnNumb = rand() % 3;
+        for (int j = 0; j < spawnNumb; j++) // j = numb hackers
         {
-            bool stop = false;
-            action.displayHackerMenu();
+            int hackerNumbRow = rand() % 5;
+            int hackerNumbCol = rand() % 9;
+            map.spawnHacker(hackerNumbRow, hackerNumbCol);
+        }
+        int BBNumbRow = rand() % 5;
+        int BBNumbCol = rand() % 9;
 
-            while (stop == false)
+        map.spawnBestBuy(BBNumbRow, BBNumbCol);
+
+        cout << "number hackers and NPC placed:" << spawnNumb << endl;
+
+        while (quit == false)
+        {
+
+            map.displayMap(); // pretty print map_data in terminal
+            action.virus(player);
+            cout << "Valid moves are: " << endl;
+            map.displayMoves(); // give user a menu of valid moves to pick from
+
+            cout << "Input a move: ";
+            cin >> move;
+            cout << endl;
+            map.executeMove(move); // move the player on map based on user input
+
+            if (map.isBestBuyLocation()) //Best Buy
             {
-                cout << "Input an option: " << endl;
-                cin >> option;
-                cout << endl;
-                stop = action.executeHackerMenu(option, player, hacker);
-                cout << endl;
+                cout << "You're in a Best Buy!" << endl;
+                bb.gameStart(player);
+            }
+            if (map.isHackerLocation()) //Starts Hacker Action
+            {
+                bool stop = false;
+                action.displayHackerMenu();
 
+                while (stop == false)
+                {
+                    cout << "Input an option: " << endl;
+                    cin >> option;
+                    cout << endl;
+                    stop = action.executeHackerMenu(option, player, hacker); //hackers killed need to be removed from map
+                    cout << endl;
+                }
+                cout << "Hackers killed: " << player.gethackersKilled() << endl;
+                if(player.gethackersKilled() == spawnNumb){
+                    cout << "Now you need to move onto the next server room bc the number of hackers in this room has been defeated" << endl; //somehow right here the server room needs to change 
+                }
+            }
+            if (map.isNPCLocation()) //Starts NPC Action
+            {
+                bool start = false;
+                cout << "You've encountered an NPC!" << endl;
+                while (start == false)
+                {
+                    cout << "1. Complete Puzzle" << endl;
+                    cout << "2. Take Your Chances" << endl;
+                    start = npc.runNPCMenu(player, option, bb);
+                }
+            }
+            
+
+            //Option Quit
+            if (move == 'q')
+            {
+                quit = action.quitGame(move); //Option to quit game
             }
         }
-        if (map.isNPCLocation()) //Starts NPC Action
-        {
-            bool start = false;
-            cout << "You've encountered an NPC!" << endl;
-            while (start == false)
-            {
-                cout << "1. Complete Puzzle" << endl;
-                cout << "2. Take Your Chances" << endl;
-                start = npc.runNPCMenu(player, option,bb);
-            }
-        }
-
-        //Option Quit
-        if (move == 'q')
-        {
-            quit = action.quitGame(move); //Option to quit game
-        }
-    }
     }
 }
