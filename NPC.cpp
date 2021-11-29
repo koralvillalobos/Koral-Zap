@@ -4,18 +4,19 @@ using namespace std;
 
 NPC::NPC()
 {
+    
 }
-bool NPC::runNPCMenu(Player &player, int option)
+bool NPC::runNPCMenu(Player &player, int option,BB &bb)
 {
     cin >> option;
     if (option == 1)
     {
-        completePuzzle(player);
+        completePuzzle(player, bb);
         return true;
     }
     else if (option == 2)
     {
-        takeYourChances(player);
+        takeYourChances(player,bb);
         return true;
     }
     else
@@ -169,100 +170,111 @@ void NPC::subRandComputerPart(BB &bb)
         }
     }
 }
-void NPC::completePuzzle(Player &player)
+void NPC::completePuzzle(Player &player, BB &bb)
 {
     int rand5 = rand() % 5;
     string playerAnswer;
     string stringAnswer;
-    cin >> playerAnswer;
+    
 
     if (rand5 == 0)
     {
         puzzle1();
-        stringAnswer = getPuzzel1Ans();
+        cout<<"Enter Answer:"<<endl;
+        cin >> playerAnswer;
+
+        stringAnswer = "21";
         if (stringAnswer == playerAnswer)
         {
             cout << "You are correct!" << endl;
-            addRandComputerPart();
+            addRandComputerPart(bb);
             return;
         }
         else
         {
             cout << "You are wrong you suck!" << endl;
-            subRandComputerPart();
+            subRandComputerPart(bb);
             return;
         }
     }
     if (rand5 == 1)
     {
         puzzle2();
-        stringAnswer = getPuzzel2Ans();
+        cout<<"Enter Answer:"<<endl;
+        cin >> playerAnswer;
+        stringAnswer = "13";
         if (stringAnswer == playerAnswer)
         {
             cout << "You are correct!" << endl;
-            addRandComputerPart();
+            addRandComputerPart(bb);
             return;
         }
         else
         {
             cout << "You are wrong you suck!" << endl;
-            subRandComputerPart();
+            subRandComputerPart(bb);
             return;
         }
     }
     if (rand5 == 2)
     {
         puzzle3();
-        stringanswer = getPuzzel3Ans();
+        cout<<"Enter Answer:"<<endl;
+        cin >> playerAnswer;
+        stringAnswer = "b";
         if (stringAnswer == playerAnswer)
         {
             cout << "You are correct!" << endl;
-            addRandComputerPart();
+            addRandComputerPart(bb);
             return;
         }
         else
         {
             cout << "You are wrong you suck!" << endl;
-            subRandComputerPart();
+            subRandComputerPart(bb);
             return;
         }
     }
     if (rand5 == 3)
     {
         puzzle4();
-        stringanswer = getPuzzel4Ans();
+        cout<<"Enter Answer:"<<endl;
+        cin >> playerAnswer;
+        stringAnswer = "a";
         if (stringAnswer == playerAnswer)
         {
             cout << "You are correct!" << endl;
-            addRandComputerPart();
+            addRandComputerPart(bb);
             return;
         }
         else
         {
             cout << "You are wrong you suck!" << endl;
-            subRandComputerPart();
+            subRandComputerPart(bb);
             return;
         }
     }
     if (rand5 == 4)
     {
         puzzle5();
-        stringanswer = getPuzzel5Ans();
+        cout<<"Enter Answer:"<<endl;
+        cin >> playerAnswer;
+        stringAnswer = "d";
         if (stringAnswer == playerAnswer)
         {
             cout << "You are correct!" << endl;
-            addRandComputerPart();
+            addRandComputerPart(bb);
             return;
         }
         else
         {
             cout << "You are wrong you suck!" << endl;
-            subRandComputerPart();
+            subRandComputerPart(bb);
             return;
         }
     }
 }
-void NPC::takeYourChances(Player &player)
+void NPC::takeYourChances(Player &player, BB &bb)
 {
     int rand3 = rand() % 3;
     int rand6 = rand() % 6;
@@ -270,7 +282,7 @@ void NPC::takeYourChances(Player &player)
     if (rand3 == 0) //good outcome
     {
         cout << "The outcome was good nothing happens" << endl;
-        addRandComputerPart();
+        addRandComputerPart(bb);
     }
     if (rand3 == 1) //neutral outcome
     {
@@ -279,7 +291,7 @@ void NPC::takeYourChances(Player &player)
     if (rand3 == 2) //bad outcome
     {
         cout << "The outcome was bad the NPC steals one of your" << endl;
-        subRandComputerPart();
+        subRandComputerPart(bb);
     }
 }
 void NPC::puzzle1()
@@ -303,24 +315,4 @@ void NPC::puzzle4()
 void NPC::puzzle5()
 {
     cout << "****MULTIPLE CHOICE****\nTo defeat a hacker you need to use a brute force attack on his account. To do this, you are using a text file that holds words, numbers and other potential password combinations. Sometimes you come up with new word combinations you would like to add to the list. Which of the following streams should you use to both read and write from this file?\n\nA) iofstream\nB) ofstream\nC) ifstream\nD) fstream" << endl;
-}
-string NPC::getPuzzel1Ans()
-{
-    return puzzel1Ans;
-}
-string NPC::getPuzzel2Ans()
-{
-    return puzzel2Ans;
-}
-string NPC::getPuzzel3Ans()
-{
-    return puzzel3Ans;
-}
-string NPC::getPuzzel4Ans()
-{
-    return puzzel4Ans;
-}
-string NPC::getPuzzel5Ans()
-{
-    return puzzel5Ans;
 }
