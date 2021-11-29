@@ -16,13 +16,20 @@ using namespace std;
 class BB{
     private:
         int computer;
-        static const int CPU = 10;
-        static const int GPU = 20;
-        static const int powerSupplyUnit = 5;
-        static const int computerCase = 15;
-        static const int internetCard = 5;
-        static const int keyboardMouse = 10;
-        static const int premadeComp = 100;
+        static const int costCPU = 10;
+        static const int costGPU = 20;
+        static const int costPowerSupplyUnit = 5;
+        static const int costComputerCase = 15;
+        static const int costInternetCard = 5;
+        static const int costKeyboardMouse = 10;
+        static const int costPremadeComp = 100;
+        int numbCPU;
+        int numbGPU;
+        int numbPowerSupplyUnit;
+        int numbComputerCase;
+        int numbInternetCard;
+        int numbKeyboardMouse;
+        int numbPremadeComp;
 
         bool antiVirus;
         static const int antiVirusCost = 10;
@@ -41,38 +48,47 @@ class BB{
         BB(bool computer, bool antiVirus, int VPN, int providerLevel);
 
         void gameStart(Player&);
-
         void printBBMenu();
         void printStartMenu();
 
+        //getters
         bool getComputerStatus();
-        void setComputerStatus(bool);
-
         bool getVirusStatus();
-        void setVirusStatus(bool);
-
         int getVPN();
-        void setVPN(int);
-
         int getProviderLevel();
-        void setProviderLevel(int);
-
-        int getDoge();
-        void setDoge(int);
-
-        int getCPU();
-        int getGPU();
-        int getPowerSupplyUnit();
-        int getComputerCase();
-        int getInternetCard();
-        int getKeyboardMouse();
-        int getPremadeComp();
+        int getCostCPU();
+        int getCostGPU();
+        int getCostPowerSupplyUnit();
+        int getCostComputerCase();
+        int getCostInternetCard();
+        int getCostKeyboardMouse();
+        int getCostPremadeComp();
         int getAntiVirusCost();
         int getVPNCost();
         int getPL2();
         int getPL3();
         int getPL4();
         int getPL5();
+        int getNumbCPU();
+        int getNumbGPU();
+        int getNumbPowerSupplyUnit();
+        int getNumbComputerCase();
+        int getNumbInternetCard();
+        int getNumbKeyboardMouse();
+        int getNumbPremadeComp();
+
+        //setters
+        void setProviderLevel(int);
+        void setVirusStatus(bool);
+        void setVPN(int);
+        void setComputerStatus(bool);
+        void setNumbCPU(int);
+        void setNumbGPU(int);
+        void setNumbPowerSupplyUnit(int);
+        void setNumbComputerCase(int);
+        void setNumbInternetCard(int);
+        void setNumbKeyboardMouse(int);
+        void setNumbPremadeComp(int);
 };
 
 #endif
