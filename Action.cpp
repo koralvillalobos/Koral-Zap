@@ -7,6 +7,7 @@
 #include "Hacker.h"
 #include "BB.h"
 #include "Map.h"
+#include "Action.h"
 #include <fstream>
 #include <iostream>
 #include <ctype.h>
@@ -24,9 +25,10 @@ Action::Action()
 {
 }
 
-string Action::choseRandomHacker()
-{
-}
+// string Action::choseRandomHacker()
+// {
+
+// }
 void Action::statusUpdate(Player &player)
 {
     cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
@@ -82,6 +84,7 @@ bool Action::fightHacker(Player &player, Hacker &hacker)
 
     if (result > 0) //if result is more than palyer wins
     {
+        player.sethackersKilled(player.gethackersKilled() + 1);
         player.setDogeCoin(player.getDogeCoin() + 50); //gives player 50 doge for win
         cout << "Win " << endl;
         cout << "+50 "
