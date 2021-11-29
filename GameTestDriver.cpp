@@ -46,9 +46,9 @@ int main()
 
     bb.gameStart(player);
 
-    
+    //need random seed
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 1; i <=5; i++)
     {
         server.setRoom(server.getRoom() + 1);
         cout << "You are in server room: " << server.getRoom() << endl;
@@ -108,7 +108,10 @@ int main()
                 }
                 cout << "Hackers killed: " << player.gethackersKilled() << endl;
                 if(player.gethackersKilled() == spawnNumb){
+                    
                     cout << "Now you need to move onto the next server room bc the number of hackers in this room has been defeated" << endl; //somehow right here the server room needs to change 
+                    i++;
+                    break;
                 }
             }
             if (map.isNPCLocation()) //Starts NPC Action
