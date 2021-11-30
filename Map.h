@@ -9,7 +9,6 @@
 #include <fstream>
 #include <iostream>
 #include <ctype.h>
-#include "Action.h"
 #include "Player.h"
 
 using namespace std;
@@ -61,6 +60,7 @@ public:
      bool isNPCLocation();
      bool isHackerLocation();
      bool isBestBuyOnMap();
+     void removeHacker(int, int);
 };
 
 #endif
