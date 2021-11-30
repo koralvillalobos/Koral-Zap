@@ -12,6 +12,8 @@
 #include "Player.h"
 #include "Hacker.h"
 #include "BB.h"
+#include <time.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -24,7 +26,7 @@ public:
 NPC();
 bool runNPCMenu(Player&, int, BB&);
 void addRandComputerPart(BB&);
-void subRandComputerPart(BB&);
+void subRandComputerPart(BB&, Player&);
 void completePuzzle(Player&, BB&);
 void takeYourChances(Player&, BB&);
 void puzzle1();
