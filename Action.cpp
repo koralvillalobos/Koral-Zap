@@ -49,12 +49,12 @@ void Action::displayHackerMenu()
     cout << "1. Fight the hacker" << endl;
     cout << "2. Forfeit the fight (lose all computer parts!)" << endl;
 }
-bool Action::executeHackerMenu(int option, Player &player, Hacker &hacker)
+bool Action::executeHackerMenu(int option, Player &player, Hacker &hacker,Map &map)
 {
     bool stop;
     if (option == 1) //Fight condition for player
     {
-        return fightHacker(player, hacker);
+        return fightHacker(player, hacker,map);
     }
     else if (option == 2) //Forfeit option for player
     {
@@ -66,7 +66,7 @@ bool Action::executeHackerMenu(int option, Player &player, Hacker &hacker)
         return false;
     }
 }
-bool Action::fightHacker(Player &player, Hacker &hacker)
+bool Action::fightHacker(Player &player, Hacker &hacker,Map &map)
 {
     int r1 = rand() % 6;
     int r2 = rand() % 6;
@@ -84,12 +84,19 @@ bool Action::fightHacker(Player &player, Hacker &hacker)
 
     if (result > 0) //if result is more than palyer wins
     {
+        int tempRow;
+        int tempCol;
+
         player.sethackersKilled(player.gethackersKilled() + 1);
         player.setDogeCoin(player.getDogeCoin() + 50); //gives player 50 doge for win
         cout << "Win " << endl;
         cout << "+50 "
              << "Doge: " << player.getDogeCoin() << endl;
         cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
+        tempRow = map.getPlayerRowPosition();
+        tempCol = map.getPlayerColPosition();
+        
+        map.removeHacker(tempRow, tempCol);
         return true;
     }
     else //if result is less than 0 or 0 palyer loses
