@@ -316,3 +316,4 @@ void NPC::puzzle5()
 {
     cout << "****MULTIPLE CHOICE****\nTo defeat a hacker you need to use a brute force attack on his account. To do this, you are using a text file that holds words, numbers and other potential password combinations. Sometimes you come up with new word combinations you would like to add to the list. Which of the following streams should you use to both read and write from this file?\n\nA) iofstream\nB) ofstream\nC) ifstream\nD) fstream" << endl;
 }
+//
