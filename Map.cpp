@@ -3,11 +3,7 @@
 // Recitations: 220 - Pragna Mandadi and 315 - Teo Pice-Broncucia
 // Project 3 - Map Implimentation
 
-#include "Player.h"
-#include "Hacker.h"
-#include "BB.h"
-#include "Server.h"
-#include "Action.h"
+#include "Map.h"
 
 using namespace std;
 
@@ -15,7 +11,6 @@ Map::Map()
 {
     resetMap();
 }
-
 // resets player position, count values, and initializes values in position arrays to -1
 void Map::resetMap()
 {
@@ -272,7 +267,7 @@ void Map::displayMoves()
 bool Map::executeMove(char move)
 {
     // if user inputs w, move up if it is an allowed move
-     //if this function executes first thing is to see if player has virus
+    //if this function executes first thing is to see if player has virus
 
     if (!(playerPosition[0] == 0) && (tolower(move) == 'w'))
     {
@@ -336,4 +331,14 @@ void Map::displayMap()
 bool Map::isBestBuyOnMap()
 {
     return best_buy_on_map;
+}
+void Map::removeHacker(int row, int col)
+{
+    hackerPositions[row][col];
+    for (int i=0;i<2;i++)
+    {
+        hackerPositions[i][0]=-1;
+        hackerPositions[i][1]=-1;
+    }
+    
 }
