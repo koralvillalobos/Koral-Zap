@@ -12,6 +12,8 @@
 #include "Player.h"
 #include "Hacker.h"
 #include "BB.h"
+#include "NPC.h"
+#include "Map.h"
 
 using namespace std;
 
@@ -29,11 +31,13 @@ public:
     string choseRandomHacker();
     void statusUpdate(Player &);
     void displayHackerMenu();
-    bool executeHackerMenu(int,Player&,Hacker&);
-    bool fightHacker(Player&,Hacker&);
+    bool executeHackerMenu(int,Player&,Hacker&,Map&);
+    bool fightHacker(Player&,Hacker&, Map&);
     bool forfeit(Player&);
     void virus(Player&);
     void useantiVirus(Player&);
+
+    void mainMenu(Player &player, BB &bb, NPC npc);
 
     void CompletePuzzle(string);
     string RockPaperScissors(int);
