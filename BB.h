@@ -10,6 +10,7 @@
 #include <iostream>
 #include "Player.h"
 #include <ctype.h>
+#include "Server.h"
 
 using namespace std; 
 
@@ -47,9 +48,10 @@ class BB{
         BB();
         BB(bool computer, bool antiVirus, int VPN, int providerLevel);
 
-        void gameStart(Player&);
+        void gameStart(Player&,Server&);
         void printBBMenu();
         void printStartMenu();
+        double findmultiplier(Server&);
 
         //getters
         bool getComputerStatus();
