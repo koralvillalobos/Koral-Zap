@@ -39,12 +39,13 @@ int main()
     bool quit = false; //if true stops game
 
     string playerName;
+    
     cout << "Please enter a player name: " << endl;
     cin >> playerName;
 
     cout << "WHERE IN THE CODE IS CARMEN SANDIEGO?\nWelcome, " << playerName << "! You have 200 dogecoins, 1 computer and 1 VPN. You will need to spend the rest of your money on the following items:\n- COMPUTER PARTS. If your computer breaks, you need 5 computer parts to make a new one.\n- ANTIVIRUS SOFTWARE. If your computer is infected with a virus, use the antivirus software to get rid of it.\n- VIRTUAL PRIVATE NETWORK (VPN). The more VPNs you have the harder it is for a hacker to infect your computer with a virus.\n- INTERNET PROVIDER. The better the internet provider, the more reliable your hacking will be.\nYou can spend all of your money here before you start your journey, or you can save some to spend on a different electronics site along the way. But beware, some of the\nwebsites online are shady, and they won’t always give you a fair price..." << endl;
 
-    bb.gameStart(player,server);
+    bb.gameStart(player,server,map);
 
     //need random seed
 
@@ -53,31 +54,23 @@ int main()
         server.setRoom(server.getRoom() + 1);
         cout << "You are in server room: " << server.getRoom() << endl;
 
-        int spawnNumb = rand() % 3;
-        for (int k = 0; k < spawnNumb; k++) //i = numb NPC
-        {
-            int NPCNumbRow = rand() % 5;
-            int NPCNumbCols = rand() % 9;
-            map.spawnNPC(NPCNumbRow, NPCNumbCols);
-        }
+        map.randomSpawnNPC(map);
+        map.randomSpawnHackers(map);
+        map.randomSpawnBB(map);
 
-        spawnNumb = rand() % 3;
-        for (int j = 0; j < spawnNumb; j++) // j = numb hackers
-        {
-            int hackerNumbRow = rand() % 5;
-            int hackerNumbCol = rand() % 9;
-            map.spawnHacker(hackerNumbRow, hackerNumbCol);
-        }
-        int BBNumbRow = rand() % 5;
-        int BBNumbCol = rand() % 9;
-
-        map.spawnBestBuy(BBNumbRow, BBNumbCol);
-
-        cout << "number hackers and NPC placed:" << spawnNumb << endl;
+        
 
         while (quit == false)
         {
-
+            //Option Quit
+            if (move == 'q')
+            {
+                quit = action.quitGame(move);
+                if(quit==true)//Option to quit game
+                {
+                    return 0;
+                }
+            }
             map.displayMap(); // pretty print map_data in terminal
             action.virus(player);
             cout << "Valid moves are: " << endl;
@@ -86,6 +79,12 @@ int main()
             cout << "Input a move: ";
             cin >> move;
             cout << endl;
+            
+            if(move == 'm'){
+                action.mainMenu(player, bb,npc);
+            }
+            
+
             map.executeMove(move); // move the player on map based on user input
 
             player.setDogeCoin(player.getDogeCoin() + 5);
@@ -100,10 +99,11 @@ int main()
             if (map.isBestBuyLocation()) //Best Buy
             {
                 cout << "You're in a Best Buy!" << endl;
-                bb.gameStart(player,server);
+                bb.gameStart(player,server,map);
             }
             if (map.isHackerLocation()) //Starts Hacker Action
             {
+                cout << "You just ran into " << hacker.pickHackerName(server.getRoom()) << "! Think you can beat this hacker’s skills?" << endl;
                 bool stop = false;
                 action.displayHackerMenu();
 
@@ -117,7 +117,7 @@ int main()
                     cout << endl;
                 }
                 cout << "Hackers killed: " << player.gethackersKilled() << endl;
-                if(player.gethackersKilled() == spawnNumb){
+                if(player.gethackersKilled() == map.getHackerCount()){
                     
                     cout << "Now you need to move onto the next server room bc the number of hackers in this room has been defeated" << endl; //somehow right here the server room needs to change 
                     i++;
@@ -135,13 +135,6 @@ int main()
                     cout << "2. Take Your Chances" << endl;
                     start = npc.runNPCMenu(player, option, bb);
                 }
-            }
-            
-
-            //Option Quit
-            if (move == 'q')
-            {
-                quit = action.quitGame(move); //Option to quit game
             }
         }
     }
