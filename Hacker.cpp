@@ -50,11 +50,13 @@ void Hacker::setLocation(int newRows, int newCols)
 }
 string Hacker::pickHackerName(int level)
 {
+    srand(time(NULL));
     string arr[4][5];
     ifstream file;
     string line = "";
-    string name="hackers.txt";
+    string name = "hackers.txt";
     string hackerName;
+    bool reFind = true;
 
     file.open(name);
 
@@ -79,24 +81,76 @@ string Hacker::pickHackerName(int level)
     }
     file.close();
 
-    int randRow = rand() % 5;
     int randCol = rand() % 4;
 
-    if(level == 1){
-        hackerName = arr[randCol][0];
-    }
-    else if(level == 2){
-        hackerName = arr[randCol][1];
-    }
-    else if(level == 3){
-        hackerName = arr[randCol][2];
-    }
-    else if(level == 4){
-        hackerName = arr[randCol][3];
-    }
-    else if (level == 5){
-        hackerName = arr[randCol][4];
-    }
+    do
+    {
+        if (level == 1)
+        {
+            if (hackerName == "q")
+            {
+                break;
+            }
+            else
+            {
+                reFind = false;
+                hackerName = arr[randCol][0];
+                arr[randCol][0] = "q";
+            }
+        }
+        else if (level == 2)
+        {
+            if (hackerName == "q")
+            {
+                break;
+            }
+            else
+            {
+                reFind = false;
+                hackerName = arr[randCol][1];
+                arr[randCol][1] = "q";
+            }
+        }
+        else if (level == 3)
+        {
+            if (hackerName == "q")
+            {
+                break;
+            }
+            else
+            {
+                reFind = false;
+                hackerName = arr[randCol][2];
+                arr[randCol][2] = "q";
+            }
+        }
+        else if (level == 4)
+        {
+            if (hackerName == "q")
+            {
+                break;
+            }
+            else
+            {
+                reFind = false;
+                hackerName = arr[randCol][3];
+                arr[randCol][3] = "q";
+            }
+        }
+        else if (level == 5)
+        {
+            if (hackerName == "q")
+            {
+                break;
+            }
+            else
+            {
+                reFind = false;
+                hackerName = arr[randCol][4];
+                arr[randCol][4] = "q";
+            }
+        }
+    } while (reFind == true);
 
     return hackerName;
     // for (int i = 0; i < 5; i++)
@@ -108,4 +162,3 @@ string Hacker::pickHackerName(int level)
     //     }
     // }
 }
-
