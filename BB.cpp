@@ -7,16 +7,6 @@
 
 using namespace std;
 
-string makeLower(string name){
-
-    for(int i = 0; i < name.length(); i++){ //iterate through the string
-        if(name[i] >= 65 && name[i] <= 90){ //if uppercase found
-            name[i] += 32; //make lower
-        }
-    }
-    return name;
-}
-
 BB::BB() //default constructor
 {
     computer = false;
@@ -29,7 +19,7 @@ BB::BB() //default constructor
     numbComputerCase = 0;
     numbInternetCard = 0;
     numbKeyboardMouse = 0;
-    numbPremadeComp = 1;
+    numbPremadeComp = 0;
 }
 
 BB::BB(bool newComputer, bool newAntiVirus, int newVPN, int newproviderLevel) //parameterized constructor
@@ -46,9 +36,33 @@ void ::BB::printBBMenu()
 }
 void ::BB::printStartMenu()
 {
-    cout<<"- COMPUTER PARTS. If your computer breaks, you need 5\ncomputer parts to make a new one.\n- ANTIVIRUS SOFTWARE. If your computer is infected with a\nvirus, use the antivirus software to get rid of it.\n- VIRTUAL PRIVATE NETWORK (VPN). The more VPNs you have\nthe harder it is for a hacker to infect your computer with\na virus.\n- INTERNET PROVIDER. The better the internet provider, the\nmore reliable your hacking will be.\nYou can spend all of your money here before you start your\njourney, or you can save some to spend on a different\nelectronics site along the way. But beware, some of the\nwebsites online are shady, and they won’t always give you a\nfair price..." <<endl;
+    cout << "- COMPUTER PARTS. If your computer breaks, you need 5\ncomputer parts to make a new one.\n- ANTIVIRUS SOFTWARE. If your computer is infected with a\nvirus, use the antivirus software to get rid of it.\n- VIRTUAL PRIVATE NETWORK (VPN). The more VPNs you have\nthe harder it is for a hacker to infect your computer with\na virus.\n- INTERNET PROVIDER. The better the internet provider, the\nmore reliable your hacking will be.\nYou can spend all of your money here before you start your\njourney, or you can save some to spend on a different\nelectronics site along the way. But beware, some of the\nwebsites online are shady, and they won’t always give you a\nfair price..." << endl;
 }
 
+double BB::findmultiplier(Server &server)
+{
+    int FUCKINGCOCKMONEY = server.getRoom();
+
+    switch (FUCKINGCOCKMONEY)
+    {
+    case 0:
+    case 1:
+        return 1;
+        break;
+    case 2:
+        return 1.1;
+        break;
+    case 3:
+        return 1.2;
+        break;
+    case 4:
+        return 1.25;
+        break;
+    case 5:
+        return 1.3;
+        break;
+    }
+}
 
 //Getters
 bool ::BB::getComputerStatus()
@@ -148,35 +162,34 @@ int ::BB::getNumbPremadeComp()
     return numbPremadeComp;
 }
 
-
 //Setters
 void ::BB::setNumbCPU(int newNumbCPU)
 {
-    numbCPU=newNumbCPU;
+    numbCPU = newNumbCPU;
 }
 void ::BB::setNumbGPU(int newNumbGPU)
 {
-    numbGPU=newNumbGPU;
+    numbGPU = newNumbGPU;
 }
 void ::BB::setNumbPowerSupplyUnit(int newNumbPowerSupplyUnit)
 {
-    numbPowerSupplyUnit=newNumbPowerSupplyUnit;
+    numbPowerSupplyUnit = newNumbPowerSupplyUnit;
 }
 void ::BB::setNumbComputerCase(int newNumbComputerCase)
 {
-    numbComputerCase=newNumbComputerCase;
+    numbComputerCase = newNumbComputerCase;
 }
 void ::BB::setNumbInternetCard(int newNumbInternetCard)
 {
-    numbInternetCard=newNumbInternetCard;
+    numbInternetCard = newNumbInternetCard;
 }
 void ::BB::setNumbKeyboardMouse(int newNumbKeyboardMouse)
 {
-    numbKeyboardMouse=newNumbKeyboardMouse;
+    numbKeyboardMouse = newNumbKeyboardMouse;
 }
 void ::BB::setNumbPremadeComp(int newNumbPremadeComp)
 {
-    numbPremadeComp=newNumbPremadeComp;
+    numbPremadeComp = newNumbPremadeComp;
 }
 void ::BB::setComputerStatus(bool newComputer)
 {
@@ -194,7 +207,8 @@ void ::BB::setProviderLevel(int newProviderLevel)
 {
     providerLevel = newProviderLevel;
 }
-void ::BB::gameStart(Player &player){
+void ::BB::gameStart(Player &player, Server &server)
+{
     int bbOption;
     char purchaseAns;
 
@@ -218,13 +232,13 @@ void ::BB::gameStart(Player &player){
             int computerPartItem;
             i = 0;
             cout << "Best Buy recommends that the player should purchase at least 1 of each computer part in case your main computer breaks.\nYou can have a maximum of 3 of each computer part and 1 extra premade computer. These are the different parts:" << endl;
-            cout << "▪ A CPU costs 10 Dogecoins" << endl;
-            cout << "▪ A GPU costs 20 Dogecoins" << endl;
-            cout << "▪ A Power Supply Unit costs 5 Dogecoins" << endl;
-            cout <<"▪ A Computer Case costs 15 Dogecoins"<<endl;
-            cout << "▪ An Internet Card costs 5 Dogecoins" << endl;
-            cout << "▪ A Keyboard and Mouse costs 10 Dogecoins" << endl;
-            cout << "▪ A Premade Computer costs 100 Dogecoins" << endl;
+            cout << "▪ A CPU costs " << (10 * findmultiplier(server)) << " Dogecoins" << endl;
+            cout << "▪ A GPU costs " << (20 * findmultiplier(server)) << " Dogecoins" << endl;
+            cout << "▪ A Power Supply Unit costs " << (5 * findmultiplier(server)) << " Dogecoins" << endl;
+            cout << "▪ A Computer Case costs " << (15 * findmultiplier(server)) << " Dogecoins" << endl;
+            cout << "▪ An Internet Card costs " << (5 * findmultiplier(server)) << " Dogecoins" << endl;
+            cout << "▪ A Keyboard and Mouse costs " << (10 * findmultiplier(server)) << " Dogecoins" << endl;
+            cout << "▪ A Premade Computer costs " << (5 * findmultiplier(server)) << " Dogecoins" << endl;
             cout << "How many parts do you wish to purchase?" << endl;
             cin >> computerPartChoice;
 
@@ -233,54 +247,53 @@ void ::BB::gameStart(Player &player){
                 cout << "Choose what you would like to purchase: " << endl;
                 cout << "1. CPU\n2. GPU\n3. Power Supply Unit\n4. Computer Case\n5. Internet card\n6. Keyboard and mouse\n7. Premade computer" << endl;
                 cin >> computerPartItem;
-                
 
                 switch (computerPartItem)
                 {
                 case 1:
-                    setNumbCPU(getNumbCPU()+1);
-                    player.setDogeCoin(player.getDogeCoin() - 10);
+                    setNumbCPU(getNumbCPU() + 1);
+                    player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 10));
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
                     break;
 
                 case 2:
-                    setNumbGPU(getNumbGPU()+1);
-                    player.setDogeCoin(player.getDogeCoin() - 20);
+                    setNumbGPU(getNumbGPU() + 1);
+                    player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 20));
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
                     break;
 
                 case 3:
-                    setNumbPowerSupplyUnit(getNumbPowerSupplyUnit()+1);
-                    player.setDogeCoin(player.getDogeCoin() - 5);
+                    setNumbPowerSupplyUnit(getNumbPowerSupplyUnit() + 1);
+                    player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 5));
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
                     break;
                 case 4:
-                    setNumbComputerCase(getNumbComputerCase()+1);
-                    player.setDogeCoin(player.getDogeCoin() - 15);
+                    setNumbComputerCase(getNumbComputerCase() + 1);
+                    player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 15));
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
                     break;
 
                 case 5:
-                    setNumbInternetCard(getNumbInternetCard()+1);
-                    player.setDogeCoin(player.getDogeCoin() - 5);
+                    setNumbInternetCard(getNumbInternetCard() + 1);
+                    player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 5));
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
                     break;
 
                 case 6:
-                    setNumbKeyboardMouse(getCostKeyboardMouse()+1);
-                    player.setDogeCoin(player.getDogeCoin() - 10);
+                    setNumbKeyboardMouse(getCostKeyboardMouse() + 1);
+                    player.setDogeCoin(player.getDogeCoin() - (10 * findmultiplier(server)));
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
                     break;
 
                 case 7:
-                    setNumbPremadeComp(getNumbPremadeComp()+1);
-                    player.setDogeCoin(player.getDogeCoin() - 100);
+                    setNumbPremadeComp(getNumbPremadeComp() + 1);
+                    player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 100));
                     cout << "DogeCoin: " << player.getDogeCoin() << endl;
                     i++;
                     break;
@@ -289,17 +302,17 @@ void ::BB::gameStart(Player &player){
                     cout << "Invalid choice. Try again." << endl;
                     break;
                 }
-            } while( i != computerPartChoice);
+            } while (i != computerPartChoice);
             break;
 
         case 2:
             int antivirusUSBChoice;
-            cout << "One USB stick of antivirus software costs 10 Dogecoins and will give you a one-time use to get rid of any viruses on your computer." << endl;
+            cout << "One USB stick of antivirus software costs " << findmultiplier(server) * 10 << " Dogecoins and will give you a one-time use to get rid of any viruses on your computer." << endl;
 
             cout << "How many antivirus USB sticks would you like to purchase?" << endl;
             cin >> antivirusUSBChoice;
 
-            player.setDogeCoin(player.getDogeCoin() - 10 * (antivirusUSBChoice));
+            player.setDogeCoin(player.getDogeCoin() - ((findmultiplier(server) * 10) * (antivirusUSBChoice)));
             player.setantiVirusUSBcount(player.getantiVirusUSBcount() + antivirusUSBChoice);
             cout << "DogeCoin: " << player.getDogeCoin() << endl;
             cout << "Antivirus: " << player.getantiVirusUSBcount();
@@ -308,12 +321,12 @@ void ::BB::gameStart(Player &player){
 
         case 3:
             int VPNChoice;
-            cout << "A VPN costs 20 Dogecoins each. VPNs reduce your chances of getting hacked by preventing hackers from tracking down your main computer. The increase in security maxes out at 2 VPNs" << endl;
+            cout << "A VPN costs " << (20 * findmultiplier(server)) << " Dogecoins each. VPNs reduce your chances of getting hacked by preventing hackers from tracking down your main computer. The increase in security maxes out at 2 VPNs" << endl;
 
             cout << "How many VPNs would you like to purchase?" << endl;
             cin >> VPNChoice;
 
-            player.setDogeCoin(player.getDogeCoin() - 20 * (VPNChoice));
+            player.setDogeCoin(player.getDogeCoin() - ((20 * findmultiplier(server))) * (VPNChoice));
             player.setVPNsOwned(player.getVPNsOwned() + VPNChoice);
             cout << "DogeCoin: " << player.getDogeCoin() << endl;
             cout << "VPN: " << player.getVPNsOwned();
@@ -323,14 +336,13 @@ void ::BB::gameStart(Player &player){
         case 4:
             int internetLevelChoice;
             i = 0;
-            cout << "Internet provider level 2 costs 10 Dogecoins\nInternet provider level 3 costs 25 Dogecoins\nInternet provider level 4 costs 40 Dogecoins\nInternet provider level 5 costs 50 Dogecoins\n Also keep in mind you can upgrade your internet provider at a later time if you so desire" << endl;
+            cout << "Internet provider level 2 costs " << (findmultiplier(server) * 10) << " Dogecoins\nInternet provider level 3 costs" << findmultiplier(server) * 25 << "Dogecoins\nInternet provider level 4 costs" << (findmultiplier(server) * 40) << " Dogecoins\nInternet provider level 5 costs " << (50 * findmultiplier(server)) << " Dogecoins\n Also keep in mind you can upgrade your internet provider at a later time if you so desire" << endl;
             cout << "Choose what you would like to purchase: " << endl;
             cout << "2. Level 2\n 3. Level 3\n4. Level 4\n5. Level 5" << endl;
             cin >> internetLevelChoice;
 
             do
             {
-
                 switch (internetLevelChoice)
                 {
                 case 2:
@@ -372,8 +384,8 @@ void ::BB::gameStart(Player &player){
             break;
         }
     }
-    else{
+    else
+    {
         return;
     }
-
 }
