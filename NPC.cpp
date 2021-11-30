@@ -9,10 +9,13 @@ NPC::NPC()
 bool NPC::runNPCMenu(Player &player, int option,BB &bb)
 {
     cin >> option;
-    if (option == 1)
+    if (option == 1 && player.getcompPartsAvailable() > 0)
     {
         completePuzzle(player, bb);
         return true;
+    }
+    else if(player.getcompPartsAvailable() == 0){
+        cout << "You have no computer parts & cannot complete a puzzle!" << endl;
     }
     else if (option == 2)
     {
@@ -68,12 +71,16 @@ void NPC::addRandComputerPart(BB &bb)
         break;
     }
 }
-void NPC::subRandComputerPart(BB &bb)
+void NPC::subRandComputerPart(BB &bb, Player &player)
 {
     bool run = false;
     while (run == false)
     {
         int num = rand() % 7;
+
+        
+
+    if(player.getcompPartsAvailable() > 0){
         switch (num)
         {
         case 0:
@@ -86,7 +93,7 @@ void NPC::subRandComputerPart(BB &bb)
             }
             else
             {
-                continue;
+                break;
             }
             break;
         case 1:
@@ -99,7 +106,7 @@ void NPC::subRandComputerPart(BB &bb)
             }
             else
             {
-                continue;
+                break;
             }
             break;
         case 2:
@@ -112,7 +119,7 @@ void NPC::subRandComputerPart(BB &bb)
             }
             else
             {
-                continue;
+                break;
             }
             break;
         case 3:
@@ -125,7 +132,7 @@ void NPC::subRandComputerPart(BB &bb)
             }
             else
             {
-                continue;
+                break;
             }
             break;
         case 4:
@@ -138,7 +145,7 @@ void NPC::subRandComputerPart(BB &bb)
             }
             else
             {
-                continue;
+                break;
             }
             break;
         case 5:
@@ -151,7 +158,7 @@ void NPC::subRandComputerPart(BB &bb)
             }
             else
             {
-                continue;
+                break;
             }
             break;
         case 6:
@@ -164,11 +171,14 @@ void NPC::subRandComputerPart(BB &bb)
             }
             else
             {
-                continue;
+                break;
             }
             break;
         }
     }
+    return;
+    }
+
 }
 void NPC::completePuzzle(Player &player, BB &bb)
 {
@@ -193,7 +203,8 @@ void NPC::completePuzzle(Player &player, BB &bb)
         else
         {
             cout << "You are wrong you suck!" << endl;
-            subRandComputerPart(bb);
+            subRandComputerPart(bb, player);
+            
             return;
         }
     }
@@ -212,7 +223,7 @@ void NPC::completePuzzle(Player &player, BB &bb)
         else
         {
             cout << "You are wrong you suck!" << endl;
-            subRandComputerPart(bb);
+            subRandComputerPart(bb,player);
             return;
         }
     }
@@ -231,7 +242,7 @@ void NPC::completePuzzle(Player &player, BB &bb)
         else
         {
             cout << "You are wrong you suck!" << endl;
-            subRandComputerPart(bb);
+            subRandComputerPart(bb, player);
             return;
         }
     }
@@ -250,7 +261,7 @@ void NPC::completePuzzle(Player &player, BB &bb)
         else
         {
             cout << "You are wrong you suck!" << endl;
-            subRandComputerPart(bb);
+            subRandComputerPart(bb, player);
             return;
         }
     }
@@ -269,7 +280,7 @@ void NPC::completePuzzle(Player &player, BB &bb)
         else
         {
             cout << "You are wrong you suck!" << endl;
-            subRandComputerPart(bb);
+            subRandComputerPart(bb,player);
             return;
         }
     }
@@ -291,7 +302,7 @@ void NPC::takeYourChances(Player &player, BB &bb)
     if (rand3 == 2) //bad outcome
     {
         cout << "The outcome was bad the NPC steals one of your" << endl;
-        subRandComputerPart(bb);
+        subRandComputerPart(bb,player);
     }
 }
 void NPC::puzzle1()
@@ -316,4 +327,3 @@ void NPC::puzzle5()
 {
     cout << "****MULTIPLE CHOICE****\nTo defeat a hacker you need to use a brute force attack on his account. To do this, you are using a text file that holds words, numbers and other potential password combinations. Sometimes you come up with new word combinations you would like to add to the list. Which of the following streams should you use to both read and write from this file?\n\nA) iofstream\nB) ofstream\nC) ifstream\nD) fstream" << endl;
 }
-//
