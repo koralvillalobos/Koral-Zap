@@ -239,6 +239,8 @@ bool Map::isHackerLocation()
  */
 void Map::displayMoves()
 {
+
+    
     if (!(playerPosition[0] == 0))
     {
         cout << "w (Up)" << endl;
@@ -255,7 +257,12 @@ void Map::displayMoves()
     {
         cout << "d (Right)" << endl;
     }
+
     cout << "q (Quit)" << endl;
+
+    cout << "m (Menu)" << endl;
+    
+   
 }
 
 /*
@@ -332,13 +339,46 @@ bool Map::isBestBuyOnMap()
 {
     return best_buy_on_map;
 }
-void Map::removeHacker(int row, int col)
+void Map::removeHacker()
 {
-    hackerPositions[row][col];
-    for (int i=0;i<2;i++)
+
+    for (int i = 0; i < 2; i++)
     {
-        hackerPositions[i][0]=-1;
-        hackerPositions[i][1]=-1;
+        hackerPositions[i][0] = -1;
+        hackerPositions[i][1] = -1;
     }
-    
+}
+
+void Map::randomSpawnBB(Map &map)
+{
+    int BBNumbRow = rand() % 5;
+    int BBNumbCol = rand() % 9;
+
+    map.spawnBestBuy(BBNumbRow, BBNumbCol);
+}
+
+void Map::randomSpawnHackers(Map &map)
+{
+    int spawnNumb = rand() % 3;
+    for (int j = 0; j < spawnNumb; j++) // j = numb hackers
+    {
+        int hackerNumbRow = rand() % 5;
+        int hackerNumbCol = rand() % 9;
+        map.spawnHacker(hackerNumbRow, hackerNumbCol);
+    }
+    cout << "number hackers placed:" << spawnNumb << endl;
+}
+
+void Map::randomSpawnNPC(Map &map)
+{
+    int spawnNumb = rand() % 3;
+    setHackerCount(spawnNumb);
+
+    for (int k = 0; k < spawnNumb; k++) //i = numb NPC
+    {
+        int NPCNumbRow = rand() % 5;
+        int NPCNumbCols = rand() % 9;
+        map.spawnNPC(NPCNumbRow, NPCNumbCols);
+    }
+    cout << "number NPC placed:" << spawnNumb << endl;
 }
