@@ -7,6 +7,7 @@
 #include "Hacker.h"
 #include "BB.h"
 #include "Map.h"
+#include "NPC.h"
 #include "Action.h"
 #include <fstream>
 #include <iostream>
@@ -14,6 +15,7 @@
 #include <iomanip>
 #include <cmath>
 #include <string>
+#include <stdlib.h>
 #include <fstream>
 #include <vector>
 
@@ -25,10 +27,6 @@ Action::Action()
 {
 }
 
-// string Action::choseRandomHacker()
-// {
-
-// }
 void Action::statusUpdate(Player &player)
 {
     cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
@@ -44,17 +42,16 @@ void Action::statusUpdate(Player &player)
 }
 void Action::displayHackerMenu()
 {
-    cout << "You've encountered a Hacker!" << endl;
     cout << "Valid moves are: " << endl;
     cout << "1. Fight the hacker" << endl;
     cout << "2. Forfeit the fight (lose all computer parts!)" << endl;
 }
-bool Action::executeHackerMenu(int option, Player &player, Hacker &hacker,Map &map)
+bool Action::executeHackerMenu(int option, Player &player, Hacker &hacker, Map &map)
 {
     bool stop;
     if (option == 1) //Fight condition for player
     {
-        return fightHacker(player, hacker,map);
+        return fightHacker(player, hacker, map);
     }
     else if (option == 2) //Forfeit option for player
     {
@@ -66,7 +63,7 @@ bool Action::executeHackerMenu(int option, Player &player, Hacker &hacker,Map &m
         return false;
     }
 }
-bool Action::fightHacker(Player &player, Hacker &hacker,Map &map)
+bool Action::fightHacker(Player &player, Hacker &hacker, Map &map)
 {
     int r1 = rand() % 6;
     int r2 = rand() % 6;
@@ -95,8 +92,8 @@ bool Action::fightHacker(Player &player, Hacker &hacker,Map &map)
         cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
         tempRow = map.getPlayerRowPosition();
         tempCol = map.getPlayerColPosition();
-        
-        map.removeHacker(tempRow, tempCol);
+
+        map.removeHacker();
         return true;
     }
     else //if result is less than 0 or 0 palyer loses
@@ -300,6 +297,7 @@ bool Action::quitGame(char move)
         cout << "n (No)" << endl;
         cout << endl;
         cin >> quit;
+
         quit = tolower(quit);
         if (quit == 'y') //if yes return true
         {
@@ -317,4 +315,214 @@ bool Action::quitGame(char move)
             cout << endl;
         }
     }
+}
+
+void Action::mainMenu(Player &player, BB &bb, NPC npc)
+{
+    int choice;
+
+    int count = 0;
+    int puzzorgame;
+    int randPuzz = rand() % 5;
+    int RPS;
+
+    int compparttorepair;
+
+    do
+    {
+        cout << "---MENU---" << endl;
+        cout << "1. Status Update\n2. Repair your Computer\n3. Use your antivirus software\n4. Browse StackOverflow\n5. Quit" << endl;
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            statusUpdate(player);
+            break;
+
+        case 2:
+            do
+            {
+                if (player.getnumbVirus() > 0)
+                {
+                    cout << "You cannot repair your computer because you have " << player.getnumbVirus() << " viruses :(" << endl;
+                }
+                else if (player.getcompPartsAvailable() > 0 && player.getnumbVirus() == 0)
+                {
+
+                    cout << "You have " << player.getcompPartsAvailable() << " computer part(s)! You can select up to 5 parts to repair. These include: " << endl;
+                    cout << "1.CPU: " << bb.getNumbCPU() << endl
+                         << "2.GPU: " << bb.getNumbGPU() << endl
+                         << "3.Power Supply Unit: " << bb.getNumbPowerSupplyUnit() << endl
+                         << "4.Computer Case: " << bb.getNumbComputerCase() << endl
+                         << "5.Internet Card: " << bb.getNumbInternetCard() << endl
+                         << "6.Keyboard and Mouse: " << bb.getNumbKeyboardMouse() << endl
+                         << "7.DONE REPAIRING" << endl
+                         << "Enter the number of the computer part you would like to use or 7 to finish:" << endl;
+
+                    cin >> compparttorepair;
+
+                    switch (compparttorepair)
+                    {
+                    case 1:
+                        if (bb.getNumbCPU() > 0)
+                        {
+                            bb.setNumbCPU(bb.getNumbCPU() - 1);
+                            count++;
+                        }
+                        else
+                        {
+                            cout << "No CPU to repair with" << endl;
+                        }
+
+                        break;
+                    case 2:
+                        if (bb.getNumbGPU() > 0)
+                        {
+                            bb.setNumbGPU(bb.getNumbGPU() - 1);
+                            count++;
+                        }
+                        else
+                        {
+                            cout << "No gpu to repair with" << endl;
+                        }
+
+                        break;
+                    case 3:
+                        if (bb.getNumbPowerSupplyUnit() > 0)
+                        {
+                            bb.setNumbPowerSupplyUnit(bb.getNumbPowerSupplyUnit() - 1);
+                            count++;
+                        }
+                        else
+                        {
+                            cout << "no power supply unit to repair with" << endl;
+                        }
+
+                        break;
+                    case 4:
+                        if (bb.getNumbComputerCase() > 0)
+                        {
+                            bb.setNumbComputerCase(bb.getNumbComputerCase() - 1);
+                            count++;
+                        }
+                        else
+                        {
+                            cout << "no computer case to repair with" << endl;
+                        }
+
+                        break;
+                    case 5:
+                        if (bb.getNumbInternetCard() > 0)
+                        {
+                            bb.setNumbInternetCard(bb.getNumbInternetCard() - 1);
+                            count++;
+                        }
+                        else
+                        {
+                            cout << "no internet card to repair with" << endl;
+                        }
+                        break;
+                    case 6:
+                        if (bb.getNumbKeyboardMouse() > 0)
+                        {
+                            bb.setNumbKeyboardMouse(bb.getNumbKeyboardMouse() - 1);
+                            count++;
+                        }
+                        else
+                        {
+                            cout << "no keyboard /mouse to repair with" << endl;
+                        }
+
+                        break;
+                    case 7:
+                        cout << "GOODBYE!" << endl;
+                        break;
+
+                    default:
+                        cout << "invalid option" << endl;
+                    }
+                }
+                if (count == 5)
+                {
+                    break;
+                }
+            } while (compparttorepair != 7);
+
+            switch (count)
+            {
+            case 1:
+                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 20);
+                cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
+                break;
+
+            case 2:
+                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 40);
+                cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
+                break;
+
+            case 3:
+                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 60);
+                cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
+                break;
+
+            case 4:
+                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 80);
+                cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
+                break;
+
+            case 5:
+                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 100);
+                cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
+                break;
+            }
+            break;
+
+        case 3:
+            if (player.getantiVirusUSBcount() > 0 && player.getnumbVirus() > 0)
+            {
+                player.setantiVirusUSBcount(player.getantiVirusUSBcount() - 1);
+                player.setnumbVirus(0);
+                cout << "You have used one stick of USB antivirus software to get ridof all viruses on your computer!" << endl;
+            }
+            else if (player.getnumbVirus() == 0)
+            {
+                cout << "You have no viruses" << endl;
+            }
+            else if (player.getantiVirusUSBcount() == 0)
+            {
+                cout << "You have no antivirus USB sticks to use :(" << endl;
+            }
+            break;
+
+        case 4:
+            cout << "Would you like to solve a puzzel(1) or attempt a game(2)?" << endl;
+            cin >> puzzorgame;
+
+            switch (puzzorgame)
+            {
+            case 1:
+                npc.completePuzzle(player, bb);
+                break;
+
+            case 2:
+                cout << "ROCK PAPER SCISSORS: " << endl;
+                cout << "1.Rock\n2.Paper\n3.Scissors" << endl;
+                cin >> RPS;
+                RockPaperScissors(RPS);
+                break;
+
+            default:
+                cout << "Invalid choice." << endl;
+                break;
+            }
+        case 5:
+            cout << "You chose to quit the menu! GOODBYE!" << endl;
+            break;
+
+        default:
+            cout << "Invalid option" << endl;
+            break;
+        }
+    } while (choice != 5);
 }
