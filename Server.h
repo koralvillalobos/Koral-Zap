@@ -22,7 +22,7 @@ class Server{
     private:
         int room;
         int hackersDefeated;
-        Map maps[5];
+        Map maps;
 
         
     public:
@@ -33,7 +33,11 @@ class Server{
         int getHackerDefeatCount();
         void setHackerDefeatCount(int);
 
+        
+
         void printMenu();
+
+
 
 };
 
