@@ -1,41 +1,72 @@
 // CSCI1300 Fall 2021
 // Authors: Zaphod Schmidt and Koral Villlalobos
 // Recitations: 220 - Pragna Mandadi and 315 - Teo Pice-Broncucia
-// Project 3 - Hacker Class
+// Project 3 - Map Class
 
-#ifndef Hacker_H
-#define Hacker_H
+#ifndef MAP_H
+#define MAP_H
 
 #include <fstream>
 #include <iostream>
 #include <ctype.h>
-#include <iomanip>
-#include <cmath>
-#include <string>
-#include <fstream>
+#include "Player.h"
 
 using namespace std;
 
-class Hacker
+class Map
 {
 private:
-    int challegeLevel;
-    string hackerName;
-    int rows;
-    int cols;
+     static const int num_rows = 5;
+     static const int num_cols = 9;
+     static const int num_npcs = 3;
+     static const int num_hackers = 3;
+
+     int playerPosition[2];
+     int bestBuyPosition[2];
+     int npcPositions[num_npcs][2];
+     int hackerPositions[num_hackers][2];
+     char mapData[num_rows][num_cols];
+
+     int npc_count;
+     int hacker_count;
+     bool best_buy_on_map;
 
 public:
-    Hacker();
-    string getHacker(); //name
-    void setHacker(string);
+     Map();
 
-    int getChallegeLevel();
-    void setChallegeLevel(int);
+     void resetMap();
 
-    int getLocationRows();
-    int getLocationCols();
-    void setLocation(int, int);
-    void pickHackerName(int);
+     // getters
+     int getPlayerRowPosition();
+     int getPlayerColPosition();
+     int getNPCCount();
+     int getHackerCount();
+
+     // setters
+     void setPlayerRowPosition(int);
+     void setPlayerColPosition(int);
+     void setNPCCount(int);
+     void setHackerCount(int);
+
+     bool spawnNPC(int, int);
+     bool spawnBestBuy(int, int);
+     bool spawnHacker(int, int);
+
+     void displayMap();
+     void displayMoves();
+     bool executeMove(char);
+
+     bool isBestBuyLocation();
+     bool isNPCLocation();
+     bool isHackerLocation();
+     bool isBestBuyOnMap();
+     void removeHacker();
+
+
+
+     void randomSpawnHackers(Map&);
+     void randomSpawnNPC(Map&);
+     void randomSpawnBB(Map&);
 };
 
 #endif
