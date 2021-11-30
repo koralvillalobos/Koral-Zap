@@ -41,6 +41,7 @@ void ::BB::printStartMenu()
 
 double BB::findmultiplier(Server &server)
 {
+
     int FUCKINGCOCKMONEY = server.getRoom();
 
     switch (FUCKINGCOCKMONEY)
@@ -207,7 +208,7 @@ void ::BB::setProviderLevel(int newProviderLevel)
 {
     providerLevel = newProviderLevel;
 }
-void ::BB::gameStart(Player &player, Server &server)
+void ::BB::gameStart(Player &player, Server &server, Map &map)
 {
     int bbOption;
     char purchaseAns;
@@ -218,174 +219,239 @@ void ::BB::gameStart(Player &player, Server &server)
     cin >> purchaseAns;
 
     int i;
-    if (purchaseAns == 'y')
+    if (purchaseAns == 'y' && player.getDogeCoin() > 0)
     {
-        cout << "---Menu---" << endl;
-        cout << "1. Computer Parts\n2. Antivirus software\n3. Virtual Private Network (VPN)\n4. Internet Provider" << endl;
-        cout << "Please input what you would like to buy." << endl;
-        cin >> bbOption;
 
-        switch (bbOption)
+        do
         {
-        case 1:
-            int computerPartChoice;
-            int computerPartItem;
-            i = 0;
-            cout << "Best Buy recommends that the player should purchase at least 1 of each computer part in case your main computer breaks.\nYou can have a maximum of 3 of each computer part and 1 extra premade computer. These are the different parts:" << endl;
-            cout << "▪ A CPU costs " << (10 * findmultiplier(server)) << " Dogecoins" << endl;
-            cout << "▪ A GPU costs " << (20 * findmultiplier(server)) << " Dogecoins" << endl;
-            cout << "▪ A Power Supply Unit costs " << (5 * findmultiplier(server)) << " Dogecoins" << endl;
-            cout << "▪ A Computer Case costs " << (15 * findmultiplier(server)) << " Dogecoins" << endl;
-            cout << "▪ An Internet Card costs " << (5 * findmultiplier(server)) << " Dogecoins" << endl;
-            cout << "▪ A Keyboard and Mouse costs " << (10 * findmultiplier(server)) << " Dogecoins" << endl;
-            cout << "▪ A Premade Computer costs " << (5 * findmultiplier(server)) << " Dogecoins" << endl;
-            cout << "How many parts do you wish to purchase?" << endl;
-            cin >> computerPartChoice;
-
-            do
+            cout << "---Menu---" << endl;
+            cout << "1. Computer Parts\n2. Antivirus software\n3. Virtual Private Network (VPN)\n4. Internet Provider\n5. DONE PURCHASING" << endl;
+            cout << "Please input what you would like to buy." << endl;
+            cin >> bbOption;
+            switch (bbOption)
             {
+            case 1:
+                int computerPartChoice;
+                int computerPartItem;
+                i = 0;
+                cout << "Best Buy recommends that the player should purchase at least 1 of each computer part in case your main computer breaks.\nYou can have a maximum of 3 of each computer part and 1 extra premade computer. These are the different parts:" << endl;
+                cout << "▪ A CPU costs " << (10 * findmultiplier(server)) << " Dogecoins" << endl;
+                cout << "▪ A GPU costs " << (20 * findmultiplier(server)) << " Dogecoins" << endl;
+                cout << "▪ A Power Supply Unit costs " << (5 * findmultiplier(server)) << " Dogecoins" << endl;
+                cout << "▪ A Computer Case costs " << (15 * findmultiplier(server)) << " Dogecoins" << endl;
+                cout << "▪ An Internet Card costs " << (5 * findmultiplier(server)) << " Dogecoins" << endl;
+                cout << "▪ A Keyboard and Mouse costs " << (10 * findmultiplier(server)) << " Dogecoins" << endl;
+                cout << "▪ A Premade Computer costs " << (5 * findmultiplier(server)) << " Dogecoins" << endl;
+                cout << "How many parts do you wish to purchase?" << endl;
+                cin >> computerPartChoice;
+
+                do
+                {
+                    cout << "Choose what you would like to purchase: " << endl;
+                    cout << "1. CPU\n2. GPU\n3. Power Supply Unit\n4. Computer Case\n5. Internet card\n6. Keyboard and mouse\n7. Premade computer" << endl;
+                    cin >> computerPartItem;
+
+                    switch (computerPartItem)
+                    {
+                    case 1:
+                        if (player.getDogeCoin() >= (findmultiplier(server) * 10))
+                        {
+                            setNumbCPU(getNumbCPU() + 1);
+                            player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 10));
+                            cout << "DogeCoin: " << player.getDogeCoin() << endl;
+                            i++;
+                        }
+                        else
+                        {
+                            cout << "Poor ass mf you do not have enough doge" << endl;
+                        }
+
+                        break;
+
+                    case 2:
+                        if (player.getDogeCoin() >= (findmultiplier(server) * 20))
+                        {
+                            setNumbGPU(getNumbGPU() + 1);
+                            player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 20));
+                            cout << "DogeCoin: " << player.getDogeCoin() << endl;
+                            i++;
+                        }
+                        else
+                        {
+                            cout << "Poor ass mf you do not have enough doge" << endl;
+                        }
+                        break;
+
+                    case 3:
+                        if (player.getDogeCoin() >= (findmultiplier(server) * 5))
+                        {
+                            setNumbPowerSupplyUnit(getNumbPowerSupplyUnit() + 1);
+                            player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 5));
+                            cout << "DogeCoin: " << player.getDogeCoin() << endl;
+                            i++;
+                        }
+                        else
+                        {
+                            cout << "Poor ass mf you do not have enough doge" << endl;
+                        }
+
+                        break;
+                    case 4:
+                        if (player.getDogeCoin() >= (findmultiplier(server) * 15))
+                        {
+                            setNumbComputerCase(getNumbComputerCase() + 1);
+                            player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 15));
+                            cout << "DogeCoin: " << player.getDogeCoin() << endl;
+                            i++;
+                        }
+                        else
+                        {
+                            cout << "Poor ass mf you do not have enough doge" << endl;
+                        }
+
+                        break;
+
+                    case 5:
+                        if (player.getDogeCoin() >= (findmultiplier(server) * 5))
+                        {
+                            setNumbInternetCard(getNumbInternetCard() + 1);
+                            player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 5));
+                            cout << "DogeCoin: " << player.getDogeCoin() << endl;
+                            i++;
+                        }
+                        else
+                        {
+                            cout << "Poor ass mf you do not have enough doge" << endl;
+                        }
+
+                        break;
+
+                    case 6:
+                        if (player.getDogeCoin() >= (10 * findmultiplier(server)))
+                        {
+                            setNumbKeyboardMouse(getCostKeyboardMouse() + 1);
+                            player.setDogeCoin(player.getDogeCoin() - (10 * findmultiplier(server)));
+                            cout << "DogeCoin: " << player.getDogeCoin() << endl;
+                            i++;
+                        }
+                        else
+                        {
+                            cout << "Poor ass mf you do not have enough doge" << endl;
+                        }
+
+                        break;
+
+                    case 7:
+                        if (player.getDogeCoin() >= (findmultiplier(server) * 100))
+                        {
+                            setNumbPremadeComp(getNumbPremadeComp() + 1);
+                            player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 100));
+                            cout << "DogeCoin: " << player.getDogeCoin() << endl;
+                            i++;
+                        }
+                        else
+                        {
+                            cout << "Poor ass mf you do not have enough doge" << endl;
+                        }
+
+                        break;
+
+                    default:
+                        cout << "Invalid choice. Try again." << endl;
+                        break;
+                    }
+                } while (i != computerPartChoice && player.getDogeCoin() > 5);
+
+                break;
+
+            case 2:
+                int antivirusUSBChoice;
+                cout << "One USB stick of antivirus software costs " << findmultiplier(server) * 10 << " Dogecoins and will give you a one-time use to get rid of any viruses on your computer." << endl;
+
+                cout << "How many antivirus USB sticks would you like to purchase?" << endl;
+                cin >> antivirusUSBChoice;
+
+                player.setDogeCoin(player.getDogeCoin() - ((findmultiplier(server) * 10) * (antivirusUSBChoice)));
+                player.setantiVirusUSBcount(player.getantiVirusUSBcount() + antivirusUSBChoice);
+                cout << "DogeCoin: " << player.getDogeCoin() << endl;
+                cout << "Antivirus: " << player.getantiVirusUSBcount();
+
+                break;
+
+            case 3:
+                int VPNChoice;
+                cout << "A VPN costs " << (20 * findmultiplier(server)) << " Dogecoins each. VPNs reduce your chances of getting hacked by preventing hackers from tracking down your main computer. The increase in security maxes out at 2 VPNs" << endl;
+
+                cout << "How many VPNs would you like to purchase?" << endl;
+                cin >> VPNChoice;
+
+                player.setDogeCoin(player.getDogeCoin() - ((20 * findmultiplier(server))) * (VPNChoice));
+                player.setVPNsOwned(player.getVPNsOwned() + VPNChoice);
+                cout << "DogeCoin: " << player.getDogeCoin() << endl;
+                cout << "VPN: " << player.getVPNsOwned() << endl;
+
+                break;
+
+            case 4:
+                int internetLevelChoice;
+                i = 0;
+                cout << "Internet provider level 2 costs " << (findmultiplier(server) * 10) << " Dogecoins\nInternet provider level 3 costs " << findmultiplier(server) * 25 << "Dogecoins\nInternet provider level 4 costs " << (findmultiplier(server) * 40) << " Dogecoins\nInternet provider level 5 costs " << (50 * findmultiplier(server)) << " Dogecoins\n\nAlso keep in mind you can upgrade your internet provider at a later time if you so desire" << endl;
                 cout << "Choose what you would like to purchase: " << endl;
-                cout << "1. CPU\n2. GPU\n3. Power Supply Unit\n4. Computer Case\n5. Internet card\n6. Keyboard and mouse\n7. Premade computer" << endl;
-                cin >> computerPartItem;
+                cout << "2. Level 2\n3. Level 3\n4. Level 4\n5. Level 5" << endl;
+                cin >> internetLevelChoice;
 
-                switch (computerPartItem)
+                do
                 {
-                case 1:
-                    setNumbCPU(getNumbCPU() + 1);
-                    player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 10));
-                    cout << "DogeCoin: " << player.getDogeCoin() << endl;
-                    i++;
-                    break;
+                    switch (internetLevelChoice)
+                    {
+                    case 2:
+                        player.setDogeCoin(player.getDogeCoin() - 10);
+                        player.setinternetProv(internetLevelChoice);
+                        i++;
+                        break;
 
-                case 2:
-                    setNumbGPU(getNumbGPU() + 1);
-                    player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 20));
-                    cout << "DogeCoin: " << player.getDogeCoin() << endl;
-                    i++;
-                    break;
+                    case 3:
+                        player.setDogeCoin(player.getDogeCoin() - 25);
+                        player.setinternetProv(internetLevelChoice);
+                        i++;
+                        break;
 
-                case 3:
-                    setNumbPowerSupplyUnit(getNumbPowerSupplyUnit() + 1);
-                    player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 5));
-                    cout << "DogeCoin: " << player.getDogeCoin() << endl;
-                    i++;
-                    break;
-                case 4:
-                    setNumbComputerCase(getNumbComputerCase() + 1);
-                    player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 15));
-                    cout << "DogeCoin: " << player.getDogeCoin() << endl;
-                    i++;
-                    break;
+                    case 4:
+                        player.setDogeCoin(player.getDogeCoin() - 40);
+                        player.setinternetProv(internetLevelChoice);
+                        i++;
+                        break;
 
-                case 5:
-                    setNumbInternetCard(getNumbInternetCard() + 1);
-                    player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 5));
-                    cout << "DogeCoin: " << player.getDogeCoin() << endl;
-                    i++;
-                    break;
+                    case 5:
+                        player.setDogeCoin(player.getDogeCoin() - 50);
+                        player.setinternetProv(internetLevelChoice);
+                        i++;
+                        break;
 
-                case 6:
-                    setNumbKeyboardMouse(getCostKeyboardMouse() + 1);
-                    player.setDogeCoin(player.getDogeCoin() - (10 * findmultiplier(server)));
-                    cout << "DogeCoin: " << player.getDogeCoin() << endl;
-                    i++;
-                    break;
+                    default:
+                        cout << "Invalid choice. Try again." << endl;
+                        break;
+                    }
+                } while (i < 1);
 
-                case 7:
-                    setNumbPremadeComp(getNumbPremadeComp() + 1);
-                    player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 100));
-                    cout << "DogeCoin: " << player.getDogeCoin() << endl;
-                    i++;
-                    break;
+                cout << "DogeCoin: " << player.getDogeCoin() << endl;
+                cout << "Internet Level: " << player.getinternetProv() << endl;
 
-                default:
-                    cout << "Invalid choice. Try again." << endl;
-                    break;
-                }
-            } while (i != computerPartChoice);
-            break;
+                break;
+            case 5:
+                cout << "Thank you for coming to Best Buy! Come again soon!" << endl;
+                break;
 
-        case 2:
-            int antivirusUSBChoice;
-            cout << "One USB stick of antivirus software costs " << findmultiplier(server) * 10 << " Dogecoins and will give you a one-time use to get rid of any viruses on your computer." << endl;
-
-            cout << "How many antivirus USB sticks would you like to purchase?" << endl;
-            cin >> antivirusUSBChoice;
-
-            player.setDogeCoin(player.getDogeCoin() - ((findmultiplier(server) * 10) * (antivirusUSBChoice)));
-            player.setantiVirusUSBcount(player.getantiVirusUSBcount() + antivirusUSBChoice);
-            cout << "DogeCoin: " << player.getDogeCoin() << endl;
-            cout << "Antivirus: " << player.getantiVirusUSBcount();
-
-            break;
-
-        case 3:
-            int VPNChoice;
-            cout << "A VPN costs " << (20 * findmultiplier(server)) << " Dogecoins each. VPNs reduce your chances of getting hacked by preventing hackers from tracking down your main computer. The increase in security maxes out at 2 VPNs" << endl;
-
-            cout << "How many VPNs would you like to purchase?" << endl;
-            cin >> VPNChoice;
-
-            player.setDogeCoin(player.getDogeCoin() - ((20 * findmultiplier(server))) * (VPNChoice));
-            player.setVPNsOwned(player.getVPNsOwned() + VPNChoice);
-            cout << "DogeCoin: " << player.getDogeCoin() << endl;
-            cout << "VPN: " << player.getVPNsOwned();
-
-            break;
-
-        case 4:
-            int internetLevelChoice;
-            i = 0;
-            cout << "Internet provider level 2 costs " << (findmultiplier(server) * 10) << " Dogecoins\nInternet provider level 3 costs" << findmultiplier(server) * 25 << "Dogecoins\nInternet provider level 4 costs" << (findmultiplier(server) * 40) << " Dogecoins\nInternet provider level 5 costs " << (50 * findmultiplier(server)) << " Dogecoins\n Also keep in mind you can upgrade your internet provider at a later time if you so desire" << endl;
-            cout << "Choose what you would like to purchase: " << endl;
-            cout << "2. Level 2\n 3. Level 3\n4. Level 4\n5. Level 5" << endl;
-            cin >> internetLevelChoice;
-
-            do
-            {
-                switch (internetLevelChoice)
-                {
-                case 2:
-                    player.setDogeCoin(player.getDogeCoin() - 10);
-                    player.setinternetProv(internetLevelChoice);
-                    i++;
-                    break;
-
-                case 3:
-                    player.setDogeCoin(player.getDogeCoin() - 25);
-                    player.setinternetProv(internetLevelChoice);
-                    i++;
-                    break;
-
-                case 4:
-                    player.setDogeCoin(player.getDogeCoin() - 40);
-                    player.setinternetProv(internetLevelChoice);
-                    i++;
-                    break;
-
-                case 5:
-                    player.setDogeCoin(player.getDogeCoin() - 50);
-                    player.setinternetProv(internetLevelChoice);
-                    i++;
-                    break;
-
-                default:
-                    cout << "Invalid choice. Try again." << endl;
-                    break;
-                }
-            } while (i < 1);
-
-            cout << "DogeCoin: " << player.getDogeCoin() << endl;
-            cout << "Internet Level: " << player.getinternetProv() << endl;
-            break;
-
-        default:
-            cout << "Invalid choice. Try again." << endl;
-            break;
-        }
+            default:
+                cout << "Invalid choice. Try again." << endl;
+                break;
+            }
+        } while (bbOption != 5);
+        map.setPlayerColPosition(map.getPlayerColPosition() + 1);
     }
+    
     else
     {
-        return;
+        map.setPlayerColPosition(map.getPlayerColPosition() + 1);
     }
 }
