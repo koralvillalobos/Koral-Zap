@@ -60,7 +60,13 @@ public:
      bool isNPCLocation();
      bool isHackerLocation();
      bool isBestBuyOnMap();
-     void removeHacker(int, int);
+     void removeHacker();
+
+
+
+     void randomSpawnHackers(Map&);
+     void randomSpawnNPC(Map&);
+     void randomSpawnBB(Map&);
 };
 
 #endif
