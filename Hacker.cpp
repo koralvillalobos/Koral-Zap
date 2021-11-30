@@ -48,12 +48,13 @@ void Hacker::setLocation(int newRows, int newCols)
     rows = newRows;
     cols = newCols;
 }
-void Hacker::pickHackerName(int level)
+string Hacker::pickHackerName(int level)
 {
-    string arr[5][4];
+    string arr[4][5];
     ifstream file;
     string line = "";
     string name="hackers.txt";
+    string hackerName;
 
     file.open(name);
 
@@ -63,9 +64,9 @@ void Hacker::pickHackerName(int level)
         int j = 0;
         while (getline(file, line))
         {
-            arr[i][j] = line;
+            arr[j][i] = line;
             j++;
-            if (j == 3)
+            if (j == 4)
             {
                 i++;
                 j = 0;
@@ -76,12 +77,35 @@ void Hacker::pickHackerName(int level)
     {
         cout << "File did not open!" << endl;
     }
-    for (int i = 0; i < 4; i++)
-    {
-        cout<<endl;
-        for (int j = 0; j < 5; j++)
-        {
-            cout << arr[j][i] << endl;
-        }
+    file.close();
+
+    int randRow = rand() % 5;
+    int randCol = rand() % 4;
+
+    if(level == 1){
+        hackerName = arr[randCol][0];
     }
+    else if(level == 2){
+        hackerName = arr[randCol][1];
+    }
+    else if(level == 3){
+        hackerName = arr[randCol][2];
+    }
+    else if(level == 4){
+        hackerName = arr[randCol][3];
+    }
+    else if (level == 5){
+        hackerName = arr[randCol][4];
+    }
+
+    return hackerName;
+    // for (int i = 0; i < 5; i++)
+    // {
+    //     cout << endl;
+    //     for (int j = 0; j < 4; j++)
+    //     {
+    //         cout << arr[j][i] << endl;
+    //     }
+    // }
 }
+
