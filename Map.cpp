@@ -44,7 +44,18 @@ void Map::resetMap()
         }
     }
 }
+string Map::makeLower(string name)
+{
 
+    for (int i = 0; i < name.length(); i++)
+    { //iterate through the string
+        if (name[i] >= 65 && name[i] <= 90)
+        {                  //if uppercase found
+            name[i] += 32; //make lower
+        }
+    }
+    return name;
+}
 // return player's row position
 int Map::getPlayerRowPosition()
 {
@@ -240,7 +251,6 @@ bool Map::isHackerLocation()
 void Map::displayMoves()
 {
 
-    
     if (!(playerPosition[0] == 0))
     {
         cout << "w (Up)" << endl;
@@ -261,8 +271,6 @@ void Map::displayMoves()
     cout << "q (Quit)" << endl;
 
     cout << "m (Menu)" << endl;
-    
-   
 }
 
 /*
@@ -271,30 +279,30 @@ void Map::displayMoves()
  * Parameters: move (char) -- 'w' (up), 'a' (left), 's' (down), 'd' (right)
  * Return: (bool) if move is valid, then true, else false
  */
-bool Map::executeMove(char move)
+bool Map::executeMove(string move)
 {
     // if user inputs w, move up if it is an allowed move
     //if this function executes first thing is to see if player has virus
 
-    if (!(playerPosition[0] == 0) && (tolower(move) == 'w'))
+    if (!(playerPosition[0] == 0) && (makeLower(move) == "w"))
     {
         playerPosition[0] -= 1;
         return true;
     }
     // if user inputs s, move down if it is an allowed move
-    else if (!(playerPosition[0] == (num_rows - 1)) && (tolower(move) == 's'))
+    else if (!(playerPosition[0] == (num_rows - 1)) && (makeLower(move) == "s"))
     {
         playerPosition[0] += 1;
         return true;
     }
     // if user inputs a, move left if it is an allowed move
-    else if (!(playerPosition[1] == 0) && (tolower(move) == 'a'))
+    else if (!(playerPosition[1] == 0) && (makeLower(move) == "a"))
     {
         playerPosition[1] -= 1;
         return true;
     }
     // if user inputs d, move right if it is an allowed move
-    else if (!(playerPosition[1] == (num_cols - 1)) && (tolower(move) == 'd'))
+    else if (!(playerPosition[1] == (num_cols - 1)) && (makeLower(move) == "d"))
     {
         playerPosition[1] += 1;
         return true;
@@ -321,10 +329,10 @@ void Map::displayMap()
             {
                 cout << "x";
             }
-            else if (mapData[i][j] == 'H')
-            { // don't show hacker on the map
-                cout << "-";
-            }
+            // else if (mapData[i][j] == 'H')
+            // { // don't show hacker on the map
+            //     cout << "-";
+            // }
             else
             {
                 cout << mapData[i][j];
@@ -341,43 +349,61 @@ bool Map::isBestBuyOnMap()
 }
 void Map::removeHacker()
 {
+    int row = getPlayerRowPosition();
+    int col = getPlayerColPosition();
 
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 3; i++)
     {
-        hackerPositions[i][0] = -1;
-        hackerPositions[i][1] = -1;
+        for (int j = 0; j < 2; j++)
+        {
+            if (hackerPositions[j][0] == row && hackerPositions[j][1] == col)
+            {
+                hackerPositions[i][0] = -1;
+                hackerPositions[i][1] = -1;
+            }
+            else
+            {
+                continue;
+            }
+        }
     }
 }
 
 void Map::randomSpawnBB(Map &map)
 {
-    int BBNumbRow = rand() % 5;
-    int BBNumbCol = rand() % 9;
+    srand(time(NULL));
+    int BBNumbRow = (rand() % 4) + 1;
+    int BBNumbCol = (rand() % 8) + 1;
 
     map.spawnBestBuy(BBNumbRow, BBNumbCol);
 }
 
 void Map::randomSpawnHackers(Map &map)
 {
-    int spawnNumb = rand() % 3;
+    srand(time(NULL)*2);
+    int spawnNumb = (rand() % 2) + 1;
+    setHackerCount(spawnNumb);
+
     for (int j = 0; j < spawnNumb; j++) // j = numb hackers
     {
-        int hackerNumbRow = rand() % 5;
-        int hackerNumbCol = rand() % 9;
+        int hackerNumbRow=(rand() % 5);
+        int hackerNumbCol=(rand() % 9);
         map.spawnHacker(hackerNumbRow, hackerNumbCol);
     }
+
     cout << "number hackers placed:" << spawnNumb << endl;
 }
 
 void Map::randomSpawnNPC(Map &map)
 {
-    int spawnNumb = rand() % 3;
-    setHackerCount(spawnNumb);
+    srand(time(NULL));
+    int spawnNumb = (rand() % 2) + 1;
+    
 
     for (int k = 0; k < spawnNumb; k++) //i = numb NPC
     {
-        int NPCNumbRow = rand() % 5;
-        int NPCNumbCols = rand() % 9;
+        int NPCNumbRow = (rand() % 5);
+        int NPCNumbCols = (rand() % 9);
         map.spawnNPC(NPCNumbRow, NPCNumbCols);
     }
     cout << "number NPC placed:" << spawnNumb << endl;
