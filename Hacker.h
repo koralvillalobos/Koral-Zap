@@ -13,6 +13,8 @@
 #include <cmath>
 #include <string>
 #include <fstream>
+#include <time.h>
+#include <stdlib.h>
 
 using namespace std;
 
