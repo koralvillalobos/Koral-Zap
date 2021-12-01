@@ -10,6 +10,8 @@
 #include <iostream>
 #include <ctype.h>
 #include "Player.h"
+#include <time.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -35,6 +37,7 @@ public:
      Map();
 
      void resetMap();
+     string makeLower(string);
 
      // getters
      int getPlayerRowPosition();
@@ -54,7 +57,7 @@ public:
 
      void displayMap();
      void displayMoves();
-     bool executeMove(char);
+     bool executeMove(string);
 
      bool isBestBuyLocation();
      bool isNPCLocation();
