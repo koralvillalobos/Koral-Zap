@@ -11,6 +11,8 @@
 #include <ctype.h>
 #include <iomanip>
 #include <cmath>
+#include <time.h>
+#include <stdlib.h>
 #include <string>
 #include <fstream>
 #include "Hacker.h"
