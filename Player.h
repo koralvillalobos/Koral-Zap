@@ -13,6 +13,9 @@
 #include <cmath>
 #include <string>
 #include <fstream>
+#include <time.h>
+#include <stdlib.h>
+
 
 
 using namespace std; 
@@ -50,7 +53,7 @@ class Player
     int getVPNsOwned();
     
     //setters
-    void setantiVirusUSBcount(int);
+    void setantiVirusUSBcount(bool);
     void setFrustration(int);
     void setcompMaintenanceLvl(int);
     void setnumbVirus(int);
