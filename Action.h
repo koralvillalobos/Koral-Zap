@@ -14,6 +14,8 @@
 #include "BB.h"
 #include "NPC.h"
 #include "Map.h"
+#include <time.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -31,13 +33,13 @@ public:
     string choseRandomHacker();
     void statusUpdate(Player &);
     void displayHackerMenu();
-    bool executeHackerMenu(int,Player&,Hacker&,Map&);
+    bool executeHackerMenu(string,Player&,Hacker&,Map&);
     bool fightHacker(Player&,Hacker&, Map&);
     bool forfeit(Player&);
     void virus(Player&);
     void useantiVirus(Player&);
 
-    void mainMenu(Player &player, BB &bb, NPC npc);
+    void mainMenu(Player&, BB&, NPC&,string);
 
     void CompletePuzzle(string);
     string RockPaperScissors(int);
@@ -47,6 +49,6 @@ public:
     char getPuzzel4Ans();
     char getPuzzel5Ans();
 
-    bool quitGame(char);
+    bool quitGame(string);
 };
 #endif
