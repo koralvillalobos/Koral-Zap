@@ -208,7 +208,7 @@ void ::BB::setProviderLevel(int newProviderLevel)
 {
     providerLevel = newProviderLevel;
 }
-void ::BB::gameStart(Player &player, Server &server, Map &map)
+void ::BB::gameStart(Player &player, Server &server, Map &map, BB &bb)
 {
     int bbOption;
     char purchaseAns;
@@ -254,7 +254,7 @@ void ::BB::gameStart(Player &player, Server &server, Map &map)
                     switch (computerPartItem)
                     {
                     case 1:
-                        if (player.getDogeCoin() >= (findmultiplier(server) * 10))
+                        if (player.getDogeCoin() >= (findmultiplier(server) * 10) && bb.getNumbCPU() < 3)
                         {
                             setNumbCPU(getNumbCPU() + 1);
                             player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 10));
@@ -263,13 +263,13 @@ void ::BB::gameStart(Player &player, Server &server, Map &map)
                         }
                         else
                         {
-                            cout << "Poor ass mf you do not have enough doge" << endl;
+                            cout << "Poor ass mf you do not have enough doge or already have 3 CPU" << endl;
                         }
 
                         break;
 
                     case 2:
-                        if (player.getDogeCoin() >= (findmultiplier(server) * 20))
+                        if (player.getDogeCoin() >= (findmultiplier(server) * 20)&& bb.getNumbGPU() < 3)
                         {
                             setNumbGPU(getNumbGPU() + 1);
                             player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 20));
@@ -278,12 +278,12 @@ void ::BB::gameStart(Player &player, Server &server, Map &map)
                         }
                         else
                         {
-                            cout << "Poor ass mf you do not have enough doge" << endl;
+                            cout << "Poor ass mf you do not have enough doge or already have 3 GPU" << endl;
                         }
                         break;
 
                     case 3:
-                        if (player.getDogeCoin() >= (findmultiplier(server) * 5))
+                        if (player.getDogeCoin() >= (findmultiplier(server) * 5) && bb.getNumbPowerSupplyUnit() < 3)
                         {
                             setNumbPowerSupplyUnit(getNumbPowerSupplyUnit() + 1);
                             player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 5));
@@ -292,12 +292,12 @@ void ::BB::gameStart(Player &player, Server &server, Map &map)
                         }
                         else
                         {
-                            cout << "Poor ass mf you do not have enough doge" << endl;
+                            cout << "Poor ass mf you do not have enough doge or already have 3 Power supply units" << endl;
                         }
 
                         break;
                     case 4:
-                        if (player.getDogeCoin() >= (findmultiplier(server) * 15))
+                        if (player.getDogeCoin() >= (findmultiplier(server) * 15) && bb.getNumbComputerCase() < 3)
                         {
                             setNumbComputerCase(getNumbComputerCase() + 1);
                             player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 15));
@@ -306,13 +306,13 @@ void ::BB::gameStart(Player &player, Server &server, Map &map)
                         }
                         else
                         {
-                            cout << "Poor ass mf you do not have enough doge" << endl;
+                            cout << "Poor ass mf you do not have enough doge or alreadt have 3 computer cases" << endl;
                         }
 
                         break;
 
                     case 5:
-                        if (player.getDogeCoin() >= (findmultiplier(server) * 5))
+                        if (player.getDogeCoin() >= (findmultiplier(server) * 5)&& bb.getNumbInternetCard() < 3)
                         {
                             setNumbInternetCard(getNumbInternetCard() + 1);
                             player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 5));
@@ -321,13 +321,13 @@ void ::BB::gameStart(Player &player, Server &server, Map &map)
                         }
                         else
                         {
-                            cout << "Poor ass mf you do not have enough doge" << endl;
+                            cout << "Poor ass mf you do not have enough doge or already have 3 internet cards" << endl;
                         }
 
                         break;
 
                     case 6:
-                        if (player.getDogeCoin() >= (10 * findmultiplier(server)))
+                        if (player.getDogeCoin() >= (10 * findmultiplier(server))&& bb.getNumbKeyboardMouse() < 3)
                         {
                             setNumbKeyboardMouse(getCostKeyboardMouse() + 1);
                             player.setDogeCoin(player.getDogeCoin() - (10 * findmultiplier(server)));
@@ -336,13 +336,13 @@ void ::BB::gameStart(Player &player, Server &server, Map &map)
                         }
                         else
                         {
-                            cout << "Poor ass mf you do not have enough doge" << endl;
+                            cout << "Poor ass mf you do not have enough doge or already have 3 keyboard/mouse" << endl;
                         }
 
                         break;
 
                     case 7:
-                        if (player.getDogeCoin() >= (findmultiplier(server) * 100))
+                        if (player.getDogeCoin() >= (findmultiplier(server) * 100) && bb.getNumbPremadeComp() < 1)
                         {
                             setNumbPremadeComp(getNumbPremadeComp() + 1);
                             player.setDogeCoin(player.getDogeCoin() - (findmultiplier(server) * 100));
@@ -351,7 +351,7 @@ void ::BB::gameStart(Player &player, Server &server, Map &map)
                         }
                         else
                         {
-                            cout << "Poor ass mf you do not have enough doge" << endl;
+                            cout << "Poor ass mf you do not have enough doge or already have an extra premade computer" << endl;
                         }
 
                         break;
@@ -374,7 +374,7 @@ void ::BB::gameStart(Player &player, Server &server, Map &map)
                 player.setDogeCoin(player.getDogeCoin() - ((findmultiplier(server) * 10) * (antivirusUSBChoice)));
                 player.setantiVirusUSBcount(player.getantiVirusUSBcount() + antivirusUSBChoice);
                 cout << "DogeCoin: " << player.getDogeCoin() << endl;
-                cout << "Antivirus: " << player.getantiVirusUSBcount();
+                cout << "Antivirus: " << player.getantiVirusUSBcount() << endl;;
 
                 break;
 
@@ -400,8 +400,8 @@ void ::BB::gameStart(Player &player, Server &server, Map &map)
                 cout << "2. Level 2\n3. Level 3\n4. Level 4\n5. Level 5" << endl;
                 cin >> internetLevelChoice;
 
-                do
-                {
+                
+                
                     switch (internetLevelChoice)
                     {
                     case 2:
@@ -432,12 +432,13 @@ void ::BB::gameStart(Player &player, Server &server, Map &map)
                         cout << "Invalid choice. Try again." << endl;
                         break;
                     }
-                } while (i < 1);
+               
 
                 cout << "DogeCoin: " << player.getDogeCoin() << endl;
                 cout << "Internet Level: " << player.getinternetProv() << endl;
 
-                break;
+            break;
+
             case 5:
                 cout << "Thank you for coming to Best Buy! Come again soon!" << endl;
                 break;
