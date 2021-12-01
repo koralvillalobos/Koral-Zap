@@ -6,10 +6,10 @@ NPC::NPC()
 {
     
 }
-bool NPC::runNPCMenu(Player &player, int option,BB &bb)
+bool NPC::runNPCMenu(Player &player, string option,BB &bb)
 {
     cin >> option;
-    if (option == 1 && player.getcompPartsAvailable() > 0)
+    if (option == "1" && player.getcompPartsAvailable() > 0)
     {
         completePuzzle(player, bb);
         return true;
@@ -17,7 +17,7 @@ bool NPC::runNPCMenu(Player &player, int option,BB &bb)
     else if(player.getcompPartsAvailable() == 0){
         cout << "You have no computer parts & cannot complete a puzzle!" << endl;
     }
-    else if (option == 2)
+    else if (option == "2")
     {
         takeYourChances(player,bb);
         return true;
@@ -27,9 +27,11 @@ bool NPC::runNPCMenu(Player &player, int option,BB &bb)
         cout << "Invalid Input" << endl;
         return false;
     }
+
 }
 void NPC::addRandComputerPart(BB &bb)
 {
+    srand(time(NULL));
     int num = rand() % 7;
     switch (num)
     {
@@ -73,6 +75,7 @@ void NPC::addRandComputerPart(BB &bb)
 }
 void NPC::subRandComputerPart(BB &bb, Player &player)
 {
+    srand(time(NULL));
     bool run = false;
     while (run == false)
     {
@@ -182,6 +185,7 @@ void NPC::subRandComputerPart(BB &bb, Player &player)
 }
 void NPC::completePuzzle(Player &player, BB &bb)
 {
+    srand(time(NULL));
     int rand5 = rand() % 5;
     string playerAnswer;
     string stringAnswer;
@@ -287,6 +291,7 @@ void NPC::completePuzzle(Player &player, BB &bb)
 }
 void NPC::takeYourChances(Player &player, BB &bb)
 {
+    srand(time(NULL));
     int rand3 = rand() % 3;
     int rand6 = rand() % 6;
 
