@@ -25,12 +25,12 @@ Player::Player() //default constructor initializing variables to zero
     dogeCoinTotal = 1;
     frustration = 1;
     carmenProg = 1;
-    hackersKilled = 1;
+    hackersKilled = 0;
     dogeCoin = 200;
 }
 
 //getters
-bool Player::getantiVirusUSBcount()
+int Player::getantiVirusUSBcount()
 {
     return antiVirusUSBcount;
 }
