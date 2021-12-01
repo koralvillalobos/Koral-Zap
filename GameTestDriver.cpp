@@ -23,6 +23,7 @@ string makeLower(string name)
 
 int main()
 {
+    srand(time(NULL));
 
     Map map;       // create object called map of type Map
     Player player; // create object called map of type Player
@@ -34,18 +35,17 @@ int main()
 
     player.sethackersKilled(0);
 
-    char move;         // for storing user input
-    int option;        //KORAL MAKE SURE TO USE THIS FOR ANY MENU OPTIONS THAT USE NUMBERS INSTEAD OF LETTERS AS A SELECTION TOOL
+    string move;       //KORAL MAKE SURE TO USE THIS FOR ANY MENU OPTIONS THAT USE NUMBERS INSTEAD OF LETTERS AS A SELECTION TOOL
     bool quit = false; //if true stops game
 
     string playerName;
-    
+
     cout << "Please enter a player name: " << endl;
     cin >> playerName;
 
     cout << "WHERE IN THE CODE IS CARMEN SANDIEGO?\nWelcome, " << playerName << "! You have 200 dogecoins, 1 computer and 1 VPN. You will need to spend the rest of your money on the following items:\n- COMPUTER PARTS. If your computer breaks, you need 5 computer parts to make a new one.\n- ANTIVIRUS SOFTWARE. If your computer is infected with a virus, use the antivirus software to get rid of it.\n- VIRTUAL PRIVATE NETWORK (VPN). The more VPNs you have the harder it is for a hacker to infect your computer with a virus.\n- INTERNET PROVIDER. The better the internet provider, the more reliable your hacking will be.\nYou can spend all of your money here before you start your journey, or you can save some to spend on a different electronics site along the way. But beware, some of the\nwebsites online are shady, and they won’t always give you a fair price..." << endl;
 
-    bb.gameStart(player,server,map);
+    bb.gameStart(player, server, map, bb);
 
     //need random seed
 
@@ -58,15 +58,13 @@ int main()
         map.randomSpawnHackers(map);
         map.randomSpawnBB(map);
 
-        
-
         while (quit == false)
         {
             //Option Quit
-            if (move == 'q')
+            if (move == "q")
             {
                 quit = action.quitGame(move);
-                if(quit==true)//Option to quit game
+                if (quit == true) //Option to quit game
                 {
                     return 0;
                 }
@@ -79,19 +77,27 @@ int main()
             cout << "Input a move: ";
             cin >> move;
             cout << endl;
-            
-            if(move == 'm'){
-                action.mainMenu(player, bb,npc);
+
+            if (move == "m")
+            {
+                bool stop=false;
+                while (stop==false)
+                {
+                    cout << "---MENU---" << endl;
+                    cout << "1. Status Update\n2. Repair your Computer\n3. Use your antivirus software\n4. Browse StackOverflow\n5. Quit" << endl;
+                    cin >> move;
+                    action.mainMenu(player, bb, npc,move);
+                }
             }
-            
 
             map.executeMove(move); // move the player on map based on user input
 
             player.setDogeCoin(player.getDogeCoin() + 5);
             cout << "+5 DogeCoin added for executed move" << endl;
             cout << "DogeCoin: " << player.getDogeCoin() << endl;
-            
-            if(bb.getNumbGPU() > 0){
+
+            if (bb.getNumbGPU() > 0)
+            {
                 player.setDogeCoin(player.getDogeCoin() + (bb.getNumbGPU() * 5));
                 cout << "You have " << bb.getNumbGPU() << " GPU(s), and there for have recieved +" << bb.getNumbGPU() * 5 << "dogecoin." << endl;
                 cout << "DogeCoin: " << player.getDogeCoin() << endl;
@@ -99,7 +105,7 @@ int main()
             if (map.isBestBuyLocation()) //Best Buy
             {
                 cout << "You're in a Best Buy!" << endl;
-                bb.gameStart(player,server,map);
+                bb.gameStart(player, server, map, bb);
             }
             if (map.isHackerLocation()) //Starts Hacker Action
             {
@@ -110,21 +116,22 @@ int main()
                 while (stop == false)
                 {
                     cout << "Input an option: " << endl;
-                    cin >> option;
+                    cin >> move;
                     cout << endl;
-                    stop = action.executeHackerMenu(option, player, hacker,map);
-                     //hackers killed need to be removed from map
+                    stop = action.executeHackerMenu(move, player, hacker, map);
+                    //hackers killed need to be removed from map
                     cout << endl;
                 }
                 cout << "Hackers killed: " << player.gethackersKilled() << endl;
-                if(player.gethackersKilled() == map.getHackerCount()){
-                    
-                    cout << "Now you need to move onto the next server room bc the number of hackers in this room has been defeated" << endl; //somehow right here the server room needs to change 
+                if (player.gethackersKilled() == map.getHackerCount())
+                {
+
+                    cout << "Now you need to move onto the next server room bc the number of hackers in this room has been defeated" << endl; //somehow right here the server room needs to change
                     i++;
                     break;
                 }
             }
-            
+
             if (map.isNPCLocation()) //Starts NPC Action
             {
                 bool start = false;
@@ -133,7 +140,7 @@ int main()
                 {
                     cout << "1. Complete Puzzle" << endl;
                     cout << "2. Take Your Chances" << endl;
-                    start = npc.runNPCMenu(player, option, bb);
+                    start = npc.runNPCMenu(player, move, bb);
                 }
             }
         }
