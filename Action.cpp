@@ -17,6 +17,7 @@
 #include <string>
 #include <stdlib.h>
 #include <fstream>
+#include <ctype.h>
 #include <vector>
 
 using namespace std;
@@ -46,14 +47,14 @@ void Action::displayHackerMenu()
     cout << "1. Fight the hacker" << endl;
     cout << "2. Forfeit the fight (lose all computer parts!)" << endl;
 }
-bool Action::executeHackerMenu(int option, Player &player, Hacker &hacker, Map &map)
+bool Action::executeHackerMenu(string option, Player &player, Hacker &hacker, Map &map)
 {
     bool stop;
-    if (option == 1) //Fight condition for player
+    if (option == "1") //Fight condition for player
     {
         return fightHacker(player, hacker, map);
     }
-    else if (option == 2) //Forfeit option for player
+    else if (option == "2") //Forfeit option for player
     {
         return forfeit(player);
     }
@@ -65,6 +66,7 @@ bool Action::executeHackerMenu(int option, Player &player, Hacker &hacker, Map &
 }
 bool Action::fightHacker(Player &player, Hacker &hacker, Map &map)
 {
+    srand(time(NULL));
     int r1 = rand() % 6;
     int r2 = rand() % 6;
     int virusChance = rand() % 10;
@@ -90,8 +92,6 @@ bool Action::fightHacker(Player &player, Hacker &hacker, Map &map)
         cout << "+50 "
              << "Doge: " << player.getDogeCoin() << endl;
         cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
-        tempRow = map.getPlayerRowPosition();
-        tempCol = map.getPlayerColPosition();
 
         map.removeHacker();
         return true;
@@ -177,6 +177,7 @@ void Action::CompletePuzzle(string name)
 }
 string Action::RockPaperScissors(int numb)
 {
+    srand(time(NULL));
     //1.Rock
     //2.Paper
     //3.Scissors
@@ -284,7 +285,7 @@ char Action::getPuzzel5Ans()
 {
     return puzzel5Ans;
 }
-bool Action::quitGame(char move)
+bool Action::quitGame(string move)
 {
 
     bool n = false;
@@ -317,10 +318,8 @@ bool Action::quitGame(char move)
     }
 }
 
-void Action::mainMenu(Player &player, BB &bb, NPC npc)
+void Action::mainMenu(Player &player, BB &bb, NPC& npc,string choice)
 {
-    int choice;
-
     int count = 0;
     int puzzorgame;
     int randPuzz = rand() % 5;
@@ -328,19 +327,11 @@ void Action::mainMenu(Player &player, BB &bb, NPC npc)
 
     int compparttorepair;
 
-    do
-    {
-        cout << "---MENU---" << endl;
-        cout << "1. Status Update\n2. Repair your Computer\n3. Use your antivirus software\n4. Browse StackOverflow\n5. Quit" << endl;
-        cin >> choice;
-
-        switch (choice)
-        {
-        case 1:
+        
+        if(choice=="1"){
             statusUpdate(player);
-            break;
-
-        case 2:
+        }
+        if(choice=="2"){
             do
             {
                 if (player.getnumbVirus() > 0)
@@ -476,8 +467,7 @@ void Action::mainMenu(Player &player, BB &bb, NPC npc)
                 cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
                 break;
             }
-            break;
-
+        }
         case 3:
             if (player.getantiVirusUSBcount() > 0 && player.getnumbVirus() > 0)
             {
