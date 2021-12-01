@@ -12,6 +12,8 @@
 #include <ctype.h>
 #include "Server.h"
 #include "Map.h"
+#include <time.h>
+#include <stdlib.h>
 
 using namespace std; 
 
@@ -49,7 +51,7 @@ class BB{
         BB();
         BB(bool computer, bool antiVirus, int VPN, int providerLevel);
 
-        void gameStart(Player&,Server&,Map&);
+        void gameStart(Player&,Server&,Map&, BB&);
         void printBBMenu();
         void printStartMenu();
         double findmultiplier(Server&);
