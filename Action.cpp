@@ -100,7 +100,7 @@ bool Action::fightHacker(Player &player, Hacker &hacker, Map &map)
     {
         //loses 20 maintenanceLvl
         player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() - 20);
-        player.setcarmenProg(player.getcarmenProg() +10);
+        player.setcarmenProg(player.getcarmenProg() + 10);
         cout << "Lose" << endl;
         cout << "Doge: " << player.getDogeCoin() << endl;
         cout << "-10 Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
@@ -144,7 +144,6 @@ void Action::useantiVirus(Player &player)
         player.setantiVirusUSBcount(player.getantiVirusUSBcount() - 1);
     }
 }
-
 
 void Action::RockPaperScissors(Player &player)
 {
@@ -313,11 +312,13 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
     }
     else if (choice == "2")
     {
-        do
+
+        while (compparttorepair != "7")
         {
             if (player.getnumbVirus() > 0)
             {
                 cout << "You cannot repair your computer because you have " << player.getnumbVirus() << " viruses :(" << endl;
+                break;
             }
             else if (player.getcompPartsAvailable() > 0 && player.getnumbVirus() == 0)
             {
@@ -409,7 +410,6 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
                 else if (compparttorepair == "7")
                 {
                     cout << "GOODBYE!" << endl;
-                    shit = true;
                 }
                 else
                 {
@@ -418,9 +418,10 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
             }
             if (count == 5)
             {
+                count=0;
                 break;
             }
-        } while (shit == false);
+        }
 
         switch (count)
         {
@@ -492,8 +493,8 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
     }
     else if (choice == "5")
     {
-        cout << "You have killed: "<<endl;
-        cout<<endl;
+        cout << "You have killed: " << endl;
+        cout << endl;
         outFstreamNames();
     }
     else if (choice == "6")
@@ -574,30 +575,29 @@ void Action::sortAlg()
 
                 //changes index 0
                 both[0][i] += both[0][i + 1];
-                both[0][i + 1]= both[0][i] - both[0][i + 1];
+                both[0][i + 1] = both[0][i] - both[0][i + 1];
                 both[0][i] -= both[0][i + 1];
 
                 change = true;
             }
         }
     }
-     for (int j = 0; j < room.size(); j++)
+    for (int j = 0; j < room.size(); j++)
     {
         cout << "Room: " << both[0][j];
-        cout << " Number of Moves: " << both[1][j]<<endl;
+        cout << " Number of Moves: " << both[1][j] << endl;
     }
 }
-void Action::inFstreamNames(ofstream &file,string name)
+void Action::inFstreamNames(ofstream &file, string name)
 {
-    
 
-        if (!file.is_open())
+    if (!file.is_open())
     {
         cout << "Unable to Open File" << endl;
     }
     else
     {
-        file<<name<<endl;
+        file << name << endl;
         file.close();
     }
 }
@@ -616,10 +616,9 @@ void Action::outFstreamNames()
     {
         while (getline(file, line))
         {
-            cout<<line<<endl;
+            cout << line << endl;
         }
         cout << endl;
     }
     file.close();
 }
-
