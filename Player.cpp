@@ -22,9 +22,9 @@ Player::Player() //default constructor initializing variables to zero
     antiVirusUSBcount = false;
     VPNsOwned = 1;
     internetProv = 10;
-    dogeCoinTotal = 1;
-    frustration = 1;
-    carmenProg = 1;
+    dogeCoinTotal = 0;
+    frustration = 0;
+    carmenProg = 0;
     hackersKilled = 0;
     dogeCoin = 200;
 }
@@ -66,10 +66,10 @@ int Player::getVPNsOwned()
 {
     return VPNsOwned;
 }
-int Player::getDogeCoin(){
+int Player::getDogeCoin()
+{
     return dogeCoin;
 }
-
 
 //setters
 void Player::setantiVirusUSBcount(bool NewAntiVirusUSBcount)
@@ -79,7 +79,14 @@ void Player::setantiVirusUSBcount(bool NewAntiVirusUSBcount)
 
 void Player::setFrustration(int newFrustration)
 {
-    frustration = newFrustration;
+    if (newFrustration > -1)
+    {
+        frustration = newFrustration;
+    }
+    else
+    {
+        frustration = 0;
+    }
 }
 void Player::setcompMaintenanceLvl(int NewCompMaintenanceLvl)
 {
@@ -109,7 +116,7 @@ void Player::setVPNsOwned(int newVPNsOwned)
 {
     VPNsOwned = newVPNsOwned;
 }
-
-void Player::setDogeCoin(int newDoge){
+void Player::setDogeCoin(int newDoge)
+{
     dogeCoin = newDoge;
 }
