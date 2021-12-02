@@ -48,7 +48,7 @@ void Hacker::setLocation(int newRows, int newCols)
     rows = newRows;
     cols = newCols;
 }
-string Hacker::pickHackerName(int level)
+string Hacker::pickHackerName(int level) //function to pick a random hacker from the hacker.txt file
 {
     
     string arr[4][5];
@@ -60,13 +60,13 @@ string Hacker::pickHackerName(int level)
 
     file.open(name);
 
-    if (file.is_open()) //open and read puzzel file
+    if (file.is_open()) //open and read file
     {
         int i = 0;
         int j = 0;
         while (getline(file, line))
         {
-            arr[j][i] = line;
+            arr[j][i] = line; //storing hacker names in 2D array
             j++;
             if (j == 4)
             {
@@ -81,24 +81,24 @@ string Hacker::pickHackerName(int level)
     }
     file.close();
 
-    int randCol = rand() % 4;
+    int randCol = rand() % 4; //get a random number
 
     do
     {
-        if (level == 1)
+        if (level == 1) //server 1
         {
-            if (hackerName == "q")
+            if (hackerName == "q") //replace name in the array with a q to make sure hacker not picked twice later
             {
                 break;
             }
             else
             {
-                reFind = false;
-                hackerName = arr[randCol][0];
+                reFind = false; //end while loop
+                hackerName = arr[randCol][0]; //getting hacker name
                 arr[randCol][0] = "q";
             }
         }
-        else if (level == 2)
+        else if (level == 2) //server 2
         {
             if (hackerName == "q")
             {
@@ -106,12 +106,12 @@ string Hacker::pickHackerName(int level)
             }
             else
             {
-                reFind = false;
-                hackerName = arr[randCol][1];
+                reFind = false; //end loop
+                hackerName = arr[randCol][1];//getting hacker name
                 arr[randCol][1] = "q";
             }
         }
-        else if (level == 3)
+        else if (level == 3) //server 3
         {
             if (hackerName == "q")
             {
@@ -119,12 +119,12 @@ string Hacker::pickHackerName(int level)
             }
             else
             {
-                reFind = false;
-                hackerName = arr[randCol][2];
+                reFind = false; //end loop
+                hackerName = arr[randCol][2];//getting hacker name
                 arr[randCol][2] = "q";
             }
         }
-        else if (level == 4)
+        else if (level == 4) //server 4
         {
             if (hackerName == "q")
             {
@@ -132,12 +132,12 @@ string Hacker::pickHackerName(int level)
             }
             else
             {
-                reFind = false;
-                hackerName = arr[randCol][3];
+                reFind = false; //end loop
+                hackerName = arr[randCol][3];//getting hacker name
                 arr[randCol][3] = "q";
             }
         }
-        else if (level == 5)
+        else if (level == 5) //server 5 
         {
             if (hackerName == "q")
             {
@@ -145,14 +145,14 @@ string Hacker::pickHackerName(int level)
             }
             else
             {
-                reFind = false;
-                hackerName = arr[randCol][4];
+                reFind = false; //end loop
+                hackerName = arr[randCol][4];//getting hacker name
                 arr[randCol][4] = "q";
             }
         }
     } while (reFind == true);
 
-    return hackerName;
+    return hackerName; //returning name of hacker
     // for (int i = 0; i < 5; i++)
     // {
     //     cout << endl;
