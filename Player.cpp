@@ -1,4 +1,4 @@
-// CSCI1300 Fall 2021
+/// CSCI1300 Fall 2021
 // Authors: Zaphod Schmidt and Koral Villlalobos
 // Recitations: 220 - Pragna Mandadi and 315 - Teo Pice-Broncucia
 // Project 3 - Player Implimentation
@@ -14,7 +14,7 @@
 
 using namespace std;
 
-Player::Player() //default constructor initializing variables to zero
+Player::Player() //default constructor initializing variables to zero or other values accordingly
 {
     compMaintenanceLvl = 100;
     numbVirus = 0;
@@ -22,9 +22,9 @@ Player::Player() //default constructor initializing variables to zero
     antiVirusUSBcount = false;
     VPNsOwned = 1;
     internetProv = 10;
-    dogeCoinTotal = 0;
-    frustration = 0;
-    carmenProg = 0;
+    dogeCoinTotal = 1;
+    frustration = 1;
+    carmenProg = 1;
     hackersKilled = 0;
     dogeCoin = 200;
 }
@@ -48,6 +48,7 @@ int Player::getnumbVirus()
 }
 int Player::getcompPartsAvailable()
 {
+
     return compPartsAvailable;
 }
 int Player::getinternetProv()
@@ -66,10 +67,10 @@ int Player::getVPNsOwned()
 {
     return VPNsOwned;
 }
-int Player::getDogeCoin()
-{
+int Player::getDogeCoin(){
     return dogeCoin;
 }
+
 
 //setters
 void Player::setantiVirusUSBcount(bool NewAntiVirusUSBcount)
@@ -79,14 +80,7 @@ void Player::setantiVirusUSBcount(bool NewAntiVirusUSBcount)
 
 void Player::setFrustration(int newFrustration)
 {
-    if (newFrustration > -1)
-    {
-        frustration = newFrustration;
-    }
-    else
-    {
-        frustration = 0;
-    }
+    frustration = newFrustration;
 }
 void Player::setcompMaintenanceLvl(int NewCompMaintenanceLvl)
 {
@@ -116,7 +110,7 @@ void Player::setVPNsOwned(int newVPNsOwned)
 {
     VPNsOwned = newVPNsOwned;
 }
-void Player::setDogeCoin(int newDoge)
-{
+
+void Player::setDogeCoin(int newDoge){
     dogeCoin = newDoge;
 }
