@@ -100,6 +100,7 @@ bool Action::fightHacker(Player &player, Hacker &hacker, Map &map)
     {
         //loses 20 maintenanceLvl
         player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() - 20);
+        player.setcarmenProg(player.getcarmenProg() +10);
         cout << "Lose" << endl;
         cout << "Doge: " << player.getDogeCoin() << endl;
         cout << "-10 Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
@@ -548,11 +549,11 @@ void Action::misfortune(Player &player, NPC &npc, BB &bb)
         cout << "No misfortunes occured!" << endl;
     }
 }
-void Action::storeMoves(int room,int numMoves)
-{
-    fuck.push_back[room-1][0](room);
-    fuck.push_back[room-1][1](numMoves);
-}
+// void Action::storeMoves(int room,int numMoves)
+// {
+//     fuck.push_back[room-1][0](room);
+//     fuck.push_back[room-1][1](numMoves);
+// }
 void Action::sortAlg()
 {int largeOne;
 int two;
@@ -562,11 +563,9 @@ int smallFive;
 
    // movestore[][];
 }
-void Action::inFstreamNames(string name)
+void Action::inFstreamNames(ofstream &file,string name)
 {
-    fstream file("KoralSux.txt",ios::out|ios::in|ios::app);
-
-    file.open("KoralSux.txt");
+    
 
         if (!file.is_open())
     {
@@ -599,3 +598,4 @@ void Action::outFstreamNames()
     }
     file.close();
 }
+
