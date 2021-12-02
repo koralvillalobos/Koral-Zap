@@ -56,20 +56,20 @@ public:
      bool spawnHacker(int, int);
 
      void displayMap();
-     void displayMoves();
+     void displayMoves(Player&);
      bool executeMove(string);
 
      bool isBestBuyLocation();
      bool isNPCLocation();
      bool isHackerLocation();
      bool isBestBuyOnMap();
+     
      void removeHacker();
+     void removeNPC();
 
-
-
-     void randomSpawnHackers(Map&);
-     void randomSpawnNPC(Map&);
-     void randomSpawnBB(Map&);
+     void randomSpawnHackers();
+     void randomSpawnNPC();
+     void randomSpawnBB();
 };
 
 #endif
