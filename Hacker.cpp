@@ -50,7 +50,7 @@ void Hacker::setLocation(int newRows, int newCols)
 }
 string Hacker::pickHackerName(int level)
 {
-    srand(time(NULL));
+    
     string arr[4][5];
     ifstream file;
     string line = "";
