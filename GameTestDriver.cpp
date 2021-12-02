@@ -81,6 +81,7 @@ int main()
                 quit = action.quitGame(move);
                 if (quit == true) //Option to quit game
                 {
+                    action.sortAlg();
                     return 0;
                 }
             }
@@ -88,18 +89,21 @@ int main()
             {
                 quit = true;
             }
-            if (player.getcompMaintenanceLvl() <= 0)
+            if (player.getcompMaintenanceLvl() < 0)
             {
                 cout << "You suck your Computer Maintenance Level reached 0 and you lost" << endl;
+                action.sortAlg();
                 return 0;
             }
             if (player.getFrustration() > 100)
             {
                 cout << "You suck you got really frustated and rage quit.\nYour Frustration Level reached 100 so you lost\nGet Gud Scrub" << endl;
+                action.sortAlg();
                 return 0;
             }
             if(player.getcarmenProg() > 100){
                 cout << "The hackers succeed in stealing all of the information out of the servers.\n This means Carmens progress level is equal to or greater than 100! You lose!" << endl;
+                action.sortAlg();
                 return 0;
             }
             map.displayMap(); // pretty print map_data in terminal
@@ -118,7 +122,7 @@ int main()
                 do
                 {
                     cout << "---MENU---" << endl;
-                    cout << "1. Status Update\n2. Repair your Computer\n3. Use your antivirus software\n4. Browse StackOverflow\n5. Check Kill List\n6.Quit" << endl;
+                    cout << "1. Status Update\n2. Repair your Computer\n3. Use your antivirus software\n4. Browse StackOverflow\n5. Check Kill List\n6. Quit" << endl;
                     cin >> move;
                     stop = action.mainMenu(player, bb, npc, move);
                 } while (stop == false);
