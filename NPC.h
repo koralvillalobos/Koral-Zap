@@ -23,12 +23,14 @@ private:
 
 
 public:
-NPC();
-bool runNPCMenu(Player&, string, BB&, Map&);
+NPC(); //default constructor
+bool runNPCMenu(Player&, string, BB&, Map&); 
 void addRandComputerPart(BB&);
 void subRandComputerPart(BB&, Player&);
 void completePuzzle(Player&, BB&);
 void takeYourChances(Player&, BB&);
+
+//outputs puzzle into terminal
 void puzzle1();
 void puzzle2();
 void puzzle3();
