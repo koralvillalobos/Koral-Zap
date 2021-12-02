@@ -22,20 +22,21 @@ using namespace std; //multiple maps array of 5 server maps
 
 class Server{
     private:
-        int room;
-        int hackersDefeated;
-        Map maps;
+        int room; //server room
+        
+        Map maps; 
 
         
     public:
         Server();
-        int getRoom();
+        int getRoom(); //get & setters for server room
         void setRoom(int);
 
-        int getHackerDefeatCount();
-        void setHackerDefeatCount(int);
+        
+        
 
-        void printMenu();
+
+
 };
 
 #endif
