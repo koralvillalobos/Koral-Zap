@@ -66,7 +66,7 @@ bool Action::executeHackerMenu(string option, Player &player, Hacker &hacker, Ma
 }
 bool Action::fightHacker(Player &player, Hacker &hacker, Map &map)
 {
-    srand(time(NULL));
+
     int r1 = rand() % 6;
     int r2 = rand() % 6;
     int virusChance = rand() % 10;
@@ -102,8 +102,7 @@ bool Action::fightHacker(Player &player, Hacker &hacker, Map &map)
         player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() - 20);
         cout << "Lose" << endl;
         cout << "Doge: " << player.getDogeCoin() << endl;
-        cout << "-20 "
-             << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
+        cout << "-10 Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
 
         //there is a 10% chance of getting a virus
         if (virusChance == 0)
@@ -145,39 +144,10 @@ void Action::useantiVirus(Player &player)
     }
 }
 
-void Action::CompletePuzzle(string name)
-{
-    ifstream file;
-    string line = "";
-    vector<string> question;
 
-    file.open(name);
-
-    if (file.is_open()) //open and read puzzel file
-    {
-        while (getline(file, line))
-        {
-            int i = 0;
-            if (line == "---")
-            {
-                break;
-            }
-            question[i] = line;
-            i++;
-        }
-    }
-    else
-    {
-        cout << "File did not open!" << endl;
-    }
-    for (int i = 0; i < question.size(); i++)
-    {
-        cout << question[i] << endl;
-    }
-}
-string Action::RockPaperScissors(int numb)
+void Action::RockPaperScissors(Player &player)
 {
-    srand(time(NULL));
+
     //1.Rock
     //2.Paper
     //3.Scissors
@@ -187,82 +157,92 @@ string Action::RockPaperScissors(int numb)
     string win = "Win";
     string loss = "Loss";
     string tie = "Tie";
+    string numb;
     int computerPick = rand() % 3;
     bool end = false;
-    cout << "compPick" << computerPick << endl;
-
+    cout << "ROCK PAPER SCISSORS: " << endl;
+    cout << "1.Rock\n2.Paper\n3.Scissors" << endl;
     while (end == false)
     {
-        switch (numb)
-        {
+        cin >> numb;
         //1.Rock
-        case 1:
+        if (numb == "1")
+        {
 
             if (computerPick == 1)
             {
+                cout << "Tie" << endl;
                 end = true;
-                return tie;
-                break;
             }
             if (computerPick == 2)
             {
+                cout << "Loss" << endl;
                 end = true;
-                return loss;
-                break;
             }
-            if (computerPick == 3)
+            if (computerPick == 0)
             {
+                player.setFrustration(player.getFrustration() - 10); //subtracts frustration level
+
+                cout << endl;
+                cout << "Win" << endl;
+                cout << endl;
+                cout << "-10 Frustration Level" << endl;
+                cout << "Frustration Level: " << player.getFrustration() << endl;
                 end = true;
-                return win;
-                break;
             }
+        }
         //2.Paper
-        case 2:
+        else if (numb == "2")
+        {
             if (computerPick == 1)
             {
+                player.setFrustration(player.getFrustration() - 10);
+                cout << "Win" << endl;
+                cout << endl;
+                cout << "-10 Frustration Level" << endl;
+                cout << "Frustration Level: " << player.getFrustration() << endl;
                 end = true;
-                return win;
-                break;
             }
             if (computerPick == 2)
             {
-
+                cout << "Tie" << endl;
                 end = true;
-                return tie;
-                break;
             }
-            if (computerPick == 3)
+            if (computerPick == 0)
             {
+                cout << "Loss" << endl;
                 end = true;
-                return loss;
-                break;
             }
+        }
         //3.Scissors
-        case 3:
+        else if (numb == "3")
+        {
             if (computerPick == 1)
             {
+                cout << "Loss" << endl;
                 end = true;
-                return loss;
-                break;
             }
             if (computerPick == 2)
             {
-                return win;
+                player.setFrustration(player.getFrustration() - 10);
+                cout << "Win" << endl;
+                cout << endl;
+                cout << "-10 Frustration Level" << endl;
+                cout << "Frustration Level: " << player.getFrustration() << endl;
                 end = true;
-                break;
             }
-            if (computerPick == 3)
+            if (computerPick == 0)
             {
+                cout << "Tie" << endl;
                 end = true;
-                return tie;
-                break;
             }
-        default:
+        }
+        else
+        {
             cout << "Invald input, please enter a number from 1-3" << endl;
-            break;
+            end = false;
         }
     }
-    return 0;
 }
 
 const int Action::getPuzzel1Ans()
@@ -307,8 +287,7 @@ bool Action::quitGame(string move)
         }
         else if (quit == 'n') //if no continue while loop
         {
-            n = true;
-            break;
+            return false;
         }
         else //edge case for invalid input
         {
@@ -318,201 +297,305 @@ bool Action::quitGame(string move)
     }
 }
 
-void Action::mainMenu(Player &player, BB &bb, NPC& npc,string choice)
+bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
 {
+    string rps;
     int count = 0;
-    int puzzorgame;
+    string puzzorgame;
     int randPuzz = rand() % 5;
-    int RPS;
+    bool shit = false;
+    string compparttorepair;
 
-    int compparttorepair;
-
-        
-        if(choice=="1"){
-            statusUpdate(player);
-        }
-        if(choice=="2"){
-            do
+    if (choice == "1")
+    {
+        statusUpdate(player);
+    }
+    else if (choice == "2")
+    {
+        do
+        {
+            if (player.getnumbVirus() > 0)
             {
-                if (player.getnumbVirus() > 0)
+                cout << "You cannot repair your computer because you have " << player.getnumbVirus() << " viruses :(" << endl;
+            }
+            else if (player.getcompPartsAvailable() > 0 && player.getnumbVirus() == 0)
+            {
+
+                cout << "You can select up to 5 parts to repair. These include: " << endl;
+                cout << "1.CPU: " << bb.getNumbCPU() << endl
+                     << "2.GPU: " << bb.getNumbGPU() << endl
+                     << "3.Power Supply Unit: " << bb.getNumbPowerSupplyUnit() << endl
+                     << "4.Computer Case: " << bb.getNumbComputerCase() << endl
+                     << "5.Internet Card: " << bb.getNumbInternetCard() << endl
+                     << "6.Keyboard and Mouse: " << bb.getNumbKeyboardMouse() << endl
+                     << "7.DONE REPAIRING" << endl
+                     << "Enter the number of the computer part you would like to use or 7 to finish:" << endl;
+
+                cin >> compparttorepair;
+
+                if (compparttorepair == "1")
                 {
-                    cout << "You cannot repair your computer because you have " << player.getnumbVirus() << " viruses :(" << endl;
-                }
-                else if (player.getcompPartsAvailable() > 0 && player.getnumbVirus() == 0)
-                {
-
-                    cout << "You have " << player.getcompPartsAvailable() << " computer part(s)! You can select up to 5 parts to repair. These include: " << endl;
-                    cout << "1.CPU: " << bb.getNumbCPU() << endl
-                         << "2.GPU: " << bb.getNumbGPU() << endl
-                         << "3.Power Supply Unit: " << bb.getNumbPowerSupplyUnit() << endl
-                         << "4.Computer Case: " << bb.getNumbComputerCase() << endl
-                         << "5.Internet Card: " << bb.getNumbInternetCard() << endl
-                         << "6.Keyboard and Mouse: " << bb.getNumbKeyboardMouse() << endl
-                         << "7.DONE REPAIRING" << endl
-                         << "Enter the number of the computer part you would like to use or 7 to finish:" << endl;
-
-                    cin >> compparttorepair;
-
-                    switch (compparttorepair)
+                    if (bb.getNumbCPU() > 0)
                     {
-                    case 1:
-                        if (bb.getNumbCPU() > 0)
-                        {
-                            bb.setNumbCPU(bb.getNumbCPU() - 1);
-                            count++;
-                        }
-                        else
-                        {
-                            cout << "No CPU to repair with" << endl;
-                        }
-
-                        break;
-                    case 2:
-                        if (bb.getNumbGPU() > 0)
-                        {
-                            bb.setNumbGPU(bb.getNumbGPU() - 1);
-                            count++;
-                        }
-                        else
-                        {
-                            cout << "No gpu to repair with" << endl;
-                        }
-
-                        break;
-                    case 3:
-                        if (bb.getNumbPowerSupplyUnit() > 0)
-                        {
-                            bb.setNumbPowerSupplyUnit(bb.getNumbPowerSupplyUnit() - 1);
-                            count++;
-                        }
-                        else
-                        {
-                            cout << "no power supply unit to repair with" << endl;
-                        }
-
-                        break;
-                    case 4:
-                        if (bb.getNumbComputerCase() > 0)
-                        {
-                            bb.setNumbComputerCase(bb.getNumbComputerCase() - 1);
-                            count++;
-                        }
-                        else
-                        {
-                            cout << "no computer case to repair with" << endl;
-                        }
-
-                        break;
-                    case 5:
-                        if (bb.getNumbInternetCard() > 0)
-                        {
-                            bb.setNumbInternetCard(bb.getNumbInternetCard() - 1);
-                            count++;
-                        }
-                        else
-                        {
-                            cout << "no internet card to repair with" << endl;
-                        }
-                        break;
-                    case 6:
-                        if (bb.getNumbKeyboardMouse() > 0)
-                        {
-                            bb.setNumbKeyboardMouse(bb.getNumbKeyboardMouse() - 1);
-                            count++;
-                        }
-                        else
-                        {
-                            cout << "no keyboard /mouse to repair with" << endl;
-                        }
-
-                        break;
-                    case 7:
-                        cout << "GOODBYE!" << endl;
-                        break;
-
-                    default:
-                        cout << "invalid option" << endl;
+                        bb.setNumbCPU(bb.getNumbCPU() - 1);
+                        count++;
+                    }
+                    else
+                    {
+                        cout << "No CPU to repair with" << endl;
                     }
                 }
-                if (count == 5)
+                else if (compparttorepair == "2")
                 {
-                    break;
+                    if (bb.getNumbGPU() > 0)
+                    {
+                        bb.setNumbGPU(bb.getNumbGPU() - 1);
+                        count++;
+                    }
+                    else
+                    {
+                        cout << "No gpu to repair with" << endl;
+                    }
                 }
-            } while (compparttorepair != 7);
-
-            switch (count)
+                else if (compparttorepair == "3")
+                {
+                    if (bb.getNumbPowerSupplyUnit() > 0)
+                    {
+                        bb.setNumbPowerSupplyUnit(bb.getNumbPowerSupplyUnit() - 1);
+                        count++;
+                    }
+                    else
+                    {
+                        cout << "no power supply unit to repair with" << endl;
+                    }
+                }
+                else if (compparttorepair == "4")
+                {
+                    if (bb.getNumbComputerCase() > 0)
+                    {
+                        bb.setNumbComputerCase(bb.getNumbComputerCase() - 1);
+                        count++;
+                    }
+                    else
+                    {
+                        cout << "no computer case to repair with" << endl;
+                    }
+                }
+                else if (compparttorepair == "5")
+                {
+                    if (bb.getNumbInternetCard() > 0)
+                    {
+                        bb.setNumbInternetCard(bb.getNumbInternetCard() - 1);
+                        count++;
+                    }
+                    else
+                    {
+                        cout << "no internet card to repair with" << endl;
+                    }
+                }
+                else if (compparttorepair == "6")
+                {
+                    if (bb.getNumbKeyboardMouse() > 0)
+                    {
+                        bb.setNumbKeyboardMouse(bb.getNumbKeyboardMouse() - 1);
+                        count++;
+                    }
+                    else
+                    {
+                        cout << "no keyboard /mouse to repair with" << endl;
+                    }
+                }
+                else if (compparttorepair == "7")
+                {
+                    cout << "GOODBYE!" << endl;
+                    shit = true;
+                }
+                else
+                {
+                    cout << "Invalid Option" << endl;
+                }
+            }
+            if (count == 5)
             {
-            case 1:
-                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 20);
-                cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
-                break;
-
-            case 2:
-                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 40);
-                cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
-                break;
-
-            case 3:
-                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 60);
-                cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
-                break;
-
-            case 4:
-                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 80);
-                cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
-                break;
-
-            case 5:
-                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 100);
-                cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
                 break;
             }
-        }
+        } while (shit == false);
+
+        switch (count)
+        {
+        case 1:
+            player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 20);
+            cout << "+20 Computer Maintenance Level" << endl;
+            cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
+            break;
+
+        case 2:
+            player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 40);
+            cout << "+40 Computer Maintenance Level" << endl;
+            cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
+            break;
+
         case 3:
-            if (player.getantiVirusUSBcount() > 0 && player.getnumbVirus() > 0)
-            {
-                player.setantiVirusUSBcount(player.getantiVirusUSBcount() - 1);
-                player.setnumbVirus(0);
-                cout << "You have used one stick of USB antivirus software to get ridof all viruses on your computer!" << endl;
-            }
-            else if (player.getnumbVirus() == 0)
-            {
-                cout << "You have no viruses" << endl;
-            }
-            else if (player.getantiVirusUSBcount() == 0)
-            {
-                cout << "You have no antivirus USB sticks to use :(" << endl;
-            }
+            player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 60);
+            cout << "+60 Computer Maintenance Level" << endl;
+            cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
             break;
 
         case 4:
-            cout << "Would you like to solve a puzzel(1) or attempt a game(2)?" << endl;
-            cin >> puzzorgame;
-
-            switch (puzzorgame)
-            {
-            case 1:
-                npc.completePuzzle(player, bb);
-                break;
-
-            case 2:
-                cout << "ROCK PAPER SCISSORS: " << endl;
-                cout << "1.Rock\n2.Paper\n3.Scissors" << endl;
-                cin >> RPS;
-                RockPaperScissors(RPS);
-                break;
-
-            default:
-                cout << "Invalid choice." << endl;
-                break;
-            }
-        case 5:
-            cout << "You chose to quit the menu! GOODBYE!" << endl;
+            player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 80);
+            cout << "+80 Computer Maintenance Level" << endl;
+            cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
             break;
 
-        default:
-            cout << "Invalid option" << endl;
+        case 5:
+            player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 100);
+            cout << "+100 Computer Maintenance Level" << endl;
+            cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
             break;
         }
-    } while (choice != 5);
+    }
+    else if (choice == "3")
+    {
+        if (player.getantiVirusUSBcount() > 0 && player.getnumbVirus() > 0)
+        {
+            player.setantiVirusUSBcount(player.getantiVirusUSBcount() - 1);
+            player.setnumbVirus(0);
+            cout << "You have used one stick of USB antivirus software to get ridof all viruses on your computer!" << endl;
+        }
+        else if (player.getnumbVirus() == 0)
+        {
+            cout << "You have no viruses" << endl;
+        }
+        else if (player.getantiVirusUSBcount() == 0)
+        {
+            cout << "You have no antivirus USB sticks to use :(" << endl;
+        }
+    }
+    else if (choice == "4")
+    {
+        cout << "Would you like to solve a puzzel(1) or attempt a game(2)?" << endl;
+        cin >> puzzorgame;
+
+        if (puzzorgame == "1")
+        {
+            npc.completePuzzle(player, bb);
+        }
+        else if (puzzorgame == "2")
+        {
+            RockPaperScissors(player);
+        }
+        else
+        {
+            cout << "Invalid choice." << endl;
+        }
+    }
+    else if (choice == "5")
+    {
+        cout << "You have killed: "<<endl;
+        cout<<endl;
+        outFstreamNames();
+    }
+    else if (choice == "6")
+    {
+        cout << "You chose to quit the menu! GOODBYE!" << endl;
+        return true;
+    }
+    else
+    {
+        cout << "Invalid option" << endl;
+    }
+}
+void Action::misfortune(Player &player, NPC &npc, BB &bb)
+{
+
+    int randnumb = rand() % 10;
+    //cout << "rand num for misfortune:" << randnumb << endl;
+
+    if (randnumb > -1 && randnumb < 4)
+    {
+        if (randnumb == 0)
+        {
+            if (player.getcompPartsAvailable() > 0)
+            {
+                cout << "UH OH! You lost a computer part due to a misfortune. You suck" << endl;
+                npc.subRandComputerPart(bb, player);
+            }
+
+            else if (player.getcompPartsAvailable() == 0)
+            {
+                cout << "OH NO! Your computer was damaged!" << endl;
+                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() - 10);
+            }
+        }
+        else if (randnumb == 1)
+        {
+            cout << "OH NO! Your team was robbed by Carmen’s dastardly hackers! You have no computer parts/antivirus software left!" << endl;
+            player.setcompPartsAvailable(0);
+            player.setantiVirusUSBcount(0);
+        }
+        else if (randnumb == 2 || randnumb == 3)
+        {
+            cout << "OH NO! Why won’t my code work!!!! Your frustration level was increased." << endl;
+            player.setFrustration(player.getFrustration() + 10);
+            if (player.getFrustration() >= 100)
+            {
+                cout << "OH NO! You have rage quit! Looks like you couldn’t handle Carmen’s hackers. BItch" << endl;
+            }
+        }
+    }
+    else
+    {
+        cout << "No misfortunes occured!" << endl;
+    }
+}
+void Action::storeMoves(int room,int numMoves)
+{
+    fuck.push_back[room-1][0](room);
+    fuck.push_back[room-1][1](numMoves);
+}
+void Action::sortAlg()
+{int largeOne;
+int two;
+int three;
+int four;
+int smallFive;
+
+   // movestore[][];
+}
+void Action::inFstreamNames(string name)
+{
+    fstream file("KoralSux.txt",ios::out|ios::in|ios::app);
+
+    file.open("KoralSux.txt");
+
+        if (!file.is_open())
+    {
+        cout << "Unable to Open File" << endl;
+    }
+    else
+    {
+        file<<name<<endl;
+        file.close();
+    }
+}
+void Action::outFstreamNames()
+{
+    ifstream file;
+    string line = "";
+
+    file.open("KoralSux.txt");
+
+    if (!file.is_open()) //open and read puzzel file
+    {
+        cout << "File did not open!" << endl;
+    }
+    else
+    {
+        while (getline(file, line))
+        {
+            cout<<line<<endl;
+        }
+        cout << endl;
+    }
+    file.close();
 }
