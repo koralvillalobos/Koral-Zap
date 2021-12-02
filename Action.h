@@ -54,9 +54,10 @@ public:
     void misfortune(Player &player, NPC &npc, BB &bb);
     void storeMoves(int,int);
     void sortAlg();
-    void inFstreamNames(string);
+    void inFstreamNames(ofstream&, string);
     void outFstreamNames();
 
     
 };
+
 #endif
