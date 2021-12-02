@@ -23,6 +23,17 @@ string makeLower(string name)
 
 int main()
 {
+    ifstream File;
+    string filepath = "KoralSux.txt";
+
+    File.open(filepath.c_str(), std::ifstream::out | std::ifstream::trunc);
+    if (!File.is_open() || File.fail())
+    {
+        File.close();
+        printf("\nError : failed to erase file content !");
+    }
+    File.close();
+
     srand(time(NULL));
 
     Map map;       // create object called map of type Map
@@ -49,7 +60,7 @@ int main()
 
     for (int i = 0; i < 5; i++)
     {
-        int moveCount=0;
+        int moveCount = 0;
         server.setRoom(server.getRoom() + 1);
         player.sethackersKilled(0);
         map.setHackerCount(0);
@@ -82,9 +93,14 @@ int main()
                 cout << "You suck your Computer Maintenance Level reached 0 and you lost" << endl;
                 return 0;
             }
-            if (player.getFrustration() == 100)
+            if (player.getFrustration() > 100)
             {
-                cout << "You suck you got really frustated and rage quit.\n Your Frustration Level reached 100 so you lost\n Get Gud Scrub" << endl;
+                cout << "You suck you got really frustated and rage quit.\nYour Frustration Level reached 100 so you lost\nGet Gud Scrub" << endl;
+                return 0;
+            }
+            if(player.getcarmenProg() > 100){
+                cout << "The hackers succeed in stealing all of the information out of the servers.\n This means Carmens progress level is equal to or greater than 100! You lose!" << endl;
+                return 0;
             }
             map.displayMap(); // pretty print map_data in terminal
             action.virus(player);
@@ -149,7 +165,12 @@ int main()
                     //hackers killed need to be removed from map
                     cout << endl;
                 }
-                action.inFstreamNames(name);
+
+                ofstream file;
+                file.open("KoralSux.txt", ios::app);
+
+                action.inFstreamNames(file, name);
+
                 cout << "Hackers killed: " << player.gethackersKilled() << endl;
                 if (player.gethackersKilled() == map.getHackerCount())
                 {
