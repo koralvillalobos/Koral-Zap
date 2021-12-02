@@ -4,22 +4,28 @@ using namespace std;
 
 NPC::NPC()
 {
-    
 }
-bool NPC::runNPCMenu(Player &player, string option,BB &bb)
+bool NPC::runNPCMenu(Player &player, string option, BB &bb, Map &map)
 {
     cin >> option;
-    if (option == "1" && player.getcompPartsAvailable() > 0)
+    if (option == "3")
     {
-        completePuzzle(player, bb);
         return true;
     }
-    else if(player.getcompPartsAvailable() == 0){
+    else if (option == "1" && bb.getCompPartsAvailable(bb) > 0)
+    {
+        completePuzzle(player, bb);
+        map.removeNPC();
+        return true;
+    }
+    else if (bb.getCompPartsAvailable(bb) == 0)
+    {
         cout << "You have no computer parts & cannot complete a puzzle!" << endl;
     }
     else if (option == "2")
     {
-        takeYourChances(player,bb);
+        takeYourChances(player, bb);
+        map.removeNPC();
         return true;
     }
     else
@@ -27,11 +33,10 @@ bool NPC::runNPCMenu(Player &player, string option,BB &bb)
         cout << "Invalid Input" << endl;
         return false;
     }
-
 }
 void NPC::addRandComputerPart(BB &bb)
 {
-    srand(time(NULL));
+
     int num = rand() % 7;
     switch (num)
     {
@@ -75,126 +80,123 @@ void NPC::addRandComputerPart(BB &bb)
 }
 void NPC::subRandComputerPart(BB &bb, Player &player)
 {
-    srand(time(NULL));
+
     bool run = false;
     while (run == false)
     {
         int num = rand() % 7;
 
-        
-
-    if(player.getcompPartsAvailable() > 0){
-        switch (num)
+        if (player.getcompPartsAvailable() > 0)
         {
-        case 0:
-            if (bb.getNumbCPU() > 0)
+            switch (num)
             {
-                bb.setNumbCPU(bb.getNumbCPU() - 1);
-                cout << "-1 CPU" << endl;
-                cout << "You have " << bb.getNumbCPU() << " CPUs left" << endl;
-                run = true;
-            }
-            else
-            {
+            case 0:
+                if (bb.getNumbCPU() > 0)
+                {
+                    bb.setNumbCPU(bb.getNumbCPU() - 1);
+                    cout << "-1 CPU" << endl;
+                    cout << "You have " << bb.getNumbCPU() << " CPUs left" << endl;
+                    run = true;
+                }
+                else
+                {
+                    break;
+                }
+                break;
+            case 1:
+                if (bb.getNumbGPU() > 0)
+                {
+                    bb.setNumbGPU(bb.getNumbGPU() - 1);
+                    cout << "-1 GPU" << endl;
+                    cout << "You have " << bb.getNumbGPU() << " GPUs left" << endl;
+                    run = true;
+                }
+                else
+                {
+                    break;
+                }
+                break;
+            case 2:
+                if (bb.getNumbPowerSupplyUnit() > 0)
+                {
+                    bb.setNumbPowerSupplyUnit(bb.getNumbPowerSupplyUnit() - 1);
+                    cout << "-1 Power Supply Unit" << endl;
+                    cout << "You have " << bb.getNumbPowerSupplyUnit() << " Power Supply Units left" << endl;
+                    run = true;
+                }
+                else
+                {
+                    break;
+                }
+                break;
+            case 3:
+                if (bb.getNumbComputerCase() > 0)
+                {
+                    bb.setNumbComputerCase(bb.getNumbComputerCase() - 1);
+                    cout << "-1 Computer Case" << endl;
+                    cout << "You have " << bb.getNumbComputerCase() << " Computer Cases left" << endl;
+                    run = true;
+                }
+                else
+                {
+                    break;
+                }
+                break;
+            case 4:
+                if (bb.getNumbInternetCard() > 0)
+                {
+                    bb.setNumbInternetCard(bb.getNumbInternetCard() - 1);
+                    cout << "-1 Internet Card" << endl;
+                    cout << "You have " << bb.getNumbInternetCard() << " Internet Cards left" << endl;
+                    run = true;
+                }
+                else
+                {
+                    break;
+                }
+                break;
+            case 5:
+                if (bb.getNumbKeyboardMouse() > 0)
+                {
+                    bb.setNumbKeyboardMouse(bb.getNumbKeyboardMouse() - 1);
+                    cout << "-1 Keyboard and Mouse" << endl;
+                    cout << "You have " << bb.getNumbKeyboardMouse() << " Keyboards and Mouse left" << endl;
+                    run = true;
+                }
+                else
+                {
+                    break;
+                }
+                break;
+            case 6:
+                if (bb.getNumbPremadeComp() > 0)
+                {
+                    bb.setNumbPremadeComp(bb.getNumbPremadeComp() - 1);
+                    cout << "-1 Pre-Made Computer" << endl;
+                    cout << "You have " << bb.getNumbPremadeComp() << " Pre-Made Computers left" << endl;
+                    run = true;
+                }
+                else
+                {
+                    break;
+                }
                 break;
             }
-            break;
-        case 1:
-            if (bb.getNumbGPU() > 0)
-            {
-                bb.setNumbGPU(bb.getNumbGPU() - 1);
-                cout << "-1 GPU" << endl;
-                cout << "You have " << bb.getNumbGPU() << " GPUs left" << endl;
-                run = true;
-            }
-            else
-            {
-                break;
-            }
-            break;
-        case 2:
-            if (bb.getNumbPowerSupplyUnit() > 0)
-            {
-                bb.setNumbPowerSupplyUnit(bb.getNumbPowerSupplyUnit() - 1);
-                cout << "-1 Power Supply Unit" << endl;
-                cout << "You have " << bb.getNumbPowerSupplyUnit() << " Power Supply Units left" << endl;
-                run = true;
-            }
-            else
-            {
-                break;
-            }
-            break;
-        case 3:
-            if (bb.getNumbComputerCase() > 0)
-            {
-                bb.setNumbComputerCase(bb.getNumbComputerCase() - 1);
-                cout << "-1 Computer Case" << endl;
-                cout << "You have " << bb.getNumbComputerCase() << " Computer Cases left" << endl;
-                run = true;
-            }
-            else
-            {
-                break;
-            }
-            break;
-        case 4:
-            if (bb.getNumbInternetCard() > 0)
-            {
-                bb.setNumbInternetCard(bb.getNumbInternetCard() - 1);
-                cout << "-1 Internet Card" << endl;
-                cout << "You have " << bb.getNumbInternetCard() << " Internet Cards left" << endl;
-                run = true;
-            }
-            else
-            {
-                break;
-            }
-            break;
-        case 5:
-            if (bb.getNumbKeyboardMouse() > 0)
-            {
-                bb.setNumbKeyboardMouse(bb.getNumbKeyboardMouse() - 1);
-                cout << "-1 Keyboard and Mouse" << endl;
-                cout << "You have " << bb.getNumbKeyboardMouse() << " Keyboards and Mouse left" << endl;
-                run = true;
-            }
-            else
-            {
-                break;
-            }
-            break;
-        case 6:
-            if (bb.getNumbPremadeComp() > 0)
-            {
-                bb.setNumbPremadeComp(bb.getNumbPremadeComp() - 1);
-                cout << "-1 Pre-Made Computer" << endl;
-                cout << "You have " << bb.getNumbPremadeComp() << " Pre-Made Computers left" << endl;
-                run = true;
-            }
-            else
-            {
-                break;
-            }
-            break;
         }
+        return;
     }
-    return;
-    }
-
 }
 void NPC::completePuzzle(Player &player, BB &bb)
 {
-    srand(time(NULL));
+
     int rand5 = rand() % 5;
     string playerAnswer;
     string stringAnswer;
-    
 
     if (rand5 == 0)
     {
         puzzle1();
-        cout<<"Enter Answer:"<<endl;
+        cout << "Enter Answer:" << endl;
         cin >> playerAnswer;
 
         stringAnswer = "21";
@@ -208,14 +210,14 @@ void NPC::completePuzzle(Player &player, BB &bb)
         {
             cout << "You are wrong you suck!" << endl;
             subRandComputerPart(bb, player);
-            
+
             return;
         }
     }
     if (rand5 == 1)
     {
         puzzle2();
-        cout<<"Enter Answer:"<<endl;
+        cout << "Enter Answer:" << endl;
         cin >> playerAnswer;
         stringAnswer = "13";
         if (stringAnswer == playerAnswer)
@@ -227,14 +229,14 @@ void NPC::completePuzzle(Player &player, BB &bb)
         else
         {
             cout << "You are wrong you suck!" << endl;
-            subRandComputerPart(bb,player);
+            subRandComputerPart(bb, player);
             return;
         }
     }
     if (rand5 == 2)
     {
         puzzle3();
-        cout<<"Enter Answer:"<<endl;
+        cout << "Enter Answer:" << endl;
         cin >> playerAnswer;
         stringAnswer = "b";
         if (stringAnswer == playerAnswer)
@@ -253,7 +255,7 @@ void NPC::completePuzzle(Player &player, BB &bb)
     if (rand5 == 3)
     {
         puzzle4();
-        cout<<"Enter Answer:"<<endl;
+        cout << "Enter Answer:" << endl;
         cin >> playerAnswer;
         stringAnswer = "a";
         if (stringAnswer == playerAnswer)
@@ -272,7 +274,7 @@ void NPC::completePuzzle(Player &player, BB &bb)
     if (rand5 == 4)
     {
         puzzle5();
-        cout<<"Enter Answer:"<<endl;
+        cout << "Enter Answer:" << endl;
         cin >> playerAnswer;
         stringAnswer = "d";
         if (stringAnswer == playerAnswer)
@@ -284,14 +286,14 @@ void NPC::completePuzzle(Player &player, BB &bb)
         else
         {
             cout << "You are wrong you suck!" << endl;
-            subRandComputerPart(bb,player);
+            subRandComputerPart(bb, player);
             return;
         }
     }
 }
 void NPC::takeYourChances(Player &player, BB &bb)
 {
-    srand(time(NULL));
+
     int rand3 = rand() % 3;
     int rand6 = rand() % 6;
 
@@ -307,7 +309,7 @@ void NPC::takeYourChances(Player &player, BB &bb)
     if (rand3 == 2) //bad outcome
     {
         cout << "The outcome was bad the NPC steals one of your" << endl;
-        subRandComputerPart(bb,player);
+        subRandComputerPart(bb, player);
     }
 }
 void NPC::puzzle1()
