@@ -9,6 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include <ctype.h>
+#include <vector>
 #include "Player.h"
 #include "Hacker.h"
 #include "BB.h"
@@ -27,6 +28,7 @@ private:
     static const char puzzel3Ans = 'B';
     static const char puzzel4Ans = 'A';
     static const char puzzel5Ans = 'D';
+    vector<vector<int> >fuck;
 
 public:
     Action();
@@ -39,16 +41,22 @@ public:
     void virus(Player&);
     void useantiVirus(Player&);
 
-    void mainMenu(Player&, BB&, NPC&,string);
+    bool mainMenu(Player&, BB&, NPC&,string);
 
-    void CompletePuzzle(string);
-    string RockPaperScissors(int);
+    
+    void RockPaperScissors(Player&);
     static const int getPuzzel1Ans();
     static const int getPuzzel2Ans();
     char getPuzzel3Ans();
     char getPuzzel4Ans();
     char getPuzzel5Ans();
-
     bool quitGame(string);
+    void misfortune(Player &player, NPC &npc, BB &bb);
+    void storeMoves(int,int);
+    void sortAlg();
+    void inFstreamNames(string);
+    void outFstreamNames();
+
+    
 };
 #endif
