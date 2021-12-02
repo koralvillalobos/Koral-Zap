@@ -31,12 +31,16 @@ public:
     string getHacker(); //name
     void setHacker(string);
 
+    //getters
     int getChallegeLevel();
-    void setChallegeLevel(int);
-
     int getLocationRows();
     int getLocationCols();
+   
+
+    //setters
     void setLocation(int, int);
+    void setChallegeLevel(int);
+
     string pickHackerName(int);
 };
 
