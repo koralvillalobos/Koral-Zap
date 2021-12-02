@@ -1,40 +1,122 @@
 // CSCI1300 Fall 2021
 // Authors: Zaphod Schmidt and Koral Villlalobos
 // Recitations: 220 - Pragna Mandadi and 315 - Teo Pice-Broncucia
-// Project 3 - NPC Class
-
-#ifndef NPC_H
-#define NPC_H
+// Project 3 - Player Implimentation
 
 #include <fstream>
 #include <iostream>
 #include <ctype.h>
+#include <iomanip>
+#include <cmath>
+#include <string>
+#include <fstream>
 #include "Player.h"
-#include "Hacker.h"
-#include "BB.h"
-#include <time.h>
-#include <stdlib.h>
 
 using namespace std;
 
-class NPC
+Player::Player() //default constructor initializing variables to zero
 {
-private:
+    compMaintenanceLvl = 100;
+    numbVirus = 0;
+    compPartsAvailable = 1;
+    antiVirusUSBcount = false;
+    VPNsOwned = 1;
+    internetProv = 10;
+    dogeCoinTotal = 0;
+    frustration = 0;
+    carmenProg = 0;
+    hackersKilled = 0;
+    dogeCoin = 200;
+}
 
+//getters
+int Player::getantiVirusUSBcount()
+{
+    return antiVirusUSBcount;
+}
+int Player::getFrustration()
+{
+    return frustration;
+}
+int Player::getcompMaintenanceLvl()
+{
+    return compMaintenanceLvl;
+}
+int Player::getnumbVirus()
+{
+    return numbVirus;
+}
+int Player::getcompPartsAvailable()
+{
+    return compPartsAvailable;
+}
+int Player::getinternetProv()
+{
+    return internetProv;
+}
+int Player::getcarmenProg()
+{
+    return carmenProg;
+}
+int Player::gethackersKilled()
+{
+    return hackersKilled;
+}
+int Player::getVPNsOwned()
+{
+    return VPNsOwned;
+}
+int Player::getDogeCoin()
+{
+    return dogeCoin;
+}
 
-public:
-NPC();
-bool runNPCMenu(Player&, string, BB&, Map&);
-void addRandComputerPart(BB&);
-void subRandComputerPart(BB&, Player&);
-void completePuzzle(Player&, BB&);
-void takeYourChances(Player&, BB&);
-void puzzle1();
-void puzzle2();
-void puzzle3();
-void puzzle4();
-void puzzle5();
+//setters
+void Player::setantiVirusUSBcount(bool NewAntiVirusUSBcount)
+{
+    antiVirusUSBcount = NewAntiVirusUSBcount;
+}
 
-
-};
-#endif
+void Player::setFrustration(int newFrustration)
+{
+    if (newFrustration > -1)
+    {
+        frustration = newFrustration;
+    }
+    else
+    {
+        frustration = 0;
+    }
+}
+void Player::setcompMaintenanceLvl(int NewCompMaintenanceLvl)
+{
+    compMaintenanceLvl = NewCompMaintenanceLvl;
+}
+void Player::setnumbVirus(int newNumbVirus)
+{
+    numbVirus = newNumbVirus;
+}
+void Player::setcompPartsAvailable(int NewCompPartsAvailable)
+{
+    compPartsAvailable = NewCompPartsAvailable;
+}
+void Player::setinternetProv(int newInternetProv)
+{
+    internetProv = newInternetProv;
+}
+void Player::setcarmenProg(int newCarmenProg)
+{
+    carmenProg = newCarmenProg;
+}
+void Player::sethackersKilled(int newHackersKilled)
+{
+    hackersKilled = newHackersKilled;
+}
+void Player::setVPNsOwned(int newVPNsOwned)
+{
+    VPNsOwned = newVPNsOwned;
+}
+void Player::setDogeCoin(int newDoge)
+{
+    dogeCoin = newDoge;
+}
