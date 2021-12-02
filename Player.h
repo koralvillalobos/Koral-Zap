@@ -24,6 +24,7 @@ class Player
 {
     private:
 
+    //private variables for getters and setters
     int compMaintenanceLvl;
     int numbVirus;
     int compPartsAvailable;
@@ -40,7 +41,7 @@ class Player
 
     Player();
 
-    //getters
+    //getters to return values
     int getantiVirusUSBcount();
     int getFrustration();
     int getcompMaintenanceLvl();
@@ -52,7 +53,7 @@ class Player
     int gethackersKilled();
     int getVPNsOwned();
     
-    //setters
+    //setters to change values
     void setantiVirusUSBcount(bool);
     void setFrustration(int);
     void setcompMaintenanceLvl(int);
