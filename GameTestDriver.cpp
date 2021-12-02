@@ -33,8 +33,6 @@ int main()
     BB bb;
     NPC npc;
 
-    player.sethackersKilled(0);
-
     string move;       //KORAL MAKE SURE TO USE THIS FOR ANY MENU OPTIONS THAT USE NUMBERS INSTEAD OF LETTERS AS A SELECTION TOOL
     bool quit = false; //if true stops game
 
@@ -51,13 +49,19 @@ int main()
 
     for (int i = 0; i < 5; i++)
     {
+        int moveCount=0;
         server.setRoom(server.getRoom() + 1);
+        player.sethackersKilled(0);
+        map.setHackerCount(0);
+        map.setNPCCount(0);
+
         cout << "You are in server room: " << server.getRoom() << endl;
 
-        map.randomSpawnNPC(map);
-        map.randomSpawnHackers(map);
-        map.randomSpawnBB(map);
+        map.randomSpawnBB();
+        map.randomSpawnHackers();
+        map.randomSpawnNPC();
 
+        quit = false;
         while (quit == false)
         {
             //Option Quit
@@ -69,10 +73,23 @@ int main()
                     return 0;
                 }
             }
+            if (move == "c" && player.gethackersKilled() == map.getHackerCount())
+            {
+                quit = true;
+            }
+            if (player.getcompMaintenanceLvl() <= 0)
+            {
+                cout << "You suck your Computer Maintenance Level reached 0 and you lost" << endl;
+                return 0;
+            }
+            if (player.getFrustration() == 100)
+            {
+                cout << "You suck you got really frustated and rage quit.\n Your Frustration Level reached 100 so you lost\n Get Gud Scrub" << endl;
+            }
             map.displayMap(); // pretty print map_data in terminal
             action.virus(player);
             cout << "Valid moves are: " << endl;
-            map.displayMoves(); // give user a menu of valid moves to pick from
+            map.displayMoves(player); // give user a menu of valid moves to pick from
 
             cout << "Input a move: ";
             cin >> move;
@@ -80,26 +97,35 @@ int main()
 
             if (move == "m")
             {
-                bool stop=false;
-                while (stop==false)
+                bool stop = false;
+
+                do
                 {
                     cout << "---MENU---" << endl;
-                    cout << "1. Status Update\n2. Repair your Computer\n3. Use your antivirus software\n4. Browse StackOverflow\n5. Quit" << endl;
+                    cout << "1. Status Update\n2. Repair your Computer\n3. Use your antivirus software\n4. Browse StackOverflow\n5. Check Kill List\n6.Quit" << endl;
                     cin >> move;
-                    action.mainMenu(player, bb, npc,move);
-                }
+                    stop = action.mainMenu(player, bb, npc, move);
+                } while (stop == false);
             }
 
             map.executeMove(move); // move the player on map based on user input
+            action.misfortune(player, npc, bb);
+            moveCount++;
 
+            //doge coin increase 5 per move
             player.setDogeCoin(player.getDogeCoin() + 5);
             cout << "+5 DogeCoin added for executed move" << endl;
             cout << "DogeCoin: " << player.getDogeCoin() << endl;
 
+            //frustration increase 2 per move
+            player.setFrustration(player.getFrustration() + 2);
+            cout << "+2 Frustration level added for executed move" << endl;
+            cout << "Frustration level: " << player.getFrustration() << endl;
+
             if (bb.getNumbGPU() > 0)
             {
                 player.setDogeCoin(player.getDogeCoin() + (bb.getNumbGPU() * 5));
-                cout << "You have " << bb.getNumbGPU() << " GPU(s), and there for have recieved +" << bb.getNumbGPU() * 5 << "dogecoin." << endl;
+                cout << "You have " << bb.getNumbGPU() << " GPU(s), and there for have recieved +" << bb.getNumbGPU() * 5 << " dogecoin." << endl;
                 cout << "DogeCoin: " << player.getDogeCoin() << endl;
             }
             if (map.isBestBuyLocation()) //Best Buy
@@ -109,7 +135,8 @@ int main()
             }
             if (map.isHackerLocation()) //Starts Hacker Action
             {
-                cout << "You just ran into " << hacker.pickHackerName(server.getRoom()) << "! Think you can beat this hacker’s skills?" << endl;
+                string name = hacker.pickHackerName(server.getRoom());
+                cout << "You just ran into " << name << "! Think you can beat this hacker’s skills?" << endl;
                 bool stop = false;
                 action.displayHackerMenu();
 
@@ -122,13 +149,11 @@ int main()
                     //hackers killed need to be removed from map
                     cout << endl;
                 }
+                action.inFstreamNames(name);
                 cout << "Hackers killed: " << player.gethackersKilled() << endl;
                 if (player.gethackersKilled() == map.getHackerCount())
                 {
-
                     cout << "Now you need to move onto the next server room bc the number of hackers in this room has been defeated" << endl; //somehow right here the server room needs to change
-                    i++;
-                    break;
                 }
             }
 
@@ -136,13 +161,17 @@ int main()
             {
                 bool start = false;
                 cout << "You've encountered an NPC!" << endl;
-                while (start == false)
+                do
                 {
                     cout << "1. Complete Puzzle" << endl;
                     cout << "2. Take Your Chances" << endl;
-                    start = npc.runNPCMenu(player, move, bb);
-                }
+                    cout << "3. Quit" << endl;
+                    start = npc.runNPCMenu(player, move, bb, map);
+                } while (start == false);
             }
         }
+        action.storeMoves(server.getRoom(),moveCount);
     }
+    cout << "You Win! You beat the final Hacker in the final server room good job!" << endl;
+    action.sortAlg();
 }
