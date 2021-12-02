@@ -303,7 +303,7 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
     int count = 0;
     string puzzorgame;
     int randPuzz = rand() % 5;
-    bool shit = false;
+    bool quit = true;
     string compparttorepair;
 
     if (choice == "1")
@@ -312,8 +312,9 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
     }
     else if (choice == "2")
     {
-
-        while (compparttorepair != "7")
+        cout<<"before while"<<endl;
+        quit=true;
+        while (quit)
         {
             if (player.getnumbVirus() > 0)
             {
@@ -410,6 +411,8 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
                 else if (compparttorepair == "7")
                 {
                     cout << "GOODBYE!" << endl;
+                    quit=false;
+                    break;
                 }
                 else
                 {
@@ -422,7 +425,6 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
                 break;
             }
         }
-
         switch (count)
         {
         case 1:
