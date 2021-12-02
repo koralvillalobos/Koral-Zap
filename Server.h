@@ -35,12 +35,7 @@ class Server{
         int getHackerDefeatCount();
         void setHackerDefeatCount(int);
 
-        
-
         void printMenu();
-
-
-
 };
 
 #endif
