@@ -28,7 +28,9 @@ private:
     static const char puzzel3Ans = 'B';
     static const char puzzel4Ans = 'A';
     static const char puzzel5Ans = 'D';
-    vector<vector<int> >fuck;
+    vector<int> room;
+    vector<int>moves;
+    vector<vector<int> >both;
 
 public:
     Action();
@@ -57,7 +59,6 @@ public:
     void inFstreamNames(ofstream&, string);
     void outFstreamNames();
 
-    
 };
 
 #endif
