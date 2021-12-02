@@ -549,19 +549,43 @@ void Action::misfortune(Player &player, NPC &npc, BB &bb)
         cout << "No misfortunes occured!" << endl;
     }
 }
-// void Action::storeMoves(int room,int numMoves)
-// {
-//     fuck.push_back[room-1][0](room);
-//     fuck.push_back[room-1][1](numMoves);
-// }
+void Action::storeMoves(int numRooms, int numMoves)
+{
+    room.push_back(numRooms);
+    moves.push_back(numMoves);
+}
 void Action::sortAlg()
-{int largeOne;
-int two;
-int three;
-int four;
-int smallFive;
+{
+    both.push_back(room);
+    both.push_back(moves);
 
-   // movestore[][];
+    bool change = true;
+    while (change)
+    {
+        change = false;
+        for (int i = 0; i < room.size(); i++)
+        {
+            if (both[1][i] > both[1][i + 1])
+            {
+                //changes index 1
+                both[1][i] += both[1][i + 1];
+                both[1][i + 1] = both[1][i] - both[1][i + 1];
+                both[1][i] -= both[1][i + 1];
+
+                //changes index 0
+                both[0][i] += both[0][i + 1];
+                both[0][i + 1]= both[0][i] - both[0][i + 1];
+                both[0][i] -= both[0][i + 1];
+
+                change = true;
+            }
+        }
+    }
+     for (int j = 0; j < room.size(); j++)
+    {
+        cout << "Room: " << both[0][j];
+        cout << " Number of Moves: " << both[1][j]<<endl;
+    }
 }
 void Action::inFstreamNames(ofstream &file,string name)
 {
