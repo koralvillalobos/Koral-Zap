@@ -367,7 +367,7 @@ void Map::removeHacker()
         }
     }
 }
-void Map::removeNPC()
+void Map::removeNPC() //remove NPC from map 
 {
     int row = getPlayerRowPosition();
     int col = getPlayerColPosition();
@@ -376,21 +376,21 @@ void Map::removeNPC()
     {
         if (npcPositions[i][0] == row && npcPositions[i][1] == col)
         {
-            npcPositions[i][0] = -1;
+            npcPositions[i][0] = -1; //chaning info in 2D arrayto remove
             npcPositions[i][1] = -1;
             mapData[row][col] = '-';
         }
     }
 }
-void Map::randomSpawnBB()
+void Map::randomSpawnBB() //randomly spawn BB for different servers
 {
 
     int BBNumbRow = (rand() % 5);
     int BBNumbCol = (rand() % 9);
 
-    spawnBestBuy(BBNumbRow, BBNumbCol);
+    spawnBestBuy(BBNumbRow, BBNumbCol); //spawing BB randomly
 }
-void Map::randomSpawnHackers()
+void Map::randomSpawnHackers() //randomly spawen hackers for different servers
 {
     int spawnNumb = ((rand() % 3)+1);
 
@@ -400,12 +400,12 @@ void Map::randomSpawnHackers()
         int hackerNumbCols = (rand() % 9);
         if (mapData[hackerNumbRow][hackerNumbCols] == '-') //hackerPositions[i][0] != hackerNumbRow && hackerPositions[i][1] != hackerNumbCols &&
         {
-            spawnHacker(hackerNumbRow, hackerNumbCols);
+            spawnHacker(hackerNumbRow, hackerNumbCols); //spawning hackers for random numbers
         }
     }
     cout << "number hackers placed: " << getHackerCount() << endl;
 }
-void Map::randomSpawnNPC()
+void Map::randomSpawnNPC() //randomly spawn NPC for different servers
 {
     int spawnNumb = ((rand() % 3)+1);
 
@@ -415,7 +415,7 @@ void Map::randomSpawnNPC()
         int NPCNumbCols = (rand() % 9);
         if (mapData[NPCNumbRow][NPCNumbCols] == '-')
         {
-            spawnNPC(NPCNumbRow, NPCNumbCols);
+            spawnNPC(NPCNumbRow, NPCNumbCols); //spawning NPC
         }
     }
     cout << "number NPCs placed: " <<getNPCCount()<< endl;
