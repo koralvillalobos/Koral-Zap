@@ -24,7 +24,7 @@ private:
 
 public:
 NPC();
-bool runNPCMenu(Player&, string, BB&);
+bool runNPCMenu(Player&, string, BB&, Map&);
 void addRandComputerPart(BB&);
 void subRandComputerPart(BB&, Player&);
 void completePuzzle(Player&, BB&);
