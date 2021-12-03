@@ -28,7 +28,7 @@ Action::Action()
 {
 }
 
-void Action::statusUpdate(Player &player)
+void Action::statusUpdate(Player &player) //displays different stats of the player with getters in the player class
 {
     cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
     cout << "# computer viruses: " << player.getnumbVirus() << endl;
@@ -41,22 +41,22 @@ void Action::statusUpdate(Player &player)
     cout << "Carmen’s progress: " << player.getcarmenProg() << endl;
     cout << "Hackers defeated: " << player.gethackersKilled() << endl;
 }
-void Action::displayHackerMenu()
+void Action::displayHackerMenu() //void to ouput menu in the terminal
 {
     cout << "Valid moves are: " << endl;
     cout << "1. Fight the hacker" << endl;
     cout << "2. Forfeit the fight (lose all computer parts!)" << endl;
 }
-bool Action::executeHackerMenu(string option, Player &player, Hacker &hacker, Map &map)
+bool Action::executeHackerMenu(string option, Player &player, Hacker &hacker, Map &map) //menu when encounter hacker to call other functions
 {
     bool stop;
     if (option == "1") //Fight condition for player
     {
-        return fightHacker(player, hacker, map);
+        return fightHacker(player, hacker, map); //call function to fight hacker
     }
     else if (option == "2") //Forfeit option for player
     {
-        return forfeit(player);
+        return forfeit(player); //call function to forfeit
     }
     else //Edge case for Invalid key
     {
@@ -64,13 +64,13 @@ bool Action::executeHackerMenu(string option, Player &player, Hacker &hacker, Ma
         return false;
     }
 }
-bool Action::fightHacker(Player &player, Hacker &hacker, Map &map)
+bool Action::fightHacker(Player &player, Hacker &hacker, Map &map) //fight hacker choice in menu 
 {
 
-    int r1 = rand() % 6;
+    int r1 = rand() % 6; //random number 
     int r2 = rand() % 6;
     int virusChance = rand() % 10;
-    int internetProviderLvl = player.getinternetProv();
+    int internetProviderLvl = player.getinternetProv(); //geting provider level and other information
     int VPN = player.getVPNsOwned();
     int ChallegeLevel = hacker.getChallegeLevel();
     double v = (1 / VPN);
@@ -79,28 +79,28 @@ bool Action::fightHacker(Player &player, Hacker &hacker, Map &map)
     {
         v = 0;
     }
-    int result = (r1 * internetProviderLvl) - ((r2 * ChallegeLevel) * v);
+    int result = (r1 * internetProviderLvl) - ((r2 * ChallegeLevel) * v); //equation to calculate if beat hacker ornot
 
     if (result > 0) //if result is more than palyer wins
     {
         int tempRow;
         int tempCol;
 
-        player.sethackersKilled(player.gethackersKilled() + 1);
+        player.sethackersKilled(player.gethackersKilled() + 1); //incrementing hackers killed in player object
         player.setDogeCoin(player.getDogeCoin() + 50); //gives player 50 doge for win
         cout << "Win " << endl;
         cout << "+50 "
              << "Doge: " << player.getDogeCoin() << endl;
         cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
 
-        map.removeHacker();
+        map.removeHacker(); //remove defeated hacker from map
         return true;
     }
     else //if result is less than 0 or 0 palyer loses
     {
         //loses 20 maintenanceLvl
-        player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() - 20);
-        player.setcarmenProg(player.getcarmenProg() + 10);
+        player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() - 20); 
+        player.setcarmenProg(player.getcarmenProg() + 10); //incrementing carmens progress 
         cout << "Lose" << endl;
         cout << "Doge: " << player.getDogeCoin() << endl;
         cout << "-10 Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
@@ -108,7 +108,7 @@ bool Action::fightHacker(Player &player, Hacker &hacker, Map &map)
         //there is a 10% chance of getting a virus
         if (virusChance == 0)
         {
-            player.setnumbVirus(player.getnumbVirus() + 1);
+            player.setnumbVirus(player.getnumbVirus() + 1); //incrementing virus 
             cout << "+1 Virus" << endl;
             cout << "Virus: " << player.getnumbVirus() << endl;
         }
@@ -158,7 +158,7 @@ void Action::RockPaperScissors(Player &player)
     string loss = "Loss";
     string tie = "Tie";
     string numb;
-    int computerPick = rand() % 3;
+    int computerPick = rand() % 3; //computer random number
     bool end = false;
     cout << "ROCK PAPER SCISSORS: " << endl;
     cout << "1.Rock\n2.Paper\n3.Scissors" << endl;
@@ -166,20 +166,20 @@ void Action::RockPaperScissors(Player &player)
     {
         cin >> numb;
         //1.Rock
-        if (numb == "1")
+        if (numb == "1") //player choice 1
         {
 
-            if (computerPick == 1)
+            if (computerPick == 1) //where rand numb 1
             {
                 cout << "Tie" << endl;
                 end = true;
             }
-            if (computerPick == 2)
+            if (computerPick == 2)//where rand numb 2
             {
                 cout << "Loss" << endl;
                 end = true;
             }
-            if (computerPick == 0)
+            if (computerPick == 0)//where rand numb 0
             {
                 player.setFrustration(player.getFrustration() - 10); //subtracts frustration level
 
@@ -192,46 +192,46 @@ void Action::RockPaperScissors(Player &player)
             }
         }
         //2.Paper
-        else if (numb == "2")
+        else if (numb == "2")//player pick 2
         {
-            if (computerPick == 1)
+            if (computerPick == 1)//where rand numb 1
             {
-                player.setFrustration(player.getFrustration() - 10);
+                player.setFrustration(player.getFrustration() - 10);//incrementing frustration for win
                 cout << "Win" << endl;
                 cout << endl;
                 cout << "-10 Frustration Level" << endl;
                 cout << "Frustration Level: " << player.getFrustration() << endl;
                 end = true;
             }
-            if (computerPick == 2)
+            if (computerPick == 2)//where rand numb 2
             {
                 cout << "Tie" << endl;
                 end = true;
             }
-            if (computerPick == 0)
+            if (computerPick == 0)//where rand numb 0
             {
                 cout << "Loss" << endl;
                 end = true;
             }
         }
         //3.Scissors
-        else if (numb == "3")
+        else if (numb == "3")//player pick 3
         {
-            if (computerPick == 1)
+            if (computerPick == 1)//where rand numb 1
             {
                 cout << "Loss" << endl;
                 end = true;
             }
-            if (computerPick == 2)
+            if (computerPick == 2)//where rand numb 2
             {
-                player.setFrustration(player.getFrustration() - 10);
+                player.setFrustration(player.getFrustration() - 10);/incrementing frustration for win
                 cout << "Win" << endl;
                 cout << endl;
                 cout << "-10 Frustration Level" << endl;
                 cout << "Frustration Level: " << player.getFrustration() << endl;
                 end = true;
             }
-            if (computerPick == 0)
+            if (computerPick == 0)//where rand numb 0
             {
                 cout << "Tie" << endl;
                 end = true;
@@ -265,7 +265,7 @@ char Action::getPuzzel5Ans()
 {
     return puzzel5Ans;
 }
-bool Action::quitGame(string move)
+bool Action::quitGame(string move) //function used for quiting and playing the game
 {
 
     bool n = false;
@@ -297,7 +297,7 @@ bool Action::quitGame(string move)
     }
 }
 
-bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
+bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice) //main menu in game
 {
     string rps;
     int count = 0;
@@ -308,20 +308,20 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
 
     if (choice == "1")
     {
-        statusUpdate(player);
+        statusUpdate(player); //call function to display player stats and other information
     }
-    else if (choice == "2")
+    else if (choice == "2") //REPAIR COMPUTER CHOICE
     {
-        cout<<"before while"<<endl;
+        
         quit=true;
         while (quit)
         {
-            if (player.getnumbVirus() > 0)
+            if (player.getnumbVirus() > 0) //player cannot repair if viruses on computer
             {
                 cout << "You cannot repair your computer because you have " << player.getnumbVirus() << " viruses :(" << endl;
                 break;
             }
-            else if (player.getcompPartsAvailable() > 0 && player.getnumbVirus() == 0)
+            else if (player.getcompPartsAvailable() > 0 && player.getnumbVirus() == 0) //if the player has parts and no viruses then they can repair
             {
 
                 cout << "You can select up to 5 parts to repair. These include: " << endl;
@@ -336,23 +336,23 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
 
                 cin >> compparttorepair;
 
-                if (compparttorepair == "1")
+                if (compparttorepair == "1") //CPU
                 {
-                    if (bb.getNumbCPU() > 0)
+                    if (bb.getNumbCPU() > 0) //make sure CPU avaliable
                     {
-                        bb.setNumbCPU(bb.getNumbCPU() - 1);
-                        count++;
+                        bb.setNumbCPU(bb.getNumbCPU() - 1); //using CPU
+                        count++; //incrementing parts repaired
                     }
                     else
                     {
                         cout << "No CPU to repair with" << endl;
                     }
                 }
-                else if (compparttorepair == "2")
+                else if (compparttorepair == "2") //GPU
                 {
-                    if (bb.getNumbGPU() > 0)
+                    if (bb.getNumbGPU() > 0) //make sure GPU avaliable
                     {
-                        bb.setNumbGPU(bb.getNumbGPU() - 1);
+                        bb.setNumbGPU(bb.getNumbGPU() - 1);//use GPU
                         count++;
                     }
                     else
@@ -360,9 +360,9 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
                         cout << "No gpu to repair with" << endl;
                     }
                 }
-                else if (compparttorepair == "3")
+                else if (compparttorepair == "3") //PSU
                 {
-                    if (bb.getNumbPowerSupplyUnit() > 0)
+                    if (bb.getNumbPowerSupplyUnit() > 0) //make sure PSU avaliable
                     {
                         bb.setNumbPowerSupplyUnit(bb.getNumbPowerSupplyUnit() - 1);
                         count++;
@@ -372,9 +372,9 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
                         cout << "no power supply unit to repair with" << endl;
                     }
                 }
-                else if (compparttorepair == "4")
+                else if (compparttorepair == "4")//COMPUTER case
                 {
-                    if (bb.getNumbComputerCase() > 0)
+                    if (bb.getNumbComputerCase() > 0) //make sure computer case avaliable
                     {
                         bb.setNumbComputerCase(bb.getNumbComputerCase() - 1);
                         count++;
@@ -384,9 +384,9 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
                         cout << "no computer case to repair with" << endl;
                     }
                 }
-                else if (compparttorepair == "5")
+                else if (compparttorepair == "5") //internet card
                 {
-                    if (bb.getNumbInternetCard() > 0)
+                    if (bb.getNumbInternetCard() > 0)//make sure /internet card avaliable
                     {
                         bb.setNumbInternetCard(bb.getNumbInternetCard() - 1);
                         count++;
@@ -396,9 +396,9 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
                         cout << "no internet card to repair with" << endl;
                     }
                 }
-                else if (compparttorepair == "6")
+                else if (compparttorepair == "6") //keyboard mouse
                 {
-                    if (bb.getNumbKeyboardMouse() > 0)
+                    if (bb.getNumbKeyboardMouse() > 0) //make sure keyboard mouse avaliable
                     {
                         bb.setNumbKeyboardMouse(bb.getNumbKeyboardMouse() - 1);
                         count++;
@@ -408,7 +408,7 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
                         cout << "no keyboard /mouse to repair with" << endl;
                     }
                 }
-                else if (compparttorepair == "7")
+                else if (compparttorepair == "7") //stop repairing
                 {
                     cout << "GOODBYE!" << endl;
                     quit=false;
@@ -419,7 +419,7 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
                     cout << "Invalid Option" << endl;
                 }
             }
-            if (count == 5)
+            if (count == 5) //5 parts bought
             {
                 count=0;
                 break;
@@ -427,46 +427,46 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
         }
         switch (count)
         {
-        case 1:
+        case 1: //1 part bought +20 computer maintenance
             player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 20);
             cout << "+20 Computer Maintenance Level" << endl;
             cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
             break;
 
-        case 2:
+        case 2://2 part bought +40 computer maintenance
             player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 40);
             cout << "+40 Computer Maintenance Level" << endl;
             cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
             break;
 
-        case 3:
+        case 3://3 part bought +60 computer maintenance
             player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 60);
             cout << "+60 Computer Maintenance Level" << endl;
             cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
             break;
 
-        case 4:
+        case 4://14part bought +80 computer maintenance
             player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 80);
             cout << "+80 Computer Maintenance Level" << endl;
             cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
             break;
 
-        case 5:
+        case 5://5 part bought +100 computer maintenance
             player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() + 100);
             cout << "+100 Computer Maintenance Level" << endl;
             cout << "Computer Maintenance Level: " << player.getcompMaintenanceLvl() << endl;
             break;
         }
     }
-    else if (choice == "3")
+    else if (choice == "3") //use antivirus USB
     {
-        if (player.getantiVirusUSBcount() > 0 && player.getnumbVirus() > 0)
+        if (player.getantiVirusUSBcount() > 0 && player.getnumbVirus() > 0) //make sure the user has a virus and has USB
         {
             player.setantiVirusUSBcount(player.getantiVirusUSBcount() - 1);
-            player.setnumbVirus(0);
+            player.setnumbVirus(0); //no more viruses
             cout << "You have used one stick of USB antivirus software to get ridof all viruses on your computer!" << endl;
         }
-        else if (player.getnumbVirus() == 0)
+        else if (player.getnumbVirus() == 0) 
         {
             cout << "You have no viruses" << endl;
         }
@@ -475,31 +475,31 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
             cout << "You have no antivirus USB sticks to use :(" << endl;
         }
     }
-    else if (choice == "4")
+    else if (choice == "4") //Browse stackoverflow
     {
         cout << "Would you like to solve a puzzel(1) or attempt a game(2)?" << endl;
         cin >> puzzorgame;
 
-        if (puzzorgame == "1")
+        if (puzzorgame == "1") //puzzle completion
         {
-            npc.completePuzzle(player, bb);
+            npc.completePuzzle(player, bb); //call puzzle menu
         }
-        else if (puzzorgame == "2")
+        else if (puzzorgame == "2")//game
         {
-            RockPaperScissors(player);
+            RockPaperScissors(player); //call game function
         }
         else
         {
             cout << "Invalid choice." << endl;
         }
     }
-    else if (choice == "5")
+    else if (choice == "5") //show names of hackers killed
     {
         cout << "You have killed: " << endl;
         cout << endl;
-        outFstreamNames();
+        outFstreamNames(); //function to output names
     }
-    else if (choice == "6")
+    else if (choice == "6") //quit menu
     {
         cout << "You chose to quit the menu! GOODBYE!" << endl;
         return true;
@@ -509,38 +509,38 @@ bool Action::mainMenu(Player &player, BB &bb, NPC &npc, string choice)
         cout << "Invalid option" << endl;
     }
 }
-void Action::misfortune(Player &player, NPC &npc, BB &bb)
+void Action::misfortune(Player &player, NPC &npc, BB &bb) //function to calculation misfortunes at each executed move
 {
 
     int randnumb = rand() % 10;
     //cout << "rand num for misfortune:" << randnumb << endl;
 
-    if (randnumb > -1 && randnumb < 4)
+    if (randnumb > -1 && randnumb < 4) //30% chance of misfortune
     {
         if (randnumb == 0)
         {
-            if (player.getcompPartsAvailable() > 0)
+            if (player.getcompPartsAvailable() > 0) 
             {
                 cout << "UH OH! You lost a computer part due to a misfortune. You suck" << endl;
-                npc.subRandComputerPart(bb, player);
+                npc.subRandComputerPart(bb, player); //take omputer part
             }
 
             else if (player.getcompPartsAvailable() == 0)
             {
                 cout << "OH NO! Your computer was damaged!" << endl;
-                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() - 10);
+                player.setcompMaintenanceLvl(player.getcompMaintenanceLvl() - 10); //damage computer
             }
         }
         else if (randnumb == 1)
         {
             cout << "OH NO! Your team was robbed by Carmen’s dastardly hackers! You have no computer parts/antivirus software left!" << endl;
-            player.setcompPartsAvailable(0);
-            player.setantiVirusUSBcount(0);
+            player.setcompPartsAvailable(0); //no avalible computer parts
+            player.setantiVirusUSBcount(0); 
         }
         else if (randnumb == 2 || randnumb == 3)
         {
             cout << "OH NO! Why won’t my code work!!!! Your frustration level was increased." << endl;
-            player.setFrustration(player.getFrustration() + 10);
+            player.setFrustration(player.getFrustration() + 10); //increment frustration
             if (player.getFrustration() >= 100)
             {
                 cout << "OH NO! You have rage quit! Looks like you couldn’t handle Carmen’s hackers. BItch" << endl;
@@ -552,32 +552,32 @@ void Action::misfortune(Player &player, NPC &npc, BB &bb)
         cout << "No misfortunes occured!" << endl;
     }
 }
-void Action::storeMoves(int numRooms, int numMoves)
+void Action::storeMoves(int numRooms, int numMoves) //function to  create 2 vectors of rooms and the exectued rooms in each
 {
     room.push_back(numRooms);
     moves.push_back(numMoves);
 }
-void Action::sortAlg()
+void Action::sortAlg() //bubble sort algorithm
 {
-    both.push_back(room);
+    both.push_back(room); //make 2D vector
     both.push_back(moves);
 
     bool change = true;
     while (change)
     {
         change = false;
-        for (int i = 0; i < room.size(); i++)
+        for (int i = 0; i < room.size(); i++) //iterate through both vectors
         {
-            if (both[1][i] > both[1][i + 1])
+            if (both[1][i] > both[1][i + 1]) //if larger change
             {
                 //changes index 1
                 both[1][i] += both[1][i + 1];
-                both[1][i + 1] = both[1][i] - both[1][i + 1];
+                both[1][i + 1] = both[1][i] - both[1][i + 1]; //switch position of index 1
                 both[1][i] -= both[1][i + 1];
 
                 //changes index 0
                 both[0][i] += both[0][i + 1];
-                both[0][i + 1] = both[0][i] - both[0][i + 1];
+                both[0][i + 1] = both[0][i] - both[0][i + 1]; //switch position of index 0
                 both[0][i] -= both[0][i + 1];
 
                 change = true;
@@ -590,7 +590,7 @@ void Action::sortAlg()
         cout << " Number of Moves: " << both[1][j] << endl;
     }
 }
-void Action::inFstreamNames(ofstream &file, string name)
+void Action::inFstreamNames(ofstream &file, string name) //write hacker names to file
 {
 
     if (!file.is_open())
@@ -599,11 +599,11 @@ void Action::inFstreamNames(ofstream &file, string name)
     }
     else
     {
-        file << name << endl;
+        file << name << endl; //writing name
         file.close();
     }
 }
-void Action::outFstreamNames()
+void Action::outFstreamNames()//reading the file with the hacker names
 {
     ifstream file;
     string line = "";
@@ -618,7 +618,7 @@ void Action::outFstreamNames()
     {
         while (getline(file, line))
         {
-            cout << line << endl;
+            cout << line << endl; //outputting names of hackers
         }
         cout << endl;
     }
